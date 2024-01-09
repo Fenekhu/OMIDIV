@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class MidiNote {
@@ -19,13 +20,36 @@ public class MidiNote {
 
 public class Track {
     public List<MidiNote> notes = new List<MidiNote>();
-    public string name;
+    public string name = "";
     public (byte lower, byte upper) pitchRange = (byte.MaxValue, byte.MinValue);
 }
 
 public class CookedMidi {
     public class TempoMap_ {
-        public SortedDictionary<long, uint> _map; // <time micros, tempo micros>
+        private Dictionary<long, uint> tempMap = new Dictionary<long, uint>();
+        private SortedDictionary<long, uint> _map = new SortedDictionary<long, uint>(); // <time micros, tempo micros>
+        private List<long> keyList = new List<long>();
+
+        public void Clear() {
+            tempMap.Clear();
+            _map.Clear();
+            keyList.Clear();
+        }
+        public void Set(long timeMicros, uint tempoMicros, bool autoUpdate = true) {
+            tempMap[timeMicros] = tempoMicros;
+            if (autoUpdate) UpdateChanges();
+        }
+        public int Count => _map.Count;
+        public void UpdateChanges() {
+            double realTime = Time.realtimeSinceStartupAsDouble;
+            Debug.Log($"Starting UpdateChanges");
+            _map = new SortedDictionary<long, uint>(tempMap);
+            Debug.Log($"UpdateChanges _map created (took {Time.realtimeSinceStartupAsDouble - realTime}s)");
+            realTime = Time.realtimeSinceStartupAsDouble;
+            keyList = new List<long>(_map.Keys);
+            Debug.Log($"UpdateChanges keyList created (took {Time.realtimeSinceStartupAsDouble - realTime}s)");
+        }
+
         public (long timeMicros, uint tempoMicros) this[long timeMicros] {
             get { // this could probably be done nicely with linq
                 return LTE(timeMicros) ?? (0, _map[0]);
@@ -33,69 +57,63 @@ public class CookedMidi {
         }
         
         public (long timeMicros, uint tempoMicros) GetAtIndex(int index) {
-            var kvp = _map.ElementAt(index);
-            return (kvp.Key, kvp.Value);
+            try {
+                var kvp = _map.ElementAt(index);
+                return (kvp.Key, kvp.Value);
+            } catch (ArgumentOutOfRangeException e) {
+                Debug.LogErrorFormat("Index out of bounds: {0:d} (size: {1:d})", index, _map.Count);
+                throw e;
+            }
         }
         public int? GTIndex(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key > timeMicros) return i;
-            }
-            return null;
+            int res = keyList.BinarySearch(timeMicros);
+            if (res >= 0) return res == keyList.Count-1 ? null : res+1;
+            res = ~res;
+            return res == keyList.Count ? null : res;
         }
         public (long timeMicros, uint tempoMicros)? GT(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key > timeMicros) return (kvp.Key, kvp.Value);
-            }
-            return null;
+            int? index = GTIndex(timeMicros);
+            if (!index.HasValue) return null;
+            return GetAtIndex(index.Value);
         }
         public int? GTEIndex(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key >= timeMicros) return i;
-            }
-            return null;
+            int res = keyList.BinarySearch(timeMicros);
+            if (res >= 0) return res;
+            res = ~res;
+            return res == keyList.Count ? null : res;
         }
         public (long timeMicros, uint tempoMicros)? GTE(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key >= timeMicros) return (kvp.Key, kvp.Value);
-            }
-            return null;
+            int? index = GTEIndex(timeMicros);
+            if (!index.HasValue) return null;
+            return GetAtIndex(index.Value);
         }
         public int? LTIndex(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key < timeMicros) return i;
-            }
-            return null;
+            int res = keyList.BinarySearch(timeMicros);
+            if (res >= 0) return res == 0? null : res-1;
+            res = ~res;
+            return res-1;
         }
         public (long timeMicros, uint tempoMicros)? LT(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key < timeMicros) return (kvp.Key, kvp.Value);
-            }
-            return null;
+            int? index = LTIndex(timeMicros);
+            if (!index.HasValue) return null;
+            return GetAtIndex(index.Value);
         }
         public int? LTEIndex(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key <= timeMicros) return i;
-            }
-            return null;
+            int res = keyList.BinarySearch(timeMicros);
+            if (res >= 0) return res == 0 ? null : res;
+            res = ~res;
+            return res-1;
         }
         public (long timeMicros, uint tempoMicros)? LTE(long timeMicros) {
-            for (int i = 0; i < _map.Count; i++) {
-                var kvp = _map.ElementAt(i);
-                if (kvp.Key <= timeMicros) return (kvp.Key, kvp.Value);
-            }
-            return null;
+            int? index = LTEIndex(timeMicros);
+            if (!index.HasValue) return null;
+            return GetAtIndex(index.Value);
         }
 
         public TempoMap_() {
-            _map = new SortedDictionary<long, uint>();
+            tempMap[0] = 500000;
             _map[0] = 500000;
+            keyList.Add(0);
         }
     }
 
@@ -113,10 +131,14 @@ public class CookedMidi {
     }
 
     public void Cook(RawMidi raw) {
+        Debug.Log("Starting Cook");
         Header = raw.header;
         Tracks.Clear();
 
         CookTempoMap(raw);
+
+        Debug.Log("Cook reading raw midi");
+        double realTime = Time.realtimeSinceStartupAsDouble;
 
         Dictionary<uint, MidiNote>[] activeNotes = new Dictionary<uint, MidiNote>[16];
         for (int i = 0; i < activeNotes.Length; i++) activeNotes[i] = new Dictionary<uint, MidiNote>();
@@ -196,11 +218,15 @@ public class CookedMidi {
 
             track.notes.Sort((n1, n2) => n1.startTick.CompareTo(n2.startTick));
         }
+
+        Debug.Log($"Cook finished reading raw midi (took {Time.realtimeSinceStartupAsDouble - realTime}s)");
     }
 
     private void CookTempoMap(RawMidi raw) {
-        TempoMap._map.Clear();
-        TempoMap._map[0] = 500000;
+        double realTime = Time.realtimeSinceStartupAsDouble;
+        Debug.Log("Starting CookTempoMap");
+        TempoMap.Clear();
+        TempoMap.Set(0, 500000, false);
 
         Dictionary<long, (long delta, uint tempoMicros)> tempoMapByTick = new Dictionary<long, (long, uint)>(); // <tick, (delta, tempo micros)>
 
@@ -221,20 +247,27 @@ public class CookedMidi {
             }
         }
 
+        Debug.Log($"CookTempoMap converting ticks to micros (took {Time.realtimeSinceStartupAsDouble - realTime}s)");
+        realTime = Time.realtimeSinceStartupAsDouble;
+
         long currentTime = 0;
         uint currentTempo = 500000;
         if (Header.fmt == EMidiDivisionFormat.TPQN) {
             foreach (var kvp in tempoMapByTick) {
                 currentTime += currentTempo * kvp.Value.delta / Header.ticksPerQuarter;
                 currentTempo = kvp.Value.tempoMicros;
-                TempoMap._map[currentTime] = currentTempo;
+                TempoMap.Set(currentTime, currentTempo, false);
             }
         } else { // SMPTE
             foreach (var kvp in tempoMapByTick) {
                 currentTime += 1_000_000 * kvp.Value.delta / (-Header.smpte * Header.ticksPerFrame);
                 currentTempo = kvp.Value.tempoMicros;
-                TempoMap._map[currentTime] = currentTempo;
+                TempoMap.Set(currentTime, currentTempo, false);
             }
         }
+
+        TempoMap.UpdateChanges();
+
+        Debug.Log($"CookTempoMap finished (took {Time.realtimeSinceStartupAsDouble - realTime}s)");
     }
 }

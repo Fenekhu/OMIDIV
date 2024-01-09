@@ -330,7 +330,9 @@ public abstract class MidiRenderer : MonoBehaviour {
         if (ImGuiManager.IsDebugEnabled) {
             if (ImGui.Begin("debug")) {
                 ImGui.Text(string.Format("time: {0:d}", CurrentTime));
-                ImGui.Text(string.Format("next tempo: {0:d}", Midi.TempoMap.GT(CurrentTime)?.tempoMicros ?? 0));
+                var nextTempo = Midi.TempoMap.GT(CurrentTime) ?? (0, 0);
+                ImGui.Text(string.Format("next tempo: {0:d} ({1:F2})", nextTempo.tempoMicros, MidiUtil.TempoBPM(nextTempo.tempoMicros)));
+                ImGui.Text(string.Format("at: {0:d}", nextTempo.timeMicros));
             }
             ImGui.End();
         }
@@ -528,8 +530,7 @@ public abstract class MidiRenderer : MonoBehaviour {
             if (rawMidi is null) rawMidi = new RawMidi();
             rawMidi.Open(MidiPath);
 
-            /*using (StreamWriter sw = new StreamWriter(new FileStream("midi_dump.txt", FileMode.Create)))
-                rawMidi.DebugPrint(sw);*/
+            //using (StreamWriter sw = new StreamWriter(new FileStream("midi_dump.txt", FileMode.Create))) rawMidi.DebugPrint(sw);
 
             midiPathChanged = false;
         }
@@ -566,7 +567,7 @@ public abstract class MidiRenderer : MonoBehaviour {
             uint _tempo = tempoMap[start].tempoMicros;
 
             if (micros < 0) {
-                int index = tempoMap.GTEIndex(start).GetValueOrDefault(tempoMap._map.Count);
+                int index = tempoMap.GTEIndex(start).GetValueOrDefault(tempoMap.Count);
                 if (index == 0) {
                     timeSpentInTempo = micros;
                 } else {
