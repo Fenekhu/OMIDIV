@@ -163,7 +163,7 @@ public abstract class MidiRenderer : MonoBehaviour {
     }
 
     protected virtual void OnEnable() {
-        ImGuiNET.Unity.ImGuiUn.Layout += DrawGUI;
+        ImGuiNET.ImGuiUn.Layout += DrawGUI;
 
         TrackColors.AddRange(new Color[] {
             new Color(1.00f, 0.00f, 0.00f, 1.0f),
@@ -196,7 +196,7 @@ public abstract class MidiRenderer : MonoBehaviour {
     }
 
     protected virtual void OnDisable() {
-        ImGuiNET.Unity.ImGuiUn.Layout -= DrawGUI;
+        ImGuiNET.ImGuiUn.Layout -= DrawGUI;
         WriteConfig();
     }
 

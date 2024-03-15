@@ -8,13 +8,13 @@
       "hash": "9c2efe83225fe09e56e6f287ac7ac2ee3f86bce2"
     },
     "com.realgames.dear-imgui": {
-      "version": "https://github.com/TylkoDemon/dear-imgui-unity.git",
+      "version": "https://github.com/vlandemart/dear-imgui-unity.git",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.collections": "0.5.0-preview.9"
       },
-      "hash": "b220195304f1e2d8432fe4ffde3f7d9592e6f489"
+      "hash": "53466f33f2d7a7c223168a54c9ece75630b2594c"
     },
     "com.unity.burst": {
       "version": "1.8.11",
