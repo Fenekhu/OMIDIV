@@ -12,13 +12,15 @@ Demo videos:
 
 **No license?**  
 I'll add a proper open-source license once the first release version (v1.x.x, not alpha or beta) is released. Until then:  
-- You are free to modify a version of it for your own use, but don't distribute that version.  
-- If you make public any content made with it (like youtube video), including with your modified version, give credit.
+- You are free to modify a version of it for your own use, but if you choose to distribute that modified version, make it clear that its a modified version of this.
+
+Also, its not a requirement but, if you like this visualizer and use it to make some content, like a youtube video, credit would be appreciated.
 
 The older engineless version of OMIDIV is available [here](https://github.com/TheGoldenProof/OMIDIV-CPP). There isn't much reason to use it, but it might handle insane note counts slightly better.
 
 ## What's Next / To Do
 - ffmpeg export
-- other visualizations
-- Midis using SMPTE time divisions probably dont work
+- Try to get mac builds to work
 - Update notifier using GitHub API
+- Midis using SMPTE time divisions probably dont work (I don't even know where to get a midi that uses SMPTE time, so until someone runs into issues with that, this is going on the back burner).
+- other visualizations
