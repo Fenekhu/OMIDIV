@@ -8,7 +8,11 @@ If you want audio, render it separately and open it.
 If the audio doesn't sync up with the notes, use the Offset (ms) in the audio or midi control window.  
 
 Demo videos:  
-[Open MIDI Visualizer (Alpha Demo)](https://youtu.be/4YJwQmvFq10)
+[Open MIDI Visualizer (Alpha Demo)](https://youtu.be/4YJwQmvFq10)  
+[Unwavering Sea](https://youtube.com/playlist?list=PLXOldc20MYD6b-hVZ-qRbORx8SYlpIOom&si=il2OAE9FXeKJlGKp)  
+[Monsterpiece](https://youtu.be/hWmX9x6rStI?si=_1VDDwxDIkh-i75G)  
+[Tempura Ocha's videos](https://youtu.be/oIgni18ZyaE?si=SIXOOQlJNNdrIZ1e)  
+(some videos above may have lots of post-processing video effects)
 
 **No license?**  
 I'll add a proper open-source license once the first release version (v1.x.x, not alpha or beta) is released. Until then:  
