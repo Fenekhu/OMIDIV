@@ -23,8 +23,10 @@ Also, its not a requirement but, if you like this visualizer and use it to make 
 The older engineless version of OMIDIV is available [here](https://github.com/TheGoldenProof/OMIDIV-CPP). There isn't much reason to use it, but it might handle insane note counts slightly better.
 
 ## What's Next / To Do
-- ffmpeg export
 - Try to get mac builds to work
 - Update notifier using GitHub API
 - Midis using SMPTE time divisions probably dont work (I don't even know where to get a midi that uses SMPTE time, so until someone runs into issues with that, this is going on the back burner).
-- other visualizations
+- other visualizations -- I'm open to suggestions, I'd love to hear your ideas and requests.
+- rework recording system
+  - old/current: ffmpeg just screen records. can be laggy.
+  - new: "recording mode" where the frames are read from the GPU in unity and fed to ffmpeg. This will appear laggy, so visuals must update only once per draw with a fixed frame time. This should produce a smooth video. Then post-process the audio track into the video?
