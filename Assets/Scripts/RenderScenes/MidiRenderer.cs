@@ -7,10 +7,13 @@ using UnityEngine.UI;
 using ImGuiNET;
 using UnityEngine.InputSystem;
 using SFB;
+using System.Threading.Tasks;
 
 public abstract class MidiRenderer : MonoBehaviour {
     private static RawMidi rawMidi;
     private static bool midiPathChanged;
+    private static float recordingTime = 0;
+    private static float simulatedTime = 0;
 
     protected static Dictionary<uint, Mesh> NgonPrisms = new Dictionary<uint, Mesh>(); // <side count, mesh>
     protected static Dictionary<uint, Mesh> NgonPlanes = new Dictionary<uint, Mesh>(); // <side count, mesh>
@@ -33,6 +36,9 @@ public abstract class MidiRenderer : MonoBehaviour {
     protected static RawImage BackgroundImage;
     protected static Camera BGCam;
     protected static Color BGColor;
+
+    protected static RecorderController VideoRecorder;
+    protected static Canvas ProcessingNotif;
 
     //protected static List<(int index, bool enabled)> TrackReorder = new List<(int, bool)>();
     protected static List<Color> TrackColors = new List<Color>();
@@ -160,10 +166,18 @@ public abstract class MidiRenderer : MonoBehaviour {
             BackgroundImage = GameObject.Find("Background Image").GetComponent<RawImage>();
         if (Sound is null)
             Sound = GetComponent<AudioSource>();
+        if (VideoRecorder is null)
+            VideoRecorder = GameObject.Find("VideoRecorder").GetComponent<RecorderController>();
+        if (ProcessingNotif is null)
+            ProcessingNotif = GameObject.Find("VideoProcessing").GetComponent<Canvas>();
+        recordingTime = 0;
     }
 
     protected virtual void OnEnable() {
         ImGuiNET.ImGuiUn.Layout += DrawGUI;
+        VideoRecorder.OnBeforeFrame += OnFrameBegin;
+        VideoRecorder.OnAfterFrame += OnFrameEnd;
+        VideoRecorder.OnRecordingEnd += () => { simulatedTime = recordingTime = 0; };
 
         TrackColors.AddRange(new Color[] {
             new Color(1.00f, 0.00f, 0.00f, 1.0f),
@@ -197,6 +211,8 @@ public abstract class MidiRenderer : MonoBehaviour {
 
     protected virtual void OnDisable() {
         ImGuiNET.ImGuiUn.Layout -= DrawGUI;
+        VideoRecorder.OnBeforeFrame -= OnFrameBegin;
+        VideoRecorder.OnAfterFrame -= OnFrameEnd;
         WriteConfig();
     }
 
@@ -205,7 +221,28 @@ public abstract class MidiRenderer : MonoBehaviour {
 
     }
 
+    protected virtual void OnFrameBegin() {
+
+    }
+    protected virtual void OnFrameEnd() {
+        recordingTime += 1f / VideoRecorder.GetFramerate();
+    }
+
+    // Do not override this unless you know what you're doing (and please call this if you do, so recordings work properly).
+    // Override CustomFixedUpdate instead.
     protected virtual void FixedUpdate() {
+        if (VideoRecorder.RecordingEnabled && IsPlaying) {
+            while (simulatedTime < recordingTime) {
+                CustomFixedUpdate();
+                simulatedTime += Time.fixedDeltaTime;
+            }
+        } else {
+            CustomFixedUpdate();
+        }
+    }
+
+    // An implementation of FixedUpdate that is aware of whether OMIDIV is recording.
+    protected virtual void CustomFixedUpdate() {
         UpdateTPS();
         if (MidiOffset != MidiOffsetPrev) {
             int diff = 1000 * (MidiOffset - MidiOffsetPrev);
@@ -217,6 +254,9 @@ public abstract class MidiRenderer : MonoBehaviour {
         }
 
         if (!IsPlaying) return;
+
+        if (VideoRecorder.RecordingEnabled && VideoRecorder.GetStatus() != RecorderController.Status.Recording)
+            return;
 
         double dx = Midi.Header.fmt switch {
             EMidiDivisionFormat.TPQN => 1.0,
@@ -231,6 +271,19 @@ public abstract class MidiRenderer : MonoBehaviour {
 
     // Update is called once per frame
     protected virtual void Update() {
+        while (VideoRecorder.GetStatus() == RecorderController.Status.Processing) {
+            if (!ProcessingNotif.enabled) {
+                ProcessingNotif.enabled = true;
+                return;
+            }
+        }
+        if (ProcessingNotif.enabled && VideoRecorder.GetStatus() != RecorderController.Status.Processing) {
+            ProcessingNotif.enabled = false;
+        }
+
+        if (IsPlaying && VideoRecorder.RecordingEnabled && VideoRecorder.GetStatus() != RecorderController.Status.Recording)
+            return;
+
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
             IsPlaying = !IsPlaying;
             if (!IsPlaying && Sound.isPlaying) {
@@ -243,6 +296,11 @@ public abstract class MidiRenderer : MonoBehaviour {
                     Sound.PlayDelayed(AudioDelay);
                 }
                 IsPaused = false;
+            }
+            if (IsPlaying) {
+                VideoRecorder.StartIfEnabled();
+            } else {
+                VideoRecorder.StopIfEnabled();
             }
         }
         if (Keyboard.current.rKey.wasPressedThisFrame) {
@@ -418,6 +476,8 @@ public abstract class MidiRenderer : MonoBehaviour {
         }
         ImGui.End();
 
+        VideoRecorder?.DrawGUI();
+
         if (bOpenMidi) {
             ExtensionFilter[] exts = {new ExtensionFilter("MIDI", "mid", "midi")};
             string[] res = StandaloneFileBrowser.OpenFilePanel("Open MIDI", "", exts, false);
@@ -479,6 +539,7 @@ public abstract class MidiRenderer : MonoBehaviour {
         MovePlay(CurrentTick);
         SeekAudio(AudioOffset / 1000f);
         IsPaused = false;
+        recordingTime = 0;
     }
 
     protected virtual void Reset_() {

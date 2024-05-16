@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ImGuiNET;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 public class Standard3D : MidiRenderer {
     struct CameraInfo {
@@ -238,13 +239,39 @@ public class Standard3D : MidiRenderer {
     }
 
     protected override void Restart() {
+        for (int j = 0; j < Tracks.Length; j++) {
+            ref TrackInfo track = ref Tracks[j];
+            Track midiTrack = Midi.Tracks[track.midiTrack];
+            for (int i = 0; i < track.nowPlaying.Count; i++) {
+                int noteI = track.nowPlaying[i];
+                if ((long)midiTrack.notes[noteI].endTick < CurrentTick) {
+                    var mat = track.obj.transform.GetChild(noteI).GetComponent<MeshRenderer>().material;
+                    mat.color = track.trackColor.WithAlpha(PlayedAlpha);
+                    mat.SetColor("_EmissionColor", Color.black);
+                    mat.DisableKeyword("_EMISSION");
+                    track.nowPlaying.RemoveAt(i--);
+                }
+            }
+        }
+
         for (int i = 0; i < Tracks.Length; i++) {
-            ref TrackInfo info = ref Tracks[i];
-            Vector3 newPos = info.obj.transform.localPosition;
+            ref TrackInfo track = ref Tracks[i];
+            Vector3 newPos = track.obj.transform.localPosition;
             newPos.x = 0;
-            info.obj.transform.localPosition = newPos;
-            info.nowPlaying.Clear();
-            info.playIndex = 0;
+            track.obj.transform.localPosition = newPos;
+
+            Track midiTrack = Midi.Tracks[track.midiTrack];
+            for (int j = 0; j < track.nowPlaying.Count; j++) {
+                int noteI = track.nowPlaying[j];
+                var mat = track.obj.transform.GetChild(noteI).GetComponent<MeshRenderer>().material;
+                mat.color = track.trackColor.WithAlpha(PlayedAlpha);
+                mat.SetColor("_EmissionColor", Color.black);
+                mat.DisableKeyword("_EMISSION");
+                track.nowPlaying.RemoveAt(j--);
+            }
+
+            track.nowPlaying.Clear();
+            track.playIndex = 0;
         }
         base.Restart();
 

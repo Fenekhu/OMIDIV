@@ -90,8 +90,8 @@ public class CookedMidi {
         public int? LTIndex(long timeMicros) {
             int res = keyList.BinarySearch(timeMicros);
             if (res >= 0) return res == 0? null : res-1;
-            res = ~res;
-            return res-1;
+            res = (~res) - 1;
+            return res < 0 ? null : res;
         }
         public (long timeMicros, uint tempoMicros)? LT(long timeMicros) {
             int? index = LTIndex(timeMicros);
@@ -101,8 +101,8 @@ public class CookedMidi {
         public int? LTEIndex(long timeMicros) {
             int res = keyList.BinarySearch(timeMicros);
             if (res >= 0) return res == 0 ? null : res;
-            res = ~res;
-            return res-1;
+            res = (~res) - 1;
+            return res < 0? null : res;
         }
         public (long timeMicros, uint tempoMicros)? LTE(long timeMicros) {
             int? index = LTEIndex(timeMicros);

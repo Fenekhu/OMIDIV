@@ -247,12 +247,23 @@ public class Circle3D : MidiRenderer {
 
     protected override void Restart() {
         for (int i = 0; i < Tracks.Length; i++) {
-            ref TrackInfo info = ref Tracks[i];
-            Vector3 newPos = info.obj.transform.localPosition;
+            ref TrackInfo track = ref Tracks[i];
+            Vector3 newPos = track.obj.transform.localPosition;
             newPos.x = 0;
-            info.obj.transform.localPosition = newPos;
-            info.nowPlaying.Clear();
-            info.playIndex = 0;
+            track.obj.transform.localPosition = newPos;
+
+            Track midiTrack = Midi.Tracks[track.midiTrack];
+            for (int j = 0; j < track.nowPlaying.Count; j++) {
+                int noteI = track.nowPlaying[j];
+                var mat = track.obj.transform.GetChild(noteI).GetComponent<MeshRenderer>().material;
+                mat.color = track.trackColor.WithAlpha(PlayedAlpha);
+                mat.SetColor("_EmissionColor", Color.black);
+                mat.DisableKeyword("_EMISSION");
+                track.nowPlaying.RemoveAt(j--);
+            }
+
+            track.nowPlaying.Clear();
+            track.playIndex = 0;
         }
         base.Restart();
 
