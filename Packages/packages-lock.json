@@ -222,6 +222,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "io.github.gkngkc.unity-standalone-file-browser": {
+      "version": "https://github.com/shiena/UnityStandaloneFileBrowser.git?path=Packages/StandaloneFileBrowser#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6bb677628ce51ecb90d568fd6f99ff49c12d454d"
+    },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
       "depth": 0,
