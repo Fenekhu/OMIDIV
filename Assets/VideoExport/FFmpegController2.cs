@@ -143,12 +143,13 @@ public class FFmpegController2 : RecorderController {
 
         if (_setOutDir) {
             string dir = FFmpegWrapper2.OutDir;
-            while (dir.EndsWith("/") || dir.EndsWith("\\")) dir.Remove(dir.Length - 1);
-            string[] res = StandaloneFileBrowser.OpenFolderPanel("Video output directory", FFmpegWrapper2.OutDir, false);
-            if (res.Length > 0) {
-                if (!(res[0].EndsWith("/") || res[0].EndsWith("\\"))) res[0] += "/";
-                FFmpegWrapper2.OutDir = res[0];
-            }
+            while (dir.EndsWith("/") || dir.EndsWith("\\")) dir = dir[..^1];
+            StandaloneFileBrowser.OpenFolderPanelAsync("Video output directory", FFmpegWrapper2.OutDir, false, (string[] res) => {
+                if (res.Length > 0) {
+                    if (!(res[0].EndsWith("/") || res[0].EndsWith("\\"))) res[0] += "/";
+                    FFmpegWrapper2.OutDir = res[0];
+                }
+            });
         }
 
         if (_openFfmpegDir) {

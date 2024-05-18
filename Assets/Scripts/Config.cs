@@ -71,19 +71,21 @@ public class Config {
     }
 
     public static void Open() {
-        string[] res = StandaloneFileBrowser.OpenFilePanel("Open File", "", "omvcfg", false);
-        if (res.Length > 0) {
-            currPath = res[0];
-            Read(new FileInfo(currPath));
-        }
+        StandaloneFileBrowser.OpenFilePanelAsync("Open File", "", "omvcfg", false, (string[] res) => {
+            if (res.Length > 0) {
+                currPath = res[0];
+                Read(new FileInfo(currPath));
+            }
+        });
     }
 
     public static void SaveAs() {
-        string res = StandaloneFileBrowser.SaveFilePanel("Save Config", "", "", "omvcfg");
-        if (res.Length > 0) {
-            currPath = res;
-            Save();
-        }
+        StandaloneFileBrowser.SaveFilePanelAsync("Save Config", "", "", "omvcfg", (string res) => {
+            if (res.Length > 0) {
+                currPath = res;
+                Save();
+            }
+        });
     }
 
     public static void Save() {

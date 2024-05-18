@@ -480,30 +480,33 @@ public abstract class MidiRenderer : MonoBehaviour {
 
         if (bOpenMidi) {
             ExtensionFilter[] exts = {new ExtensionFilter("MIDI", "mid", "midi")};
-            string[] res = StandaloneFileBrowser.OpenFilePanel("Open MIDI", "", exts, false);
-            if (res.Length > 0) {
-                MidiPath = new FileInfo(res[0]);
-                midiPathChanged = true;
-                IsPlaying = false;
-                ReloadMidi = true;
-                NeedsRestart = true;
-            }
+            StandaloneFileBrowser.OpenFilePanelAsync("Open MIDI", "", exts, false, (string[] res) => {
+                if (res.Length > 0) {
+                    MidiPath = new FileInfo(res[0]);
+                    midiPathChanged = true;
+                    IsPlaying = false;
+                    ReloadMidi = true;
+                    NeedsRestart = true;
+                }
+            });
         }
 
         if (bOpenAudio) {
-            string[] res = StandaloneFileBrowser.OpenFilePanel("Open Audio", "", "", false);
-            if (res.Length > 0) {
-                AudioPath = new FileInfo(res[0]);
-                IsPlaying = false;
-                ReloadAudio = true;
-                NeedsRestart = true;
-            }
+            StandaloneFileBrowser.OpenFilePanelAsync("Open Audio", "", "", false, (string[] res) => {
+                if (res.Length > 0) {
+                    AudioPath = new FileInfo(res[0]);
+                    IsPlaying = false;
+                    ReloadAudio = true;
+                    NeedsRestart = true;
+                }
+            });
         }
 
         if (bOpenImage) {
             ExtensionFilter[] exts = {new ExtensionFilter("Image", "png", "jpg", "jpeg"), new ExtensionFilter("PNG", "png"), new ExtensionFilter("JPEG", "jpg", "jpeg")};
-            string[] res = StandaloneFileBrowser.OpenFilePanel("Open Image", "", exts, false);
-            if (res.Length > 0) ImagePath = new FileInfo(res[0]);
+            StandaloneFileBrowser.OpenFilePanelAsync("Open Image", "", exts, false, (string[] res) => {
+                if (res.Length > 0) ImagePath = new FileInfo(res[0]);
+            });
         }
 
         if (bOpenConfig) {
