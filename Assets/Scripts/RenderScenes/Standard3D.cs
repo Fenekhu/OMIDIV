@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ImGuiNET;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 public class Standard3D : MidiRenderer {
     struct CameraInfo {

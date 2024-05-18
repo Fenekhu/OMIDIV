@@ -7,7 +7,8 @@ using UnityEngine.UI;
 using ImGuiNET;
 using UnityEngine.InputSystem;
 using SFB;
-using System.Threading.Tasks;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
 public abstract class MidiRenderer : MonoBehaviour {
     private static RawMidi rawMidi;
@@ -42,6 +43,10 @@ public abstract class MidiRenderer : MonoBehaviour {
 
     //protected static List<(int index, bool enabled)> TrackReorder = new List<(int, bool)>();
     protected static List<Color> TrackColors = new List<Color>();
+
+    protected static GameObject GlobalLight;
+    protected static Volume GlobalVolume;
+    protected static Bloom Bloom;
 
     protected bool IsPlaying = false;
     protected bool AutoReload = true;
@@ -170,6 +175,14 @@ public abstract class MidiRenderer : MonoBehaviour {
             VideoRecorder = GameObject.Find("VideoRecorder").GetComponent<RecorderController>();
         if (ProcessingNotif is null)
             ProcessingNotif = GameObject.Find("VideoProcessing").GetComponent<Canvas>();
+        if (GlobalLight is null)
+            GlobalLight = GameObject.Find("Directional Light");
+        if (GlobalVolume is null || Bloom is null) {
+            GlobalVolume = GameObject.Find("Global Volume").GetComponent<Volume>();
+            if (GlobalVolume.profile.TryGet(out Bloom bloom)) {
+                Bloom = bloom;
+            }
+        }
         recordingTime = 0;
     }
 
@@ -218,7 +231,6 @@ public abstract class MidiRenderer : MonoBehaviour {
 
     // Start is called before the first frame update
     protected virtual void Start() {
-
     }
 
     protected virtual void OnFrameBegin() {
@@ -409,6 +421,7 @@ public abstract class MidiRenderer : MonoBehaviour {
                 bOpenConfig = ImGui.MenuItem("Open Config");
                 bSaveConfig = ImGui.MenuItem("Save Config");
                 bSaveConfigAs = ImGui.MenuItem("Save Config As");
+                if (ImGui.MenuItem("Quit")) Application.Quit();
                 ImGui.EndMenu();
             }
             if (ImGui.BeginMenu("View")) {
@@ -443,9 +456,9 @@ public abstract class MidiRenderer : MonoBehaviour {
             Vector4 bgColor = BGColor;
             if (ImGui.ColorEdit4("Background Color", ref bgColor, ImGuiColorEditFlags.NoAlpha)) {
                 BGColor = bgColor;
-                BGCam.backgroundColor = BGColor;
+                MainCam.backgroundColor = BGColor;
             }
-            ImGui.Text("Background Image"); ImGui.SameLine();
+            /*ImGui.Text("Background Image"); ImGui.SameLine();
             bOpenImage = ImGui.Button("Open##bgImg"); ImGui.SameLine();
             ClearBGImage = ImGui.Button("Clear##bgImg");
             if (BackgroundImage.texture != null && ImGui.TreeNode("Image Options##bgImg")) {
@@ -460,6 +473,45 @@ public abstract class MidiRenderer : MonoBehaviour {
                 if (ImGui.ColorEdit4("Image Tint", ref color, ImGuiColorEditFlags.NoInputs)) {
                     BackgroundImage.color = color;
                 }
+                ImGui.TreePop();
+            }*/
+
+            if (ImGui.TreeNode("Lighting")) {
+                ImGui.Text("Direction");
+                Vector3 lightDir = GlobalLight.transform.localEulerAngles;
+                string fmt = "%.1f";
+                ImGui.SetNextItemWidth(48f);
+                if (ImGui.InputFloat("##xin", ref lightDir.x, 0, 0, fmt))
+                    lightDir.x %= 360f;
+                ImGui.SameLine();
+                ImGui.SliderFloat("X", ref lightDir.x, 0f, 360f);
+                ImGui.SetNextItemWidth(48f);
+                if (ImGui.InputFloat("##yin", ref lightDir.y, 0, 0, fmt))
+                    lightDir.y %= 360f;
+                ImGui.SameLine();
+                ImGui.SliderFloat("Y", ref lightDir.y, 0f, 360f);
+                ImGui.SetNextItemWidth(48f);
+                if (ImGui.InputFloat("##zin", ref lightDir.z, 0, 0, fmt))
+                    lightDir.z %= 360f;
+                ImGui.SameLine();
+                ImGui.SliderFloat("Z", ref lightDir.z, 0f, 360f);
+                GlobalLight.transform.localEulerAngles = lightDir;
+                ImGui.TreePop();
+            }
+
+            bool _bloom = Bloom.active;
+            if (ImGui.Checkbox("Bloom", ref _bloom))
+                Bloom.active = _bloom;
+            if (Bloom.active && ImGui.TreeNode("Bloom settings")) {
+                float _threshold = Bloom.threshold.value;
+                if (ImGui.InputFloat("Threshold", ref _threshold))
+                    Bloom.threshold.value = _threshold;
+                float _intensity = Bloom.intensity.value;
+                if (ImGui.InputFloat("Intensity", ref _intensity))
+                    Bloom.intensity.value = _intensity;
+                float _scatter = Bloom.scatter.value;
+                if (ImGui.SliderFloat("Scatter", ref _scatter, Bloom.scatter.min, Bloom.scatter.max))
+                    Bloom.scatter.value = _scatter;
                 ImGui.TreePop();
             }
         }
@@ -571,6 +623,10 @@ public abstract class MidiRenderer : MonoBehaviour {
 
     protected virtual void WriteConfig() {
         Config.Set("bg.color", BGColor);
+        Config.Set("gvol.bloom.active", Bloom.active);
+        Config.Set("gvol.bloom.threshold", Bloom.threshold.value);
+        Config.Set("gvol.bloom.intensity", Bloom.intensity.value);
+        Config.Set("gvol.bloom.scatter", Bloom.scatter.value);
     }
 
     protected virtual void ReadConfig() {
@@ -579,7 +635,12 @@ public abstract class MidiRenderer : MonoBehaviour {
         }
 
         BGColor = Config.Get<Color>("bg.color") ?? Color.black;
-        if (BGCam != null) BGCam.backgroundColor = BGColor;
+        if (MainCam != null) MainCam.backgroundColor = BGColor;
+
+        Bloom.active = Config.Get<bool>("gvol.bloom.active") ?? Bloom.active;
+        Bloom.threshold.value = Config.Get<float>("gvol.bloom.threshold") ?? Bloom.threshold.value;
+        Bloom.intensity.value = Config.Get<float>("gvol.bloom.intensity") ?? Bloom.intensity.value;
+        Bloom.scatter.value = Config.Get<float>("gvol.bloom.scatter") ?? Bloom.scatter.value;
 
         ReloadVisuals = AutoReload;
     }
