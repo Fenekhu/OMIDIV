@@ -82,7 +82,7 @@ public class FFmpegWrapper2 {
         return true;
     }
 
-    public static readonly string ArgsWinDef =
+    public static readonly string ExecArgsDef =
         "-loglevel error " +
 
         "-f rawvideo " +
@@ -97,7 +97,8 @@ public class FFmpegWrapper2 {
         "-c:v %vcodec% " + 
         "-crf %crf% " +
         "\"%outfile%.%file_ext%\"";
-    public static string ArgsWin { get; set; } = ArgsWinDef;
+    public static string ExecArgs { get; set; } = ExecArgsDef;
+    public static readonly float ArgsVer = 1f;
 
     public static string OutDir { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)+"/OMIDIV/";
     public static string OutFile { get; set; } = "";
@@ -107,11 +108,7 @@ public class FFmpegWrapper2 {
     }
 
     static string GetCmdString(bool reencoding) {
-        switch (Application.platform) {
-        case RuntimePlatform.WindowsEditor:
-        case RuntimePlatform.WindowsPlayer:
-            return ArgsWin;
-        }
+        if (!reencoding) return ExecArgs;
 
         throw new NotImplementedException();
     }
@@ -193,7 +190,10 @@ public class FFmpegWrapper2 {
         // some things don't need to be remembered
         CmdParams["outfile"] = "";
 
-        getString("vrec.ffmpeg2.argswin", (string val) => { ArgsWin = val; });
+        float argsVer = 0;
+        getString("vrec.ffmpeg2.argsVer", (string val) => { argsVer = float.Parse(val); });
+        if (argsVer != ArgsVer) ExecArgs = ExecArgsDef;
+        else getString("vrec.ffmpeg2.execArgs", (string val) => { ExecArgs = val; });
         getString("vrec.ffmpeg2.video_scale", (string val) => { VideoScale = float.Parse(val); });
     }
 
@@ -201,7 +201,8 @@ public class FFmpegWrapper2 {
         foreach (var item in CmdParams)
             PlayerPrefs.SetString("vrec.ffmpeg2." + item.Key, item.Value);
 
-        PlayerPrefs.SetString("vrec.ffmpeg2.argswin", ArgsWin);
+        PlayerPrefs.SetString("vrec.ffmpeg2.argsVer", ArgsVer.ToString());
+        PlayerPrefs.SetString("vrec.ffmpeg2.execArgs", ExecArgs);
         PlayerPrefs.SetString("vrec.ffmpeg2.video_scale", VideoScale.ToString());
     }
 

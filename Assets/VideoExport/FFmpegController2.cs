@@ -129,11 +129,11 @@ public class FFmpegController2 : RecorderController {
                         Vector2 boxSize = new Vector2(0, ImGui.GetTextLineHeight() * 3);
 
                         ImGui.Text("Encoding command");
-                        string argswin = FFmpegWrapper2.ArgsWin;
-                        if (ImGui.InputTextMultiline("##argswin", ref argswin, 512, boxSize, flags))
-                            FFmpegWrapper2.ArgsWin = argswin;
-                        if (ImGui.Button("Reset##argswin"))
-                            FFmpegWrapper2.ArgsWin = FFmpegWrapper2.ArgsWinDef;
+                        string execArgs = FFmpegWrapper2.ExecArgs;
+                        if (ImGui.InputTextMultiline("##execArgs", ref execArgs, 512, boxSize, flags))
+                            FFmpegWrapper2.ExecArgs = execArgs;
+                        if (ImGui.Button("Reset##execArgs"))
+                            FFmpegWrapper2.ExecArgs = FFmpegWrapper2.ExecArgsDef;
 
                         ImGui.TreePop();
                     }
@@ -163,6 +163,10 @@ public class FFmpegController2 : RecorderController {
                     UseShellExecute = true,
                     Verb = "open"
                 }); break;
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                System.Diagnostics.Process.Start("open", $"\"{FFmpegWrapper2.GetExecutableDir()}\"");
+                break;
             default:
                 throw new NotImplementedException();
             }
