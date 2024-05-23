@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.realgames.dear-imgui": {
+      "version": "https://github.com/vlandemart/dear-imgui-unity-update.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.collections": "0.5.0-preview.9"
+      },
+      "hash": "53466f33f2d7a7c223168a54c9ece75630b2594c"
+    },
     "com.unity.burst": {
       "version": "1.8.13",
       "depth": 1,
