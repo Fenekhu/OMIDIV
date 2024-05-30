@@ -5,12 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Circle2D : MidiRenderer {
-    struct CameraInfo {
-        public Vector3 homePos;
-        public Quaternion homeRot;
-        public float fov;
-    }
+public class Circle2D : MidiScene {
 
     struct TrackInfo {
         public GameObject obj;
@@ -28,10 +23,9 @@ public class Circle2D : MidiRenderer {
 
     static readonly float GlobalScale = 1/128.0f;
 
-    GameObject NotePrefab;
+    [SerializeField] GameObject NotePrefab;
 
     TrackInfo[] Tracks = new TrackInfo[0];
-    CameraInfo CamInfo = new CameraInfo();
 
     float StartRadius = 450.0f;
     float DeltaRadius = -32f;
@@ -46,47 +40,28 @@ public class Circle2D : MidiRenderer {
     float NoteAlpha = 0.125f;
     float NoteFadeTime = 0.5f;
 
-    float needsTrackUpdate = -1f;
-    float needsNoteUpdate = -1f;
-    float needsReloadVisuals = -1f;
+    protected float LastTrackUpdate = -1f;
+    protected float LastNoteUpdate = -1f;
+    protected float LastReloadVisuals = -1f;
 
-    protected override void OnEnable() {
-        CamInfo.homePos = new Vector3(0f, 0f, -8f);
-        CamInfo.homeRot = Quaternion.identity;
-        CamInfo.fov = 90f;
-        base.OnEnable();
-    }
+    protected override int GetSceneIndex() => 2;
 
-    protected override void OnDisable() {
-        base.OnDisable();
-    }
+    protected override string GetSceneName() => "Circle 2D";
 
-    // Start is called before the first frame update
     protected override void Start() {
         base.Start();
-
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
-
-        MainCam.transform.localPosition = CamInfo.homePos;
-        MainCam.transform.localRotation = CamInfo.homeRot;
-        MainCam.fieldOfView = Camera.HorizontalToVerticalFieldOfView(CamInfo.fov, MainCam.aspect);
-
-        NotePrefab = Resources.Load("Note2D") as GameObject;
     }
 
-    protected override void FixedUpdate() {
-        base.FixedUpdate();
-
-    }
-
-    // Update is called once per frame
     protected override void Update() {
-        if (needsReloadVisuals > 0 && Time.realtimeSinceStartup - needsReloadVisuals > 0.5f) { ReloadVisuals = true; needsReloadVisuals = -1f; }
+        if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { NeedsVisualReload = true; LastReloadVisuals = -1f; }
         base.Update();
-        UpdateInputs();
-        if (needsTrackUpdate > 0 && Time.realtimeSinceStartup - needsTrackUpdate > 0.1f) { UpdateTracks(); needsTrackUpdate = -1f; }
-        if (needsNoteUpdate > 0 && Time.realtimeSinceStartup - needsNoteUpdate > 0.5f) { UpdateNotes(false); needsNoteUpdate = -1f; }
+        if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.1f) { ResetTracks(); LastTrackUpdate = -1f; }
+        if (LastNoteUpdate > 0 && Time.realtimeSinceStartup - LastNoteUpdate > 0.5f) { ResetNotes(false); LastNoteUpdate = -1f; }
 
+        if (!IsPlaying) return;
+
+        // fade the notes
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo track = ref Tracks[j];
             Track midiTrack = Midi.Tracks[track.midiTrack];
@@ -96,7 +71,7 @@ public class Circle2D : MidiRenderer {
                 if (track.fadeTimes[i] > 0) {
                     mat.color = track.trackColor.WithAlpha(math.remap(0, NoteFadeTime, NoteAlpha, 1, track.fadeTimes[i]));
                     mat.SetColor("_EmissionColor", track.trackColor * math.min(4, 8 * math.unlerp(0, NoteFadeTime, track.fadeTimes[i])));
-                    track.fadeTimes[i] -= Time.deltaTime;
+                    track.fadeTimes[i] -= DeltaTime;
                     if (track.fadeTimes[i] == 0) track.fadeTimes[i]--; // ensure that this doesn't land on exactly zero and enters the next block next frame
                 } else if (track.fadeTimes[i] < 0) { // properly "shut off" the note only once (instead of every frame if this was <= 0)
                     mat.color = track.trackColor.WithAlpha(NoteAlpha);
@@ -107,8 +82,7 @@ public class Circle2D : MidiRenderer {
             }
         }
 
-        if (!IsPlaying) return;
-
+        // update "now playing"
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo track = ref Tracks[j];
             Track midiTrack = Midi.Tracks[track.midiTrack];
@@ -134,50 +108,6 @@ public class Circle2D : MidiRenderer {
                 } else break;
             }
         }
-    }
-
-    private void UpdateInputs() {
-        float speed = 2.0f * Time.deltaTime;
-        Vector3 ds = Vector3.zero;
-        float rotSpeed = 60f * Time.deltaTime;
-        (float x, float y) rot = (0, 0);
-
-        if (Keyboard.current.aKey.isPressed) {
-            ds.x -= speed;
-        }
-        if (Keyboard.current.dKey.isPressed) {
-            ds.x += speed;
-        }
-        if (Keyboard.current.eKey.isPressed) {
-            ds.y += speed;
-        }
-        if (Keyboard.current.qKey.isPressed) {
-            ds.y -= speed;
-        }
-        if (Keyboard.current.wKey.isPressed) {
-            ds.z += speed;
-        }
-        if (Keyboard.current.sKey.isPressed) {
-            ds.z -= speed;
-        }
-        if (Keyboard.current.leftArrowKey.isPressed) {
-            rot.x -= rotSpeed;
-        }
-        if (Keyboard.current.rightArrowKey.isPressed) {
-            rot.x += rotSpeed;
-        }
-        if (Keyboard.current.upArrowKey.isPressed) {
-            rot.y += rotSpeed;
-        }
-        if (Keyboard.current.downArrowKey.isPressed) {
-            rot.y -= rotSpeed;
-        }
-
-        //ds.z += Mouse.current.scroll.y.value / 64f;
-
-        MainCam.transform.Translate(ds, Space.Self);
-        MainCam.transform.Rotate(Vector3.up, rot.x, Space.World);
-        MainCam.transform.Rotate(Vector3.left, rot.y, Space.Self);
     }
 
     protected override void InitVisuals() {
@@ -207,11 +137,11 @@ public class Circle2D : MidiRenderer {
             Tracks[i] = info;
         }
 
-        UpdateTracks();
-        UpdateNotes();
+        ResetTracks();
+        ResetNotes();
     }
 
-    private void UpdateTracks() {
+    private void ResetTracks() {
         int i = 0;
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo info = ref Tracks[j];
@@ -230,12 +160,12 @@ public class Circle2D : MidiRenderer {
         SideCountPrev = (uint)SideCount;
     }
 
-    private void UpdateNotes(bool justColors = false) {
+    private void ResetNotes(bool justColors = false) {
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo trackInfo = ref Tracks[j];
 
             // will be null if the mesh doesn't need to be updated
-            Mesh newMesh = trackInfo.updateMeshes? GetNSidedPlaneMesh(trackInfo.noteSides) : null;
+            Mesh newMesh = trackInfo.updateMeshes? GeometryUtil.GetNSidedPlaneMesh(trackInfo.noteSides) : null;
 
             Track midiTrack = Midi.Tracks[trackInfo.midiTrack];
             float trackRadius = StartRadius + j * DeltaRadius;
@@ -277,55 +207,13 @@ public class Circle2D : MidiRenderer {
         }
         base.Restart();
 
-        MainCam.transform.localPosition = CamInfo.homePos;
-        MainCam.transform.localRotation = CamInfo.homeRot;
-
-        UpdateNotes(true);
+        ResetNotes(true);
     }
 
     protected override void MovePlay(double ticks) {}
 
     protected override void DrawGUI() {
-        if (!ImGuiManager.IsEnabled) return;
         base.DrawGUI();
-
-        if (ImGui.Begin(MainCam.name)) {
-            ImGui.Text("Position");
-            Vector3 camPos = MainCam.transform.localPosition;
-            ImGui.InputFloat("X", ref camPos.x, 2f, 20f);
-            ImGui.InputFloat("Y", ref camPos.y, 2f, 20f);
-            ImGui.InputFloat("Z", ref camPos.z, 2f, 20f);
-            MainCam.transform.localPosition = camPos;
-            if (ImGui.Button("Set as default##pos")) CamInfo.homePos = camPos;
-
-            ImGui.Text("Orientation");
-            Vector3 camRot = MainCam.transform.localEulerAngles;
-            string fmt = "%.1f";
-            ImGui.SetNextItemWidth(48f);
-            if (ImGui.InputFloat("##pitchin", ref camRot.x, 0, 0, fmt))
-                camRot.x %= 360f;
-            ImGui.SameLine();
-            ImGui.SliderFloat("Pitch", ref camRot.x, -179f, 179f);
-            ImGui.SetNextItemWidth(48f);
-            if (ImGui.InputFloat("##yawin", ref camRot.y, 0, 0, fmt))
-                camRot.y %= 360f;
-            ImGui.SameLine();
-            ImGui.SliderFloat("Yaw", ref camRot.y, -180f, 180f);
-            ImGui.SetNextItemWidth(48f);
-            if (ImGui.InputFloat("##rollin", ref camRot.z, 0, 0, fmt))
-                camRot.z %= 360f;
-            ImGui.SameLine();
-            ImGui.SliderFloat("Roll", ref camRot.z, -180f, 180f);
-            MainCam.transform.localEulerAngles = camRot;
-            if (ImGui.Button("Set as default##rot")) CamInfo.homeRot = MainCam.transform.localRotation;
-        }
-        ImGui.End();
-
-        if (ImGui.Begin("Keybinds")) {
-            ImGui.Text("W/A/S/D/E/Q: Camera Position");
-            ImGui.Text("Arrow Keys: Camera Rotation");
-        }
-        ImGui.End();
 
         bool updateTracks = false;
         bool updateNotes = false;
@@ -333,15 +221,15 @@ public class Circle2D : MidiRenderer {
 
         if (ImGui.Begin("MIDI Controls")) {
             ImGui.PushItemWidth(128f);
-            if (ImGui.InputFloat("Track Start Radius", ref StartRadius, 1.0f, 5.0f)) updateNotes = AutoReload;
-            if (ImGui.InputFloat("Track Radius Delta", ref DeltaRadius, 1.0f, 5.0f)) updateNotes = AutoReload;
+            if (ImGui.InputFloat("Track Start Radius", ref StartRadius, 1.0f, 5.0f)) updateNotes = true;
+            if (ImGui.InputFloat("Track Radius Delta", ref DeltaRadius, 1.0f, 5.0f)) updateNotes = true;
             if (ImGui.SliderFloat("Angle Range", ref AngleRange, 0, 360f, "%.1f deg")) {
                 for (int i = 0; i < Tracks.Length; i++) { ref TrackInfo track = ref Tracks[i]; track.angleRange = AngleRange; }
-                updateNotes = AutoReload;
+                updateNotes = true;
             }
-            if (ImGui.SliderFloat("Angle Offset", ref AngleOffset, -180f, 180f, "%.1f deg")) updateTracks = AutoReload;
+            if (ImGui.SliderFloat("Angle Offset", ref AngleOffset, -180f, 180f, "%.1f deg")) updateTracks = true;
             ImGui.PopItemWidth();
-            if (ImGui.Checkbox("Align Ends", ref AlignEnds)) updateNotes = AutoReload;
+            if (ImGui.Checkbox("Align Ends", ref AlignEnds)) updateNotes = true;
 
             if (ImGui.TreeNode("Tracks")) {
                 float buttonDim = ImGui.GetFrameHeight();
@@ -349,16 +237,16 @@ public class Circle2D : MidiRenderer {
                 for (int i = 0; i < Tracks.Length; i++) {
                     if (ImGui.Button(string.Format("^##trUp{0:d}", i), buttonSize) && i != 0) {
                         (Tracks[i-1], Tracks[i]) = (Tracks[i], Tracks[i-1]);
-                        updateTracks = AutoReload;
+                        updateTracks = true;
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.Button(string.Format("v##trDown{0:d}", i), buttonSize) && i != Tracks.Length - 1) {
                         (Tracks[i], Tracks[i+1]) = (Tracks[i+1], Tracks[i]);
-                        updateTracks = AutoReload;
+                        updateTracks = true;
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.Checkbox(string.Format("##chtr{0:d}", i), ref Tracks[i].enabled))
-                        updateTracks = AutoReload;
+                        updateTracks = true;
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.TreeNode(string.Format("{0:s}##tr{1:d}", Midi.Tracks[Tracks[i].midiTrack].name, i))) {
                         ref TrackInfo track = ref Tracks[i];
@@ -367,15 +255,15 @@ public class Circle2D : MidiRenderer {
                         Vector4 color = track.trackColor;
                         if (ImGui.ColorEdit4("Track Color", ref color, ImGuiColorEditFlags.NoAlpha | ImGuiColorEditFlags.NoInputs)) {
                             track.trackColor = color;
-                            updateNotes = AutoReload;
+                            updateNotes = true;
                         }
-                        if (ImGui.SliderFloat("Angle Offset", ref track.angleOffset, -180f, 180f, "%.1f deg")) updateTracks = AutoReload;
-                        if (ImGui.SliderFloat("Angle Range", ref track.angleRange, 0, 360f, "%.1f deg")) updateNotes = AutoReload;
+                        if (ImGui.SliderFloat("Angle Offset", ref track.angleOffset, -180f, 180f, "%.1f deg")) updateTracks = true;
+                        if (ImGui.SliderFloat("Angle Range", ref track.angleRange, 0, 360f, "%.1f deg")) updateNotes = true;
                         int sides = (int)track.noteSides;
                         if (ImGui.SliderInt("Note Sides", ref sides, 3, 8)) {
                             track.noteSides = (uint)sides;
                             track.updateMeshes = true;
-                            updateNotes = AutoReload;
+                            updateNotes = true;
                         }
                         ImGui.PopItemWidth();
                         ImGui.TreePop();
@@ -387,10 +275,10 @@ public class Circle2D : MidiRenderer {
             if (ImGui.TreeNode("Note Options")) {
                 ImGui.PushItemWidth(128f);
                 ImGui.SliderFloat("Velocity Intensity", ref VelocityFactor, 0f, 1f);
-                if (ImGui.SliderInt("Note Sides", ref SideCount, 3, 8)) (updateTracks, updateNotes) = (AutoReload, AutoReload);
-                if (ImGui.SliderFloat("Note Rotation", ref NoteRotation, -180f, 180f, "%.1f deg")) updateNotes = AutoReload;
-                if (ImGui.InputFloat("Note Size", ref NoteSize)) updateNotes = AutoReload;
-                if (ImGui.SliderFloat("Note Alpha", ref NoteAlpha, 0f, 1f, "%.3f", 3)) updateNotes = AutoReload;
+                if (ImGui.SliderInt("Note Sides", ref SideCount, 3, 8)) (updateTracks, updateNotes) = (true, true);
+                if (ImGui.SliderFloat("Note Rotation", ref NoteRotation, -180f, 180f, "%.1f deg")) updateNotes = true;
+                if (ImGui.InputFloat("Note Size", ref NoteSize)) updateNotes = true;
+                if (ImGui.SliderFloat("Note Alpha", ref NoteAlpha, 0f, 1f, "%.3f", 3)) updateNotes = true;
                 ImGui.InputFloat("Fade Time", ref NoteFadeTime);
                 NoteFadeTime = math.max(NoteFadeTime, 0.00048828125f); // things break if NoteFadeTime is 0. 1/2048 so the display rounds down to 0.000
                 ImGui.PopItemWidth();
@@ -399,9 +287,11 @@ public class Circle2D : MidiRenderer {
         }
         ImGui.End();
 
-        if (updateTracks) needsTrackUpdate = Time.unscaledTime;
-        if (updateNotes) needsNoteUpdate = Time.unscaledTime;
-        if (updateVisuals) needsReloadVisuals = Time.unscaledTime;
+        if (AutoReload) {
+            if (updateTracks) LastTrackUpdate = Time.unscaledTime;
+            if (updateNotes) LastNoteUpdate = Time.unscaledTime;
+            if (updateVisuals) LastReloadVisuals = Time.unscaledTime;
+        }
     }
 
     protected override void WriteConfig() {
@@ -418,9 +308,6 @@ public class Circle2D : MidiRenderer {
         Config.Set("c2d.noteSize", NoteSize);
         Config.Set("c2d.noteAlpha", NoteAlpha);
         Config.Set("c2d.noteFadeTime", NoteFadeTime);
-        Config.Set("c2d.cam.fov", CamInfo.fov);
-        Config.Set("c2d.cam.homePos", CamInfo.homePos);
-        Config.Set("c2d.cam.homeRot", CamInfo.homeRot);
 
         List<Color> trackColors = new List<Color>();
         trackColors.AddRange(TrackColors);
@@ -437,32 +324,23 @@ public class Circle2D : MidiRenderer {
     protected override void ReadConfig() {
         base.ReadConfig();
 
-        static void TryGet<T>(string id, ref T val) where T : unmanaged {
-            T? res = Config.Get<T>(id);
-            if (res.HasValue) val = res.Value;
-        }
-
-        TryGet("c2d.startRadius", ref StartRadius);
-        TryGet("c2d.deltaRadius", ref DeltaRadius);
-        TryGet("c2d.angleOffset", ref AngleOffset);
-        TryGet("c2d.angleRange", ref AngleRange);
-        TryGet("c2d.alignEnds", ref AlignEnds);
-        TryGet("c2d.velFactor", ref VelocityFactor);
-        TryGet("c2d.noteSides", ref SideCount);
-        TryGet("c2d.noteRotation", ref NoteRotation);
-        TryGet("c2d.noteSize", ref NoteSize);
-        TryGet("c2d.noteAlpha", ref NoteAlpha);
-        TryGet("c2d.noteFadeTime", ref NoteFadeTime);
-        TryGet("c2d.cam.fov", ref CamInfo.fov);
-        TryGet("c2d.cam.homePos", ref CamInfo.homePos);
-        TryGet("c2d.cam.homeRot", ref CamInfo.homeRot);
+        Config.TryGet("c2d.startRadius", ref StartRadius);
+        Config.TryGet("c2d.deltaRadius", ref DeltaRadius);
+        Config.TryGet("c2d.angleOffset", ref AngleOffset);
+        Config.TryGet("c2d.angleRange", ref AngleRange);
+        Config.TryGet("c2d.alignEnds", ref AlignEnds);
+        Config.TryGet("c2d.velFactor", ref VelocityFactor);
+        Config.TryGet("c2d.noteSides", ref SideCount);
+        Config.TryGet("c2d.noteRotation", ref NoteRotation);
+        Config.TryGet("c2d.noteSize", ref NoteSize);
+        Config.TryGet("c2d.noteAlpha", ref NoteAlpha);
+        Config.TryGet("c2d.noteFadeTime", ref NoteFadeTime);
 
         List<Color> trackColors = new List<Color>();
         Config.Get("c2d.trackColors", trackColors);
-        if (trackColors.Count > 0) TrackColors = trackColors;
-
-        MainCam.transform.localPosition = CamInfo.homePos;
-        MainCam.transform.localRotation = CamInfo.homeRot;
-        MainCam.fieldOfView = Camera.HorizontalToVerticalFieldOfView(CamInfo.fov, MainCam.aspect);
+        if (trackColors.Count > 0) {
+            TrackColors.Clear();
+            TrackColors.AddRange(trackColors);
+        }
     }
 }
