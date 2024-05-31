@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ImGuiNET;
 using TrackInfo = Base3DTrackInfo;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 public class Standard3D : Base3D<Standard3D.TrackInfo> {
 
@@ -13,16 +14,14 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
     float ZSpacing = 16f;
     float NoteVSpacing = 2f;
 
-    protected override int GetSceneIndex() => 1;
-
-    protected override string GetSceneName() => "Standard 3D";
 
     protected override void ResetTracks() {
         int i = 0;
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo info = ref Tracks[j];
-            info.obj.SetActive(info.enabled);
-            if (!info.enabled) continue;
+            bool ignore = IgnoreTrack(info);
+            info.obj.SetActive(!ignore);
+            if (ignore) continue;
             float posX = info.obj.transform.localPosition.x;
             info.obj.transform.localPosition = new Vector3(posX, info.pitchOffset * (NoteHeight + NoteVSpacing), ZSpacing * i);
             Vector3 scale = info.obj.transform.localScale;
@@ -42,6 +41,7 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
     protected override void ResetNotes(bool justColors) {
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo trackInfo = ref Tracks[j];
+            if (IgnoreTrack(trackInfo)) continue;
 
             // will be null if the mesh doesn't need to be updated
             Mesh newMesh = trackInfo.updateMeshes? GeometryUtil.GetNSidedPrismMesh(trackInfo.noteSides) : null;
@@ -66,41 +66,19 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
         }
     }
 
-    protected override void DrawGUI() {
-        base.DrawGUI();
-
-        bool updateTracks = false;
-        bool updateNotes = false;
-        bool updateVisuals = false;
-
-        if (ImGui.Begin("MIDI Controls")) {
-            ImGui.SetNextItemWidth(128f);
-            if (ImGui.InputFloat("Track depth spacing", ref ZSpacing, 0.5f, 5.0f)) updateTracks = true;
-
-            if (ImGui.TreeNode("Tracks")) {
-                for (int i = 0; i < Tracks.Length; i++) {
-                    if (ImGui.TreeNode(string.Format("{0:s}##tr{1:d}", Midi.Tracks[Tracks[i].midiTrack].name, i))) {
-                        ref TrackInfo track = ref Tracks[i];
-                        // --------------- individual track options -----------------------
-                        if (ImGui.InputInt("Pitch offset", ref track.pitchOffset)) updateTracks = true;
-                        ImGui.TreePop();
-                    }
-                }
-                ImGui.TreePop();
-            }
-
-            if (ImGui.TreeNode("Note Options")) {
-                ImGui.SetNextItemWidth(128f);
-                if (ImGui.InputFloat("Vertical Spacing", ref NoteVSpacing)) updateTracks = updateNotes = true;
-            }
-        }
-        ImGui.End();
-
-        if (AutoReload) {
-            if (updateTracks) LastTrackUpdate = Time.unscaledTime;
-            if (updateNotes) LastNoteUpdate = Time.unscaledTime;
-            if (updateVisuals) LastReloadVisuals = Time.unscaledTime;
-        }
+    protected override void DrawGeneralMidiControls(ref bool updateTracks, ref bool updateNotes) {
+        ImGui.SetNextItemWidth(128f);
+        if (ImGui.InputFloat("Track depth spacing", ref ZSpacing, 0.5f, 5.0f)) updateTracks = true;
+    }
+    protected override void DrawIndividualTrackControls(ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes) {
+        if (ImGui.InputInt("Pitch offset", ref trackInfo.pitchOffset)) updateTracks = true;
+    }
+    protected override void DrawNoteControls(ref bool updateTracks, ref bool updateNotes) {
+        ImGui.SetNextItemWidth(128f);
+        if (ImGui.InputFloat("Vertical Spacing", ref NoteVSpacing)) updateTracks = updateNotes = true;
+    }
+    protected override void TrackListChanged(ref bool updateTracks, ref bool updateNotes) {
+        updateTracks = true;
     }
 
     protected override string GetConfigTag() => "s3d";

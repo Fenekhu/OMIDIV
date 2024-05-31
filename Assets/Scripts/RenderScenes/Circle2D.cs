@@ -44,10 +44,6 @@ public class Circle2D : MidiScene {
     protected float LastNoteUpdate = -1f;
     protected float LastReloadVisuals = -1f;
 
-    protected override int GetSceneIndex() => 2;
-
-    protected override string GetSceneName() => "Circle 2D";
-
     protected override void Start() {
         base.Start();
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
@@ -125,7 +121,7 @@ public class Circle2D : MidiScene {
             TrackInfo info = new TrackInfo();
             info.obj = go;
             info.midiTrack = i;
-            info.enabled = true;
+            info.enabled = track.notes.Count != 0;
             info.trackColor = TrackColors[i % TrackColors.Count];
             info.angleOffset = 0f;
             info.angleRange = 360f;
@@ -141,28 +137,32 @@ public class Circle2D : MidiScene {
         ResetNotes();
     }
 
+    private bool TrackHasNotes(TrackInfo track) => Midi.Tracks[track.midiTrack].notes.Count != 0;
+
+    private bool IgnoreTrack(TrackInfo trackInfo) => !trackInfo.enabled || !TrackHasNotes(trackInfo);
+
     private void ResetTracks() {
-        int i = 0;
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo info = ref Tracks[j];
             Transform tfm = info.obj.transform;
-            info.obj.SetActive(info.enabled);
-            if (!info.enabled) continue;
+            bool ignore = IgnoreTrack(info);
+            info.obj.SetActive(!ignore);
+            if (ignore) continue;
             tfm.localEulerAngles = new Vector3(0f, 0f, AngleOffset + info.angleOffset);
 
             if (SideCount != SideCountPrev) {
                 info.noteSides = (uint)SideCount;
                 info.updateMeshes = true;
             }
-
-            i++;
         }
         SideCountPrev = (uint)SideCount;
     }
 
     private void ResetNotes(bool justColors = false) {
-        for (int j = 0; j < Tracks.Length; j++) {
-            ref TrackInfo trackInfo = ref Tracks[j];
+        int j = 0;
+        for (int rj = 0; rj < Tracks.Length; rj++) {
+            ref TrackInfo trackInfo = ref Tracks[rj];
+            if (IgnoreTrack(trackInfo)) continue;
 
             // will be null if the mesh doesn't need to be updated
             Mesh newMesh = trackInfo.updateMeshes? GeometryUtil.GetNSidedPlaneMesh(trackInfo.noteSides) : null;
@@ -186,6 +186,8 @@ public class Circle2D : MidiScene {
                 obj.localEulerAngles = new Vector3(0, 0, NoteRotation - Mathf.Rad2Deg * noteTheta);
             }
             trackInfo.updateMeshes = false;
+
+            j++;
         }
     }
 
@@ -217,7 +219,6 @@ public class Circle2D : MidiScene {
 
         bool updateTracks = false;
         bool updateNotes = false;
-        bool updateVisuals = false;
 
         if (ImGui.Begin("MIDI Controls")) {
             ImGui.PushItemWidth(128f);
@@ -233,23 +234,31 @@ public class Circle2D : MidiScene {
 
             if (ImGui.TreeNode("Tracks")) {
                 float buttonDim = ImGui.GetFrameHeight();
-                Vector2 buttonSize = new Vector2(buttonDim, buttonDim);
+                Vector2 buttonSize = new Vector2(buttonDim, buttonDim); int skipCount = 1;
                 for (int i = 0; i < Tracks.Length; i++) {
-                    if (ImGui.Button(string.Format("^##trUp{0:d}", i), buttonSize) && i != 0) {
-                        (Tracks[i-1], Tracks[i]) = (Tracks[i], Tracks[i-1]);
-                        updateTracks = true;
+                    if (!TrackHasNotes(Tracks[i])) {
+                        skipCount++;
+                        continue;
+                    } else {
+                        skipCount = 1;
+                    }
+
+                    if (ImGui.Button(string.Format("^##trUp{0:d}", i), buttonSize) && i >= skipCount) {
+                        (Tracks[i-skipCount], Tracks[i]) = (Tracks[i], Tracks[i-skipCount]);
+                        updateTracks = updateNotes = true;
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
-                    if (ImGui.Button(string.Format("v##trDown{0:d}", i), buttonSize) && i != Tracks.Length - 1) {
-                        (Tracks[i], Tracks[i+1]) = (Tracks[i+1], Tracks[i]);
-                        updateTracks = true;
+                    if (ImGui.Button(string.Format("v##trDown{0:d}", i), buttonSize) && i != Tracks.Length - skipCount) {
+                        (Tracks[i], Tracks[i+skipCount]) = (Tracks[i+skipCount], Tracks[i]);
+                        updateTracks = updateNotes = true;
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.Checkbox(string.Format("##chtr{0:d}", i), ref Tracks[i].enabled))
-                        updateTracks = true;
+                        updateTracks = updateNotes = true;
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
-                    if (ImGui.TreeNode(string.Format("{0:s}##tr{1:d}", Midi.Tracks[Tracks[i].midiTrack].name, i))) {
-                        ref TrackInfo track = ref Tracks[i];
+
+                    ref TrackInfo track = ref Tracks[i];
+                    if (TrackHasNotes(track) && ImGui.TreeNode(string.Format("{0:s}##tr{1:d}", Midi.Tracks[track.midiTrack].name, i))) {
                         // --------------- individual track options -----------------------
                         ImGui.PushItemWidth(96.0f);
                         Vector4 color = track.trackColor;
@@ -290,7 +299,6 @@ public class Circle2D : MidiScene {
         if (AutoReload) {
             if (updateTracks) LastTrackUpdate = Time.unscaledTime;
             if (updateNotes) LastNoteUpdate = Time.unscaledTime;
-            if (updateVisuals) LastReloadVisuals = Time.unscaledTime;
         }
     }
 

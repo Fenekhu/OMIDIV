@@ -97,7 +97,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
                 MidiNote note = midiTrack.notes[track.playIndex];
                 if ((long)note.startTick < CurrentTick) {
                     track.nowPlaying.Add(track.playIndex);
-                    SetNoteState(track, track.playIndex, NoteState.Played);
+                    SetNoteState(track, track.playIndex, NoteState.Playing);
                     track.playIndex++;
                 } else break;
             }
@@ -127,6 +127,10 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         ResetTracks();
         ResetNotes();
     }
+
+    protected bool TrackHasNotes(TrackInfo track) => Midi.Tracks[track.midiTrack].notes.Count != 0;
+
+    protected bool IgnoreTrack(TrackInfo trackInfo) => !trackInfo.enabled || !TrackHasNotes(trackInfo);
 
     protected abstract void ResetTracks();
     protected abstract void ResetNotes(bool justColors = false);
@@ -164,36 +168,52 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         }
     }
 
+    // trees cant be added to my making a treenode with the same name
+    protected virtual void DrawGeneralMidiControls(ref bool updateTracks, ref bool updateNotes) { }
+    protected virtual void DrawIndividualTrackControls(ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes) { }
+    protected virtual void DrawNoteControls(ref bool updateTracks, ref bool updateNotes) { }
+    // Circle3D needs to update notes when these are changed, but Standard3D only needs to update tracks.
+    protected abstract void TrackListChanged(ref bool updateTracks, ref bool updateNotes);
+
     protected override void DrawGUI() {
         base.DrawGUI();
 
         bool updateTracks = false;
         bool updateNotes = false;
-        bool updateVisuals = false;
 
         if (ImGui.Begin("MIDI Controls")) {
             ImGui.SetNextItemWidth(128f);
             ImGui.SliderFloat("Played Note Alpha", ref PlayedAlpha, 0f, 1f);
+            DrawGeneralMidiControls(ref updateTracks, ref updateNotes);
 
             if (ImGui.TreeNode("Tracks")) {
                 float buttonDim = ImGui.GetFrameHeight();
                 Vector2 buttonSize = new Vector2(buttonDim, buttonDim);
+                int skipCount = 1;
                 for (int i = 0; i < Tracks.Length; i++) {
-                    if (ImGui.Button(string.Format("^##trUp{0:d}", i), buttonSize) && i != 0) {
-                        (Tracks[i-1], Tracks[i]) = (Tracks[i], Tracks[i-1]);
-                        updateTracks = true;
+                    if (!TrackHasNotes(Tracks[i])) {
+                        skipCount++;
+                        continue;
+                    } else {
+                        skipCount = 1;
+                    }
+
+                    if (ImGui.Button(string.Format("^##trUp{0:d}", i), buttonSize) && i >= skipCount) {
+                        (Tracks[i-skipCount], Tracks[i]) = (Tracks[i], Tracks[i-skipCount]);
+                        TrackListChanged(ref updateTracks, ref updateNotes);
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
-                    if (ImGui.Button(string.Format("v##trDown{0:d}", i), buttonSize) && i != Tracks.Length - 1) {
-                        (Tracks[i], Tracks[i+1]) = (Tracks[i+1], Tracks[i]);
-                        updateTracks = true;
+                    if (ImGui.Button(string.Format("v##trDown{0:d}", i), buttonSize) && i != Tracks.Length - skipCount) {
+                        (Tracks[i], Tracks[i+skipCount]) = (Tracks[i+skipCount], Tracks[i]);
+                        TrackListChanged(ref updateTracks, ref updateNotes);
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.Checkbox(string.Format("##chtr{0:d}", i), ref Tracks[i].enabled))
-                        updateTracks = true;
+                        TrackListChanged(ref updateTracks, ref updateNotes);
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
+
+                    ref TrackInfo track = ref Tracks[i];
                     if (ImGui.TreeNode(string.Format("{0:s}##tr{1:d}", Midi.Tracks[Tracks[i].midiTrack].name, i))) {
-                        ref TrackInfo track = ref Tracks[i];
                         // --------------- individual track options -----------------------
                         Vector4 color = track.trackColor;
                         if (ImGui.ColorEdit4("Track color", ref color, ImGuiColorEditFlags.NoAlpha | ImGuiColorEditFlags.NoInputs)) {
@@ -207,6 +227,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
                             track.updateMeshes = true;
                             updateNotes = true;
                         }
+                        DrawIndividualTrackControls(ref track, ref updateTracks, ref updateNotes);
                         ImGui.TreePop();
                     }
                 }
@@ -223,6 +244,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
                 if (ImGui.InputFloat("Length Factor", ref newScale.x)) transform.localScale = newScale * GlobalScale;
                 if (ImGui.InputFloat("Horizontal Spacing", ref NoteHSpacing)) updateNotes = true;
                 ImGui.PopItemWidth();
+                DrawNoteControls(ref updateTracks, ref updateNotes);
                 ImGui.TreePop();
             }
         }
@@ -231,7 +253,6 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         if (AutoReload) {
             if (updateTracks) LastTrackUpdate = Time.unscaledTime;
             if (updateNotes) LastNoteUpdate = Time.unscaledTime;
-            if (updateVisuals) LastReloadVisuals = Time.unscaledTime;
         }
     }
 

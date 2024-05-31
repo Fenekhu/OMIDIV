@@ -115,7 +115,7 @@ public static class GeometryUtil {
         }
 
         for (int i = 0; i < sides - 2; i++) {
-            indicies[i*3+0] = i;
+            indicies[i*3+0] = 0;
             indicies[i*3+1] = i+1;
             indicies[i*3+2] = i+2;
         }

@@ -9,23 +9,21 @@ using UnityEngine.InputSystem;
 
 public abstract class MidiScene : OmidivComponent {
     // This static stuff should be retained between scenes
-    private static Dictionary<int, string> scenes = new Dictionary<int, string>();
-
     private static RawMidi rawMidi;
     private static bool midiPathChanged = false;
-    private static float recordingTime = 0;
-    private static float simulatedTime = 0;
+    private static float recordingTime = 0; // seconds
+    private static float simulatedTime = 0; // seconds
 
     protected static FileInfo MidiPath;
     protected static CookedMidi Midi = new CookedMidi();
-    protected static int MidiOffset;
-    private static int midiOffsetPrev;
-    protected static bool midiOffsetChanged;
-
-    protected static bool IsPlaying = false;
+    protected static int MidiDelay; // milliseconds
+    private static int midiDelayPrev; // milliseconds
+    protected static bool midiDelayChanged;
     public static bool AutoReload = true;
 
-    public static float DeltaTime = 0;
+    public static float DeltaTime { get { return overrideTime? recordingDeltaTime : Time.deltaTime; } }
+    private static float recordingDeltaTime = 0; // seconds
+    private static bool overrideTime = false;
 
     protected static readonly List<Color> TrackColors = new List<Color>();
 
@@ -68,6 +66,8 @@ public abstract class MidiScene : OmidivComponent {
     protected double CurrentTimeDouble = 0;
     protected uint CurrentTempo = 500000;
 
+    private bool bOpenMidi = false;
+
     public static event Action OnPlayStarted;
     public static event Action OnPlayStopped;
     public static event Action OnReset;
@@ -83,50 +83,35 @@ public abstract class MidiScene : OmidivComponent {
     public static bool NeedsVisualReload = false;
     public static bool NeedsAudioReload = false;
 
-    public static void RegisterScene(int index, string name) {
-        scenes.Add(index, name);
-    }
-
-    public MidiScene() {
-        RegisterScene(GetSceneIndex(), GetSceneName());
-    }
-
-    public void SetScene(int index) {
-        StartCoroutine(CoroutineUtils.LoadScene(index));
-    }
-
-    protected abstract int GetSceneIndex();
-    protected abstract string GetSceneName();
     protected abstract void InitVisuals();
     protected abstract void ClearVisuals();
     protected abstract void MovePlay(double ticks);
 
     protected override void OnEnable() {
-        Config.AfterLoading += ReadConfig;
-        Config.BeforeSaving += WriteConfig;
+        base.OnEnable();
+        ImGuiManager.DrawMainMenuItems += DrawMainMenuItems;
         if (VideoRecorder != null) {
+            VideoRecorder.OnRecordingBegin += OnRecordingBegin;
             VideoRecorder.OnBeforeFrame += OnFrameBegin;
             VideoRecorder.OnAfterFrame += OnFrameEnd;
             VideoRecorder.OnRecordingEnd += OnRecordingEnd;
         }
-        OnReset += Reset_;
-        OnRestart += Restart;
     }
 
     protected override void OnDisable() {
-        Config.AfterLoading -= ReadConfig;
-        Config.BeforeSaving -= WriteConfig;
+        base.OnDisable();
+        ImGuiManager.DrawMainMenuItems -= DrawMainMenuItems;
         if (VideoRecorder != null) {
+            VideoRecorder.OnRecordingBegin -= OnRecordingBegin;
             VideoRecorder.OnBeforeFrame -= OnFrameBegin;
             VideoRecorder.OnAfterFrame -= OnFrameEnd;
             VideoRecorder.OnRecordingEnd -= OnRecordingEnd;
         }
-        OnReset -= Reset_;
-        OnRestart -= Restart;
     }
 
     protected virtual void Start() {
         recordingTime = 0;
+        if (Midi != null) NeedsVisualReload = true;
     }
 
     protected override void OnDestroy() {
@@ -134,15 +119,20 @@ public abstract class MidiScene : OmidivComponent {
         ClearVisuals();
     }
 
+    private void OnRecordingBegin() {
+        overrideTime = true;
+        recordingDeltaTime = 1f / VideoRecorder.GetFramerate();
+    }
+
     private void OnFrameBegin() { }
 
     private void OnFrameEnd() {
-        DeltaTime = 1f / VideoRecorder.GetFramerate();
-        recordingTime += DeltaTime;
+        recordingTime += recordingDeltaTime;
     }
 
     private void OnRecordingEnd() {
         simulatedTime = recordingTime = 0;
+        overrideTime = false;
     }
 
     protected override void ReadConfig() {
@@ -169,16 +159,16 @@ public abstract class MidiScene : OmidivComponent {
     // Similarly, use MidiScene.DeltaTime instead of Time.deltaTime
     protected virtual void CustomFixedUpdate() {
         UpdateTPS();
-        if (MidiOffset != midiOffsetPrev) {
-            int diff = 1000 * (MidiOffset - midiOffsetPrev);
+        if (MidiDelay != midiDelayPrev) {
+            int diff = 1000 * (midiDelayPrev - MidiDelay);
             double tickCount = math.floor(MicrosToTicks(CurrentTime, diff));
             MovePlay(tickCount);
             CurrentTimeDouble += diff;
             CurrentTickDouble += tickCount;
 
-            midiOffsetPrev = MidiOffset;
-            midiOffsetChanged = true;
-        } else midiOffsetChanged = false;
+            midiDelayPrev = MidiDelay;
+            midiDelayChanged = true;
+        } else midiDelayChanged = false;
 
         if (!IsPlaying) return;
 
@@ -197,6 +187,20 @@ public abstract class MidiScene : OmidivComponent {
     }
 
     protected virtual void Update() {
+        if (bOpenMidi) {
+            SFB.ExtensionFilter[] exts = {new SFB.ExtensionFilter("MIDI", "mid", "midi")};
+            SFB.StandaloneFileBrowser.OpenFilePanelAsync("Open MIDI", "", exts, false, (string[] res) => {
+                if (res.Length > 0) {
+                    MidiPath = new FileInfo(res[0]);
+                    midiPathChanged = true;
+                    NeedsStopPlay = true;
+                    NeedsMidiReload = true;
+                    NeedsRestart = true;
+                }
+            });
+            bOpenMidi = false;
+        }
+
         if (IsPlaying && VideoRecorder.RecordingEnabled && VideoRecorder.GetStatus() != RecorderController.Status.Recording)
             return;
 
@@ -257,31 +261,9 @@ public abstract class MidiScene : OmidivComponent {
             ImGui.End();
         }
 
-        bool bOpenMidi = false;
-
-        if (ImGui.BeginMainMenuBar()) {
-            if (ImGui.BeginMenu("File")) {
-                ImGui.Separator();
-                bOpenMidi = ImGui.MenuItem("Open Midi");
-                if (ImGui.MenuItem("Quit")) Application.Quit();
-                ImGui.Separator();
-                ImGui.EndMenu();
-            }
-            if (ImGui.BeginMenu("View")) {
-
-                foreach (var kvp in scenes) {
-                    if (ImGui.MenuItem(kvp.Value, kvp.Key != GetSceneIndex()))
-                        SetScene(kvp.Key);
-                }
-                ImGui.EndMenu();
-            }
-
-            ImGui.EndMainMenuBar();
-        }
-
         if (ImGui.Begin("MIDI Controls")) {
             ImGui.SetNextItemWidth(128.0f);
-            ImGui.InputInt("Offset (ms)", ref MidiOffset);
+            ImGui.InputInt("Delay (ms, +/-)", ref MidiDelay, 100, 2000);
         }
         ImGui.End();
 
@@ -300,18 +282,12 @@ public abstract class MidiScene : OmidivComponent {
             ImGui.Text("F11: Toggle Fullscreen");
         }
         ImGui.End();
+    }
 
-        if (bOpenMidi) {
-            SFB.ExtensionFilter[] exts = {new SFB.ExtensionFilter("MIDI", "mid", "midi")};
-            SFB.StandaloneFileBrowser.OpenFilePanelAsync("Open MIDI", "", exts, false, (string[] res) => {
-                if (res.Length > 0) {
-                    MidiPath = new FileInfo(res[0]);
-                    midiPathChanged = true;
-                    NeedsStopPlay = true;
-                    NeedsMidiReload = true;
-                    NeedsRestart = true;
-                }
-            });
+    protected void DrawMainMenuItems(string menuName) {
+        if (menuName == "File") {
+            bOpenMidi = ImGui.MenuItem("Open Midi");
+            ImGui.Separator();
         }
     }
 
@@ -322,7 +298,7 @@ public abstract class MidiScene : OmidivComponent {
     }
 
     protected override void Restart() {
-        CurrentTimeDouble = MidiOffset * 1000d;
+        CurrentTimeDouble = -MidiDelay * 1000d;
         CurrentTickDouble = MicrosToTicks(0, CurrentTime);
         MovePlay(CurrentTickDouble);
         simulatedTime = recordingTime = 0;
@@ -374,7 +350,7 @@ public abstract class MidiScene : OmidivComponent {
 
     private void InitMidi() {
         CurrentTickDouble = 0;
-        CurrentTimeDouble = 0; // TODO this was NOT originally here
+        CurrentTimeDouble = 0; // TODO this was NOT originally here // huh?
         CurrentTempo = 0;
         ClearVisuals();
 

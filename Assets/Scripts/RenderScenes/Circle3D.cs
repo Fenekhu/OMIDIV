@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 public class Circle3D : Base3D<Circle3D.TrackInfo> {
 
@@ -15,17 +16,13 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
     float DeltaRadius = -16f;
     float AngleOffset = 0f;
 
-    protected override int GetSceneIndex() => 1;
-
-    protected override string GetSceneName() => "Circle 3D";
-
     protected override void ResetTracks() {
-        int i = 0;
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo info = ref Tracks[j];
             Transform tfm = info.obj.transform;
-            info.obj.SetActive(info.enabled);
-            if (!info.enabled) continue;
+            bool ignore = IgnoreTrack(info);
+            info.obj.SetActive(!ignore);
+            if (ignore) continue;
             tfm.localEulerAngles = new Vector3(AngleOffset + info.angleOffset, 0f, 0f);
             Vector3 scale = tfm.localScale;
             scale.x = info.lengthFactor;
@@ -35,15 +32,15 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
                 info.noteSides = (uint)SideCount;
                 info.updateMeshes = true;
             }
-
-            i++;
         }
         SideCountPrev = (uint)SideCount;
     }
 
     protected override void ResetNotes(bool justColors = false) {
-        for (int j = 0; j < Tracks.Length; j++) {
-            ref TrackInfo trackInfo = ref Tracks[j];
+        int j = 0;
+        for (int rj = 0; rj < Tracks.Length; rj++) {
+            ref TrackInfo trackInfo = ref Tracks[rj];
+            if (IgnoreTrack(trackInfo)) continue;
 
             // will be null if the mesh doesn't need to be updated
             Mesh newMesh = trackInfo.updateMeshes? GeometryUtil.GetNSidedPrismMesh(trackInfo.noteSides) : null;
@@ -70,43 +67,25 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
                 obj.localEulerAngles = new Vector3(NoteRotation - Mathf.Rad2Deg * noteTheta, 0);
             }
             trackInfo.updateMeshes = false;
+
+            j++;
         }
     }
 
-    protected override void DrawGUI() {
-        base.DrawGUI();
-
-        bool updateTracks = false;
-        bool updateNotes = false;
-        bool updateVisuals = false;
-
-        if (ImGui.Begin("MIDI Controls")) {
-            ImGui.PushItemWidth(128f);
-            if (ImGui.InputFloat("Track Start Radius", ref StartRadius, 1.0f, 5.0f)) updateNotes = true;
-            if (ImGui.InputFloat("Track Radius Delta", ref DeltaRadius, 1.0f, 5.0f)) updateNotes = true;
-            if (ImGui.SliderFloat("Angle Offset", ref AngleOffset, -180f, 180f, "%.1f deg")) updateTracks = true;
-            ImGui.PopItemWidth();
-
-            if (ImGui.TreeNode("Tracks")) {
-                for (int i = 0; i < Tracks.Length; i++) {
-                    if (ImGui.TreeNode(string.Format("{0:s}##tr{1:d}", Midi.Tracks[Tracks[i].midiTrack].name, i))) {
-                        ref TrackInfo track = ref Tracks[i];
-                        // --------------- individual track options -----------------------
-                        if (ImGui.SliderFloat("Angle Offset", ref track.angleOffset, -180f, 180f, "%.1f deg")) updateTracks = true;
-                        ImGui.TreePop();
-                    }
-                }
-                ImGui.TreePop();
-            }
-        }
-        ImGui.End();
-
-        if (AutoReload) {
-            if (updateTracks) LastTrackUpdate = Time.unscaledTime;
-            if (updateNotes) LastNoteUpdate = Time.unscaledTime;
-            if (updateVisuals) LastReloadVisuals = Time.unscaledTime;
-        }
+    protected override void DrawGeneralMidiControls(ref bool updateTracks, ref bool updateNotes) {
+        ImGui.PushItemWidth(128f);
+        if (ImGui.InputFloat("Track Start Radius", ref StartRadius, 1.0f, 5.0f)) updateNotes = true;
+        if (ImGui.InputFloat("Track Radius Delta", ref DeltaRadius, 1.0f, 5.0f)) updateNotes = true;
+        if (ImGui.SliderFloat("Angle Offset", ref AngleOffset, -180f, 180f, "%.1f deg")) updateTracks = true;
+        ImGui.PopItemWidth();
     }
+    protected override void DrawIndividualTrackControls(ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes) {
+        if (ImGui.SliderFloat("Angle Offset", ref trackInfo.angleOffset, -180f, 180f, "%.1f deg")) updateNotes = true;
+    }
+    protected override void TrackListChanged(ref bool updateTracks, ref bool updateNotes) {
+        updateTracks = updateNotes = true;
+    }
+
     protected override string GetConfigTag() => "c3d";
 
     protected override void WriteConfig() {
