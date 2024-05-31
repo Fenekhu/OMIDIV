@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Default.unity
+    path: Assets/Scenes/#Loading.unity
+    guid: 4cf403f5e04e5cd40b1f8a1c0f974b3d
+  - enabled: 1
+    path: Assets/Scenes/Standard 3D.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Circle 3D.unity
+    guid: 6a35d59b3f98d2f4e840fb4a694f53de
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7a8259d6a4dd9d346a63bd265c35974d,
       type: 2}
