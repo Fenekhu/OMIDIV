@@ -52,8 +52,8 @@ public class Circle2D : MidiScene {
     protected override void Update() {
         if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { NeedsVisualReload = true; LastReloadVisuals = -1f; }
         base.Update();
-        if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.1f) { ResetTracks(); LastTrackUpdate = -1f; }
-        if (LastNoteUpdate > 0 && Time.realtimeSinceStartup - LastNoteUpdate > 0.5f) { ResetNotes(false); LastNoteUpdate = -1f; }
+        if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.2f) { ResetTracks(); LastTrackUpdate = -1f; }
+        if (LastNoteUpdate > 0 && Time.realtimeSinceStartup - LastNoteUpdate > 0.2f) { ResetNotes(false); LastNoteUpdate = -1f; }
 
         if (!IsPlaying) return;
 
