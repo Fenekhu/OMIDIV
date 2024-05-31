@@ -5,24 +5,27 @@ using System.Collections;
 using UnityEngine;
 
 public class FFmpegController2 : RecorderController {
-    private int _framerate = 0;
+    private int _framerate = 60;
 
     private int _autoHideUI = 0;
     public bool AutoHideUI { get { return _autoHideUI != 0; } set { _autoHideUI = value ? 1 : 0; } }
 
-    void OnEnable() {
+    protected override void OnEnable() {
+        base.OnEnable();
         FFmpegWrapper2.LoadConfig();
         FFmpegWrapper2.InitParams();
         _framerate = (int)FFmpegWrapper2.FrameRate;
         _autoHideUI = PlayerPrefs.GetInt("vrec.ffmpeg2.autoHideUI", _autoHideUI);
     }
 
-    void OnDisable() {
+    protected override void OnDisable() {
+        base.OnDisable();
         FFmpegWrapper2.SaveConfig();
         PlayerPrefs.SetInt("vrec.ffmpeg2.autoHideUI", _autoHideUI);
     }
 
-    private void OnDestroy() {
+    protected override void OnDestroy() {
+        base.OnDestroy();
         FFmpegWrapper2.ForceKill();
     }
 
@@ -56,7 +59,7 @@ public class FFmpegController2 : RecorderController {
         FireOnRecordingEnd();
     }
 
-    public override void DrawGUI() {
+    protected override void DrawGUI() {
         bool _setOutDir = false;
         bool _openFfmpegDir = false;
 

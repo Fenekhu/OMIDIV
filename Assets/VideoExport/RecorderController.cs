@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public abstract class RecorderController : MonoBehaviour {
+public abstract class RecorderController : OmidivComponent {
 
     public event Action OnRecordingBegin;
     public event Action OnBeforeFrame;
@@ -29,8 +26,6 @@ public abstract class RecorderController : MonoBehaviour {
     public abstract void StartRecording();
     public abstract void StopRecording();
 
-    public abstract void DrawGUI();
-
     // events cant be called directly from subclasses
     protected void FireOnRecordingBegin() {
         OnRecordingBegin?.Invoke();
@@ -43,6 +38,13 @@ public abstract class RecorderController : MonoBehaviour {
     }
     protected void FireOnRecordingEnd() {
         OnRecordingEnd?.Invoke();
+    }
+
+    protected override void OnPlayStart() {
+        StartIfEnabled();
+    }
+    protected override void OnPlayStop() {
+        StopIfEnabled();
     }
 
 }

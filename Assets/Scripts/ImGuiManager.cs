@@ -1,14 +1,22 @@
 using ImGuiNET;
+using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ImGuiManager : MonoBehaviour {
-    private static bool drawDebug = false;
+    public static event Action Draw;
+    public static event Action<string> DrawMainMenuItems;
 
     public static bool IsEnabled = true;
-    public static bool IsDebugEnabled {  get { return drawDebug && IsEnabled; } set { drawDebug = value; } }
+    public static bool IsDebugEnabled;
+
+    private static HashSet<string> customMainMenus = new HashSet<string>();
+    public static void AddCustomMainMenu(string name) => customMainMenus.Add(name);
+    public static void RemoveCustomMainMenu(string name) => customMainMenus.Remove(name);
 
     private static ImGuiManager instance;
 
@@ -25,17 +33,25 @@ public class ImGuiManager : MonoBehaviour {
     private float lastXPSUpdate = 0.0f;
 
     private void OnEnable() {
-        //ImGuiUn.Layout += DrawGUI;
+        ImGuiUn.Layout += DrawGUI_;
+        Draw += DrawGUI;
+        DrawMainMenuItems += DrawMainMenuItems_;
+        AddCustomMainMenu("File");
+        AddCustomMainMenu("View");
         instance = this;
     }
 
     private void OnDisable() {
-        //ImGuiUn.Layout -= DrawGUI;
+        ImGuiUn.Layout -= DrawGUI_;
+        Draw -= DrawGUI;
+        DrawMainMenuItems -= DrawMainMenuItems_;
+        RemoveCustomMainMenu("File");
+        RemoveCustomMainMenu("View");
         instance = null;
     }
 
     private void Update() {
-        upsArr[upsI] = Time.deltaTime;
+        upsArr[upsI] = Time.unscaledDeltaTime;
         upsI = (upsI + 1) % fpsArr.Length;
 
         if (Keyboard.current.f1Key.wasPressedThisFrame) {
@@ -55,10 +71,8 @@ public class ImGuiManager : MonoBehaviour {
         lastTime = Time.realtimeSinceStartup;
     }
 
-    private void DrawGUI_() {
-        if (!IsEnabled) return;
-
-        fpsArr[fpsI] = Time.deltaTime;
+    private void DrawGUI() {
+        fpsArr[fpsI] = Time.unscaledDeltaTime;
         fpsI = (fpsI + 1) % fpsArr.Length;
 
         if (IsDebugEnabled) {
@@ -91,10 +105,35 @@ public class ImGuiManager : MonoBehaviour {
             }
             ImGui.End();
         }
+
+        if (ImGui.BeginMainMenuBar()) {
+            foreach (string name in customMainMenus) {
+                if (ImGui.BeginMenu(name)) {
+                    DrawMainMenuItems?.Invoke(name);
+                    ImGui.EndMenu();
+                }
+            }
+            ImGui.EndMainMenuBar();
+        }
     }
 
-    public static void DrawGUI() {
-        instance.DrawGUI_();
+    private void DrawGUI_() {
+        if (IsEnabled) Draw?.Invoke();
+    }
+
+    private void DrawMainMenuItems_(string name) {
+        switch (name) {
+        case "File":
+            if (ImGui.MenuItem("Quit")) Application.Quit();
+            ImGui.Separator();
+            break;
+        case "View":
+            foreach (var kvp in SceneRegistry.Scenes) {
+                if (ImGui.MenuItem(kvp.Value, kvp.Key != SceneManager.GetActiveScene().buildIndex))
+                    StartCoroutine(CoroutineUtils.LoadScene(kvp.Key));
+            }
+            break;
+        }
     }
 
     public static bool RawImageControlInner(RawImage img) {

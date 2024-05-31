@@ -11,7 +11,7 @@ using Debug = UnityEngine.Debug;
 public class FFmpegWrapper2 {
     static Dictionary<string, string> CmdParams = new Dictionary<string, string>() {
         {"file_ext", "mp4"},
-        {"framerate", "30"},
+        {"framerate", "60"},
         {"outdir", ""},
         {"outfile", ""},
         {"crf", "0"},

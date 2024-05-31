@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public abstract class OmidivComponent : MonoBehaviour {
+    protected static bool IsPlaying = false;
+
     protected virtual void OnEnable() {
         ImGuiManager.Draw += DrawGUI;
         Config.AfterLoading += ReadConfig;

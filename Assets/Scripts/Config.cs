@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using SFB;
 using System;
 using System.Collections;
@@ -8,7 +7,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
 
-public class Config {
+public static class Config {
+    public static event Action AfterLoading;
+    public static event Action BeforeSaving;
+
     private static Dictionary<string, byte[]> cfgMap = new Dictionary<string, byte[]>(); // <setting id, data>
     private static string currPath;
 
@@ -20,6 +22,9 @@ public class Config {
                 return *(T*)bptr;
             }
         }
+    }
+    public static void TryGet<T>(string id, ref T val) where T : unmanaged {
+        val = Get<T>(id) ?? val;
     }
     public static int Get<T>(string id, List<T> dest, int maxCount = -1) where T : unmanaged {
         bool result = cfgMap.TryGetValue(id, out byte[] data);
@@ -41,6 +46,11 @@ public class Config {
         str = System.Text.Encoding.UTF8.GetString(data);
         return true;
     }
+    public static void TryGet(string id, ref string str) {
+        Get(id, out string res);
+        if (res.Length != 0) str = res;
+    }
+
     public static void Set<T>(string id, T val) where T : unmanaged {
         byte[] data = new byte[Marshal.SizeOf<T>()];
         unsafe {
@@ -63,7 +73,7 @@ public class Config {
         cfgMap[id] = data;
     }
     public static void Set(string id, string val) {
-        cfgMap[id] = System.Text.Encoding.UTF8.GetBytes(val);
+        cfgMap[id] = Encoding.UTF8.GetBytes(val);
     }
 
     public static void Clear() {
@@ -118,9 +128,13 @@ public class Config {
                 }
             }
         }
+
+        AfterLoading?.Invoke();
     }
 
     public static void Write(FileInfo path) {
+        BeforeSaving?.Invoke();
+
         using (BinaryWriter bw = new BinaryWriter(File.OpenWrite(path.FullName), Encoding.UTF8)) {
             bw.Write((byte)1); // header size
             bw.Write((byte)2); // config version
