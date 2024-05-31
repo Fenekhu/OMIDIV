@@ -845,7 +845,7 @@ PrefabInstance:
     - target: {fileID: 2579979078807705148, guid: 0ed6a01a2160e4240bfaeafd11e99bdc,
         type: 3}
       propertyPath: SceneTag
-      value: s3d
+      value: c3d
       objectReference: {fileID: 0}
     - target: {fileID: 4749444125355302152, guid: 0ed6a01a2160e4240bfaeafd11e99bdc,
         type: 3}
