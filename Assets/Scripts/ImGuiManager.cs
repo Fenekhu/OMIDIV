@@ -6,53 +6,68 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Diagnostics;
 
 public class ImGuiManager : MonoBehaviour {
     public static event Action Draw;
     public static event Action<string> DrawMainMenuItems;
 
-    public static bool IsEnabled = true;
-    public static bool IsDebugEnabled;
+    public static bool IsEnabled { get; set; } = true;
+    public static bool IsDebugEnabled { get; set; }
+    private static HashSet<string> mainMenuTabs = new HashSet<string>();
+    public static void AddMainMenuTab(string name) => mainMenuTabs.Add(name);
+    public static void RemoveMainMenuTab(string name) => mainMenuTabs.Remove(name);
+    private class XPSCounter {
+        private readonly float[] spxArr;
+        private int index = 0;
+        private Stopwatch clock;
+        public float avgSpx { get { return spxArr.Sum() / spxArr.Length; } }
+        public float avgXps { get { return 1 / avgSpx; } }
 
-    private static HashSet<string> customMainMenus = new HashSet<string>();
-    public static void AddCustomMainMenu(string name) => customMainMenus.Add(name);
-    public static void RemoveCustomMainMenu(string name) => customMainMenus.Remove(name);
+        public XPSCounter(int count) {
+            spxArr = new float[count];
+            clock = new Stopwatch();
+        }
 
-    private static ImGuiManager instance;
+        public void Start() => clock.Restart();
 
-    private float[] tpsArr = new float[64];
-    private float[] upsArr = new float[64];
-    private float[] fpsArr = new float[64];
-    private int tpsI = 0;
-    private int upsI = 0;
-    private int fpsI = 0;
-    private float avgTps = 0;
-    private float avgUps = 0;
-    private float avgFps = 0;
-    private float lastTime = -1.0f;
-    private float lastXPSUpdate = 0.0f;
+        public void Update() {
+            spxArr[index] = (float)((double)clock.ElapsedTicks / Stopwatch.Frequency); // lose less precision before the division
+            clock.Restart();
+            index = (index+1) % spxArr.Length;
+        }
+    }
+
+    XPSCounter tpsCounter = new XPSCounter(64);
+    XPSCounter upsCounter = new XPSCounter(64);
+    XPSCounter fpsCounter = new XPSCounter(64);
+    private float avgTps, avgUps, avgFps;
+    private float lastXPSRefresh = 0.0f;
 
     private void OnEnable() {
         ImGuiUn.Layout += DrawGUI_;
         Draw += DrawGUI;
         DrawMainMenuItems += DrawMainMenuItems_;
-        AddCustomMainMenu("File");
-        AddCustomMainMenu("View");
-        instance = this;
+        AddMainMenuTab("File");
+        AddMainMenuTab("View");
     }
 
     private void OnDisable() {
         ImGuiUn.Layout -= DrawGUI_;
         Draw -= DrawGUI;
         DrawMainMenuItems -= DrawMainMenuItems_;
-        RemoveCustomMainMenu("File");
-        RemoveCustomMainMenu("View");
-        instance = null;
+        RemoveMainMenuTab("File");
+        RemoveMainMenuTab("View");
+    }
+
+    private void Start() {
+        tpsCounter.Start();
+        upsCounter.Start();
+        fpsCounter.Start();
     }
 
     private void Update() {
-        upsArr[upsI] = Time.unscaledDeltaTime;
-        upsI = (upsI + 1) % fpsArr.Length;
+        upsCounter.Update();
 
         if (Keyboard.current.f1Key.wasPressedThisFrame) {
             IsEnabled = !IsEnabled;
@@ -64,23 +79,18 @@ public class ImGuiManager : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (lastTime != -1.0f) {
-            tpsArr[tpsI] = Time.realtimeSinceStartup - lastTime;
-            tpsI = (tpsI + 1) % tpsArr.Length;
-        }
-        lastTime = Time.realtimeSinceStartup;
+        tpsCounter.Update();
     }
 
     private void DrawGUI() {
-        fpsArr[fpsI] = Time.unscaledDeltaTime;
-        fpsI = (fpsI + 1) % fpsArr.Length;
+        fpsCounter.Update();
 
         if (IsDebugEnabled) {
-            if (Time.realtimeSinceStartup - lastXPSUpdate > 0.5f) {
-                avgTps = tpsArr.Sum() / tpsArr.Length;
-                avgUps = upsArr.Sum() / upsArr.Length;
-                avgFps = fpsArr.Sum() / fpsArr.Length;
-                lastXPSUpdate = Time.realtimeSinceStartup;
+            if (Time.realtimeSinceStartup - lastXPSRefresh > 0.5f) {
+                avgTps = tpsCounter.avgXps;
+                avgUps = upsCounter.avgXps;
+                avgFps = fpsCounter.avgXps;
+                lastXPSRefresh = Time.realtimeSinceStartup;
             }
 
             float nww = ImGui.GetFontSize() * 18;
@@ -88,10 +98,10 @@ public class ImGuiManager : MonoBehaviour {
             ImGui.SetNextWindowSize(new Vector2(nww, nwh));
             ImGui.SetNextWindowPos(new Vector2(Screen.width - nww, Screen.height - nwh));
             if (ImGui.Begin("fps", ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoInputs)) {
-                string tpsStr = string.Format("{0:F2} tps ({1:F2})", 1/avgTps, 1/Time.fixedDeltaTime);
+                string tpsStr = string.Format("{0:F2} tps ({1:F2})", avgTps, 1/Time.fixedDeltaTime);
                 ImGui.Text(tpsStr);
-                ImGui.Text(string.Format("{0:F2} ups", 1/avgUps).PadLeft(tpsStr.Length));
-                ImGui.Text(string.Format("{0:F2} fps", 1/avgFps).PadLeft(tpsStr.Length));
+                ImGui.Text(string.Format("{0:F2} ups", avgUps).PadLeft(tpsStr.Length));
+                ImGui.Text(string.Format("{0:F2} fps", avgFps).PadLeft(tpsStr.Length));
             }
             ImGui.End();
 
@@ -107,7 +117,7 @@ public class ImGuiManager : MonoBehaviour {
         }
 
         if (ImGui.BeginMainMenuBar()) {
-            foreach (string name in customMainMenus) {
+            foreach (string name in mainMenuTabs) {
                 if (ImGui.BeginMenu(name)) {
                     DrawMainMenuItems?.Invoke(name);
                     ImGui.EndMenu();
@@ -136,7 +146,7 @@ public class ImGuiManager : MonoBehaviour {
         }
     }
 
-    public static bool RawImageControlInner(RawImage img) {
+    /*public static bool RawImageControlInner(RawImage img) {
         const float oneOn120 = 1f / 120f;
         const float oneOn12 = 1f / 12f;
 
@@ -171,5 +181,6 @@ public class ImGuiManager : MonoBehaviour {
         if (updateEnabled) img.enabled = enabled;
 
         return updatePos || updateRot || updateScl || updateEnabled;
+    }*/
     }
 }
