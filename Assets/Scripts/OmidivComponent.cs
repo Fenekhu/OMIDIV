@@ -1,10 +1,12 @@
-﻿using ImGuiNET;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
+/**
+ * 
+ */
 public abstract class OmidivComponent : MonoBehaviour {
     protected static bool IsPlaying = false;
 
+    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
     protected virtual void OnEnable() {
         ImGuiManager.Draw += DrawGUI;
         Config.AfterLoading += ReadConfig;
@@ -18,6 +20,7 @@ public abstract class OmidivComponent : MonoBehaviour {
         MidiScene.OnReloadAudio += ReloadAudio;
     }
 
+    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
     protected virtual void OnDisable() {
         ImGuiManager.Draw -= DrawGUI;
         Config.AfterLoading -= ReadConfig;
@@ -31,10 +34,12 @@ public abstract class OmidivComponent : MonoBehaviour {
         MidiScene.OnReloadAudio -= ReloadAudio;
     }
 
+    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
     protected virtual void Awake() {
         ReadConfig();
     }
 
+    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
     protected virtual void OnDestroy() {
         WriteConfig();
     }
