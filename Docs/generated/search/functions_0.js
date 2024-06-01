@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['registerscene_0',['RegisterScene',['../class_scene_registry.html#af54eb720ef92d99ecb05657efeda5bf4',1,'SceneRegistry']]]
+  ['addmainmenutab_0',['AddMainMenuTab',['../class_im_gui_manager.html#aa2cedc0064c3700a561bc6b79f4033b3',1,'ImGuiManager']]]
 ];

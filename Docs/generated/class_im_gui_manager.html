@@ -88,12 +88,15 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="#events">Events</a> &#124;
 <a href="class_im_gui_manager-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ImGuiManager Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Performs OMIDIV-specific ImGui operations, such as setup, base UI drawing, and events.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for ImGuiManager:</div>
 <div class="dyncontent">
@@ -103,34 +106,191 @@ Inheritance diagram for ImGuiManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a92360b55723d7d667dfe14b79c277ace" id="r_a92360b55723d7d667dfe14b79c277ace"><td class="memItemLeft" align="right" valign="top"><a id="a92360b55723d7d667dfe14b79c277ace" name="a92360b55723d7d667dfe14b79c277ace"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>AddCustomMainMenu</b> (string name)</td></tr>
-<tr class="separator:a92360b55723d7d667dfe14b79c277ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecfd05b640d90c17e55cd74f8508e7ec" id="r_aecfd05b640d90c17e55cd74f8508e7ec"><td class="memItemLeft" align="right" valign="top"><a id="aecfd05b640d90c17e55cd74f8508e7ec" name="aecfd05b640d90c17e55cd74f8508e7ec"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>RemoveCustomMainMenu</b> (string name)</td></tr>
-<tr class="separator:aecfd05b640d90c17e55cd74f8508e7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34a2fd572236e55acff09256b2588852" id="r_a34a2fd572236e55acff09256b2588852"><td class="memItemLeft" align="right" valign="top"><a id="a34a2fd572236e55acff09256b2588852" name="a34a2fd572236e55acff09256b2588852"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>RawImageControlInner</b> (RawImage img)</td></tr>
-<tr class="separator:a34a2fd572236e55acff09256b2588852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2cedc0064c3700a561bc6b79f4033b3" id="r_aa2cedc0064c3700a561bc6b79f4033b3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2cedc0064c3700a561bc6b79f4033b3">AddMainMenuTab</a> (string name)</td></tr>
+<tr class="memdesc:aa2cedc0064c3700a561bc6b79f4033b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a tab to the main menu bar if it doesn't already exist.  <br /></td></tr>
+<tr class="separator:aa2cedc0064c3700a561bc6b79f4033b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afddb595266d26e55009af5464d853f32" id="r_afddb595266d26e55009af5464d853f32"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afddb595266d26e55009af5464d853f32">RemoveMainMenuTab</a> (string name)</td></tr>
+<tr class="memdesc:afddb595266d26e55009af5464d853f32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a tab from the main menu bar.  <br /></td></tr>
+<tr class="separator:afddb595266d26e55009af5464d853f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:ac6ad2aea80d0a8176cb5d498c9c0dee6" id="r_ac6ad2aea80d0a8176cb5d498c9c0dee6"><td class="memItemLeft" align="right" valign="top"><a id="ac6ad2aea80d0a8176cb5d498c9c0dee6" name="ac6ad2aea80d0a8176cb5d498c9c0dee6"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsEnabled</b> = true</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:ac6ad2aea80d0a8176cb5d498c9c0dee6" id="r_ac6ad2aea80d0a8176cb5d498c9c0dee6"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6ad2aea80d0a8176cb5d498c9c0dee6">IsEnabled</a> = true<code> [get, set]</code></td></tr>
+<tr class="memdesc:ac6ad2aea80d0a8176cb5d498c9c0dee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the GUI is enabled.  <br /></td></tr>
 <tr class="separator:ac6ad2aea80d0a8176cb5d498c9c0dee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8571ebfb40fde53c2d008ba05b04ba2c" id="r_a8571ebfb40fde53c2d008ba05b04ba2c"><td class="memItemLeft" align="right" valign="top"><a id="a8571ebfb40fde53c2d008ba05b04ba2c" name="a8571ebfb40fde53c2d008ba05b04ba2c"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsDebugEnabled</b></td></tr>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsDebugEnabled</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:a8571ebfb40fde53c2d008ba05b04ba2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether debug stuff should be drawn. <br /></td></tr>
 <tr class="separator:a8571ebfb40fde53c2d008ba05b04ba2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="events" name="events"></a>
 Events</h2></td></tr>
-<tr class="memitem:a983feb6365cb21d64609fb9ca698851c" id="r_a983feb6365cb21d64609fb9ca698851c"><td class="memItemLeft" align="right" valign="top"><a id="a983feb6365cb21d64609fb9ca698851c" name="a983feb6365cb21d64609fb9ca698851c"></a>
-static Action&#160;</td><td class="memItemRight" valign="bottom"><b>Draw</b></td></tr>
+<tr class="memitem:a983feb6365cb21d64609fb9ca698851c" id="r_a983feb6365cb21d64609fb9ca698851c"><td class="memItemLeft" align="right" valign="top">static Action&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a983feb6365cb21d64609fb9ca698851c">Draw</a></td></tr>
+<tr class="memdesc:a983feb6365cb21d64609fb9ca698851c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the UI is drawn. Modify the UI by subscribing to this event.  <br /></td></tr>
 <tr class="separator:a983feb6365cb21d64609fb9ca698851c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51bd4bedcad2ee460b20381f9002b171" id="r_a51bd4bedcad2ee460b20381f9002b171"><td class="memItemLeft" align="right" valign="top"><a id="a51bd4bedcad2ee460b20381f9002b171" name="a51bd4bedcad2ee460b20381f9002b171"></a>
-static Action&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>DrawMainMenuItems</b></td></tr>
+<tr class="memitem:a51bd4bedcad2ee460b20381f9002b171" id="r_a51bd4bedcad2ee460b20381f9002b171"><td class="memItemLeft" align="right" valign="top">static Action&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51bd4bedcad2ee460b20381f9002b171">DrawMainMenuItems</a></td></tr>
+<tr class="memdesc:a51bd4bedcad2ee460b20381f9002b171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called with the name of the tab for each main menu tab.<br  />
+  <br /></td></tr>
 <tr class="separator:a51bd4bedcad2ee460b20381f9002b171"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Performs OMIDIV-specific ImGui operations, such as setup, base UI drawing, and events. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa2cedc0064c3700a561bc6b79f4033b3" name="aa2cedc0064c3700a561bc6b79f4033b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2cedc0064c3700a561bc6b79f4033b3">&#9670;&#160;</a></span>AddMainMenuTab()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ImGuiManager.AddMainMenuTab </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a tab to the main menu bar if it doesn't already exist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The tab title.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>It is recommended to call this in <code>OnEnable</code>, and <a class="el" href="#afddb595266d26e55009af5464d853f32" title="Removes a tab from the main menu bar.">RemoveMainMenuTab(string)</a> in <code>OnDisable</code>.<br  />
+ </p>
+
+</div>
+</div>
+<a id="afddb595266d26e55009af5464d853f32" name="afddb595266d26e55009af5464d853f32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afddb595266d26e55009af5464d853f32">&#9670;&#160;</a></span>RemoveMainMenuTab()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ImGuiManager.RemoveMainMenuTab </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes a tab from the main menu bar. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The tab title to remove.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Not removing a tab could result in the tab remaining in subsequent scenes.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="ac6ad2aea80d0a8176cb5d498c9c0dee6" name="ac6ad2aea80d0a8176cb5d498c9c0dee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ad2aea80d0a8176cb5d498c9c0dee6">&#9670;&#160;</a></span>IsEnabled</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ImGuiManager.IsEnabled = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether the GUI is enabled. </p>
+<p>Draw will not be called if not enabled.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Event Documentation</h2>
+<a id="a983feb6365cb21d64609fb9ca698851c" name="a983feb6365cb21d64609fb9ca698851c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a983feb6365cb21d64609fb9ca698851c">&#9670;&#160;</a></span>Draw</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action ImGuiManager.Draw</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called when the UI is drawn. Modify the UI by subscribing to this event. </p>
+<p>OmidivComponent.DrawGUI is subscribed to this event.</p>
+
+</div>
+</div>
+<a id="a51bd4bedcad2ee460b20381f9002b171" name="a51bd4bedcad2ee460b20381f9002b171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51bd4bedcad2ee460b20381f9002b171">&#9670;&#160;</a></span>DrawMainMenuItems</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action&lt;string&gt; ImGuiManager.DrawMainMenuItems</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called with the name of the tab for each main menu tab.<br  />
+ </p>
+<p>The current version of ImGui doesn't support calling BeginMainMenuBar multiple time to append, instead just overwriting. Additionally, it doesn't support appending with BeginMenu with the same name (at least not in the current version). </p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> MyDrawMenuItems(<span class="keywordtype">string</span> menuName) {</div>
+<div class="line">    <span class="keywordflow">switch</span> (menuName) {</div>
+<div class="line">    <span class="keywordflow">case</span> <span class="stringliteral">&quot;File&quot;</span>:</div>
+<div class="line">        <span class="keywordflow">if</span> (ImGui.MenuItem(<span class="stringliteral">&quot;Quit&quot;</span>)) Application.Quit(); <span class="keywordflow">break</span>;</div>
+<div class="line">    ...</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="#aa2cedc0064c3700a561bc6b79f4033b3" title="Adds a tab to the main menu bar if it doesn&#39;t already exist.">AddMainMenuTab(string)</a></dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>L:/Coding/Unity/OMIDIV/Assets/Scripts/<b>ImGuiManager.cs</b></li>
 </ul>

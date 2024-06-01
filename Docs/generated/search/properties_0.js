@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['scenes_0',['Scenes',['../class_scene_registry.html#aa62c2264f0e7be73502852cd9a3afbd0',1,'SceneRegistry']]],
-  ['startupsceneindex_1',['StartupSceneIndex',['../class_scene_registry.html#a485be3f8830a91e22e461563df9be628',1,'SceneRegistry']]]
+  ['isdebugenabled_0',['IsDebugEnabled',['../class_im_gui_manager.html#a8571ebfb40fde53c2d008ba05b04ba2c',1,'ImGuiManager']]],
+  ['isenabled_1',['IsEnabled',['../class_im_gui_manager.html#ac6ad2aea80d0a8176cb5d498c9c0dee6',1,'ImGuiManager']]]
 ];

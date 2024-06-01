@@ -88,6 +88,7 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_scene_registry-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">SceneRegistry Class Reference</div></div>
@@ -109,11 +110,18 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:af54eb720ef92d99ecb05657efeda5bf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a midi visualization scene.  <br /></td></tr>
 <tr class="separator:af54eb720ef92d99ecb05657efeda5bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a71769896be49e5f26a65a418cf829bf3" id="r_a71769896be49e5f26a65a418cf829bf3"><td class="memItemLeft" align="right" valign="top"><a id="a71769896be49e5f26a65a418cf829bf3" name="a71769896be49e5f26a65a418cf829bf3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>StartupSceneIndex_</b> = -1</td></tr>
+<tr class="memdesc:a71769896be49e5f26a65a418cf829bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows <a class="el" href="#a485be3f8830a91e22e461563df9be628" title="The build index of the scene that will be loaded at startup.">StartupSceneIndex</a> to be overriden from the Unity editor. <br /></td></tr>
+<tr class="separator:a71769896be49e5f26a65a418cf829bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:aa62c2264f0e7be73502852cd9a3afbd0" id="r_aa62c2264f0e7be73502852cd9a3afbd0"><td class="memItemLeft" align="right" valign="top"><a id="aa62c2264f0e7be73502852cd9a3afbd0" name="aa62c2264f0e7be73502852cd9a3afbd0"></a>
 static IReadOnlyDictionary&lt; int, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Scenes</b><code> [get]</code></td></tr>
-<tr class="memdesc:aa62c2264f0e7be73502852cd9a3afbd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps build index to display name<br /></td></tr>
+<tr class="memdesc:aa62c2264f0e7be73502852cd9a3afbd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps build index to display name. <br /></td></tr>
 <tr class="separator:aa62c2264f0e7be73502852cd9a3afbd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a485be3f8830a91e22e461563df9be628" id="r_a485be3f8830a91e22e461563df9be628"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a485be3f8830a91e22e461563df9be628">StartupSceneIndex</a> = -1<code> [get, set]</code></td></tr>
 <tr class="memdesc:a485be3f8830a91e22e461563df9be628"><td class="mdescLeft">&#160;</td><td class="mdescRight">The build index of the scene that will be loaded at startup.  <br /></td></tr>
@@ -122,7 +130,7 @@ static IReadOnlyDictionary&lt; int, string &gt;&#160;</td><td class="memItemRigh
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Holds a list of Midi visualization scenes. </p>
 <p>On startup, it reads the list of scenes in the build settings and adds all scenes that don't start with a '#'.<br  />
- Scenes can be added with <a class="el" href="#af54eb720ef92d99ecb05657efeda5bf4" title="Adds a midi visualization scene.">RegisterScene</a> and a read-only list returned with <a class="el" href="#aa62c2264f0e7be73502852cd9a3afbd0" title="Maps build index to display name">Scenes</a> </p>
+ Scenes can be added with <a class="el" href="#af54eb720ef92d99ecb05657efeda5bf4" title="Adds a midi visualization scene.">RegisterScene</a> and a read-only list returned with <a class="el" href="#aa62c2264f0e7be73502852cd9a3afbd0" title="Maps build index to display name.">Scenes</a> </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af54eb720ef92d99ecb05657efeda5bf4" name="af54eb720ef92d99ecb05657efeda5bf4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af54eb720ef92d99ecb05657efeda5bf4">&#9670;&#160;</a></span>RegisterScene()</h2>
