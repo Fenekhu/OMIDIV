@@ -1,17 +1,20 @@
 ﻿using ImGuiNET;
 using SFB;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
+/// <summary>
+/// Controls audio playing and gives it a UI.
+/// </summary>
 public class AudioPlayer : OmidivComponent {
 
     protected static FileInfo AudioPath;
     protected static AudioClip AudioClip;
+    /// <summary>Milliseconds</summary>
     protected static int AudioOffset;
     private static int audioOffsetPrev;
     protected static bool AudioOffsetChanged;
+    /// <summary>Seconds</summary>
     protected static float AudioTime = 0;
     protected static bool IsPaused = false;
 
@@ -59,7 +62,7 @@ public class AudioPlayer : OmidivComponent {
         }
 
         if (AudioOffset != audioOffsetPrev) {
-            float diff = (AudioOffset - audioOffsetPrev)/1000f;
+            float diff = (AudioOffset - audioOffsetPrev)/1000f; // seconds
             AudioTime += diff;
             if (IsPlaying) {
                 if (AudioTime < 0) {
@@ -76,7 +79,8 @@ public class AudioPlayer : OmidivComponent {
             AudioOffsetChanged = false;
         }
 
-        if (IsPlaying) AudioTime += MidiScene.DeltaTime;
+        // this doesn't need to use MidiScene.DeltaTime because audio isnt recorded.
+        if (IsPlaying) AudioTime += Time.unscaledDeltaTime;
     }
 
     protected override void DrawGUI() {
@@ -99,9 +103,6 @@ public class AudioPlayer : OmidivComponent {
         }
     }
 
-    protected override void ReadConfig() { }
-    protected override void WriteConfig() { }
-
     protected override void OnPlayStart() {
         IsPaused = false;
         if (AudioTime < 0) {
@@ -123,14 +124,12 @@ public class AudioPlayer : OmidivComponent {
         IsPaused = false;
     }
 
-    protected override void LoadVisuals() { }
-
     protected override void LoadAudio() {
-        LoadAudio();
+        LoadAudio_();
         AudioTime = AudioOffset / 1000f;
     }
 
-    private void LoadAudio() {
+    private void LoadAudio_() {
         AudioImporter.Import(AudioPath.FullName);
         if (AudioImporter.isError) {
             Debug.Log(AudioImporter.error);

@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
-/**
- * 
- */
+/// <summary>
+/// A base component that is subscribed to a bunch of events.
+/// </summary>
 public abstract class OmidivComponent : MonoBehaviour {
-    protected static bool IsPlaying = false;
+    /// <summary>Is the visualization currently playing.</summary>
+    public static bool IsPlaying { get; protected set; } = false;
 
-    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
+    /// <remarks>
+    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// </remarks>
     protected virtual void OnEnable() {
         ImGuiManager.Draw += DrawGUI;
         Config.AfterLoading += ReadConfig;
@@ -20,7 +23,9 @@ public abstract class OmidivComponent : MonoBehaviour {
         MidiScene.OnLoadAudio += LoadAudio;
     }
 
-    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
+    /// <remarks>
+    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// </remarks>
     protected virtual void OnDisable() {
         ImGuiManager.Draw -= DrawGUI;
         Config.AfterLoading -= ReadConfig;
@@ -34,25 +39,57 @@ public abstract class OmidivComponent : MonoBehaviour {
         MidiScene.OnLoadAudio -= LoadAudio;
     }
 
-    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
+    /// <remarks>
+    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// </remarks>
     protected virtual void Awake() {
         ReadConfig();
     }
 
-    // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
+    /// <remarks>
+    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// </remarks>
     protected virtual void OnDestroy() {
         WriteConfig();
     }
 
+    /// <summary>
+    /// Override this. Use ImGui to draw most UI elements here.
+    /// </summary>
+    /// <remarks>Subscribe to <see cref="ImGuiManager.DrawMainMenuItems"/> to add to main menu bar menus instead of here.</remarks>
     protected virtual void DrawGUI() { }
+
+    /// <summary>
+    /// Override this. Read from <see cref="Config"/> here.
+    /// </summary>
     protected virtual void ReadConfig() { }
+
+    /// <summary>
+    /// Override this. Write to <see cref="Config"/> here.
+    /// </summary>
     protected virtual void WriteConfig() { }
 
+    /// <summary>
+    /// Override this. Called when the visualization starts playing. May be starting from the beginning or resuming.
+    /// </summary>
     protected virtual void OnPlayStart() { }
+
+    /// <summary>
+    /// Override this. Called when the visualization stops playing.
+    /// </summary>
     protected virtual void OnPlayStop() { }
 
+    /// <summary>
+    /// Override this. Called when <see cref="MidiScene.OnReset"/> is fired. 
+    /// <see cref="LoadAudio"/> and <see cref="LoadMidi"/> will also be called, so don't do any of that here,
+    /// but do reload any other resources you're component needs.
+    /// </summary>
+    /// <remarks>Reset() is a Unity message, hence the <c>_</c></remarks>
     protected virtual void Reset_() { }
 
+    /// <summary>
+    /// Override this. Called when the visualization restarts.
+    /// </summary>
     protected virtual void Restart() { }
 
     /// <summary>

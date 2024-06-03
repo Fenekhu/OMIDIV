@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Utilities for creating or altering Geometry.
+/// </summary>
 public static class GeometryUtil {
 
     static GeometryUtil() {
@@ -18,9 +18,15 @@ public static class GeometryUtil {
     private static readonly Dictionary<uint, Mesh> NgonPrisms = new Dictionary<uint, Mesh>();
     private static readonly Dictionary<uint, Mesh> NgonPlanes = new Dictionary<uint, Mesh>();
 
+    /// <summary>
+    /// Generates a mesh for a 3D N-sided regular prism, with the shape sides orentied to the left and right and a width of 1.
+    /// </summary>
+    /// <param name="sides">The number of sides for the prism.</param>
+    /// <returns>An N-sided prism mesh.</returns>
+    /// <remarks>sides=4 generates a 1x1x1 cube.</remarks>
     public static Mesh GetNSidedPrismMesh(uint sides) {
         if (sides < 2) return null;
-        if (NgonPrisms.TryGetValue(sides, out Mesh result)) return result;
+        if (NgonPrisms.TryGetValue(sides, out Mesh result)) return result; // try to use a cached value
 
         Mesh ret = new Mesh();
         Vector3[] vertices = new Vector3[sides * 6];
@@ -93,6 +99,12 @@ public static class GeometryUtil {
         return ret;
     }
 
+    /// <summary>
+    /// Generates a mesh for a 2D N-sided regular polygon, facing forward, with a width of 1.
+    /// </summary>
+    /// <param name="sides">The number of sides for the polygon.</param>
+    /// <returns>An N-sided polygon mesh.</returns>
+    /// <remarks>sides=4 generates a 1x1x1 cube.</remarks>
     public static Mesh GetNSidedPlaneMesh(uint sides) {
         if (sides < 3) return null;
         if (NgonPlanes.TryGetValue(sides, out Mesh result)) return result;

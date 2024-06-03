@@ -1,8 +1,16 @@
 ﻿using ImGuiNET;
 using UnityEngine;
 
+/// <summary>
+/// <see cref="OmidivComponent"/> for providing GUI controls for a directional light.
+/// </summary>
 public class DirectionalLightController : OmidivComponent {
     [SerializeField] private GameObject Light;
+
+    /// <summary>
+    /// Use this to give different instances in difference scenes different saved config.
+    /// </summary>
+    public string ConfigTag = "def";
 
     protected override void DrawGUI() {
         if (ImGui.Begin("Misc Controls")) {
@@ -31,11 +39,12 @@ public class DirectionalLightController : OmidivComponent {
         }
         ImGui.End();
     }
-    protected override void ReadConfig() {
 
+    protected override void ReadConfig() {
+        Config.TryGet<Quaternion>("dirLight."+tag+".lightDir", q => Light.transform.rotation = q);
     }
 
     protected override void WriteConfig() {
-
+        Config.Set("dirLight."+tag+".lightDir", Light.transform.rotation);
     }
 }

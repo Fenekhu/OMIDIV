@@ -4,17 +4,20 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// A component that bridges FFmpegWrapper2 into Unity and the OMIDIV environment.
+/// </summary>
 public class FFmpegController2 : RecorderController {
-    private int _framerate = 60;
 
     private int _autoHideUI = 0;
+
+    /// <summary>Whether to disable the UI when recording begins.</summary>
     public bool AutoHideUI { get { return _autoHideUI != 0; } set { _autoHideUI = value ? 1 : 0; } }
 
     protected override void OnEnable() {
         base.OnEnable();
         FFmpegWrapper2.LoadConfig();
-        FFmpegWrapper2.InitParams();
-        _framerate = (int)FFmpegWrapper2.FrameRate;
+        FFmpegWrapper2.InitParams(); // im not sure if this really needs to be called here.
         _autoHideUI = PlayerPrefs.GetInt("vrec.ffmpeg2.autoHideUI", _autoHideUI);
     }
 
@@ -29,6 +32,7 @@ public class FFmpegController2 : RecorderController {
         FFmpegWrapper2.ForceKill();
     }
 
+    /// <summary>Coroutine that fires the <see cref="RecorderController.OnBeforeFrame"/> and <see cref="RecorderController.OnAfterFrame"/> events.</summary>
     private IEnumerator FrameTrigger() {
         while (GetStatus() == Status.Recording) {
             FireOnBeforeFrame();
@@ -77,7 +81,9 @@ public class FFmpegController2 : RecorderController {
                 _openFfmpegDir = ImGui.Button("Open that folder");
                 if (ImGui.Button("Refresh"))
                     FFmpegWrapper2.ExecutableExists(true);
+
             } else {
+
                 bool _recording = RecordingEnabled;
                 if (ImGui.Checkbox("Record on play", ref _recording))
                     RecordingEnabled = _recording;
@@ -96,6 +102,7 @@ public class FFmpegController2 : RecorderController {
                 ImGui.Text(" ");
 
                 ImGui.SetNextItemWidth(50);
+                int _framerate = (int)FFmpegWrapper2.FrameRate;
                 if (ImGui.InputInt("Framerate", ref _framerate, 0, 0) && _framerate > 0)
                     FFmpegWrapper2.FrameRate = (uint)_framerate;
 
