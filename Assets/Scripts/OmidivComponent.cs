@@ -15,9 +15,9 @@ public abstract class OmidivComponent : MonoBehaviour {
         MidiScene.OnPlayStopped += OnPlayStop;
         MidiScene.OnReset += Reset_;
         MidiScene.OnRestart += Restart;
-        MidiScene.OnReloadMidi += ReloadMidi;
-        MidiScene.OnReloadVisuals += ReloadVisuals;
-        MidiScene.OnReloadAudio += ReloadAudio;
+        MidiScene.OnLoadMidi += LoadMidi;
+        MidiScene.OnLoadVisuals += LoadVisuals;
+        MidiScene.OnLoadAudio += LoadAudio;
     }
 
     // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
@@ -29,9 +29,9 @@ public abstract class OmidivComponent : MonoBehaviour {
         MidiScene.OnPlayStopped -= OnPlayStop;
         MidiScene.OnReset -= Reset_;
         MidiScene.OnRestart -= Restart;
-        MidiScene.OnReloadMidi -= ReloadMidi;
-        MidiScene.OnReloadVisuals -= ReloadVisuals;
-        MidiScene.OnReloadAudio -= ReloadAudio;
+        MidiScene.OnLoadMidi -= LoadMidi;
+        MidiScene.OnLoadVisuals -= LoadVisuals;
+        MidiScene.OnLoadAudio -= LoadAudio;
     }
 
     // Please call base.OnEnable() if overriding this, unless you really know what you're doing.
@@ -55,9 +55,18 @@ public abstract class OmidivComponent : MonoBehaviour {
 
     protected virtual void Restart() { }
 
-    protected virtual void ReloadMidi() { }
+    /// <summary>
+    /// Override this. Called when the midi information needs to be loaded from the file. <see cref="LoadVisuals"/> will also be called, so don't do any of that here.
+    /// </summary>
+    protected virtual void LoadMidi() { }
 
-    protected virtual void ReloadVisuals() { }
+    /// <summary>
+    /// Override this. Called when the visuals need to be recreated (like when something in the MIDI Controls window is changed).
+    /// </summary>
+    protected virtual void LoadVisuals() { }
 
-    protected virtual void ReloadAudio() { }
+    /// <summary>
+    /// Override this. Called when the audio needs to be loaded from the file.
+    /// </summary>
+    protected virtual void LoadAudio() { }
 }

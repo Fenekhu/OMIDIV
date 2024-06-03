@@ -117,19 +117,15 @@ public class AudioPlayer : OmidivComponent {
         IsPaused = true;
     }
 
-    protected override void Reset_() { }
-
     protected override void Restart() {
         Sound.Stop();
         AudioTime = AudioOffset / 1000f;
         IsPaused = false;
     }
 
-    protected override void ReloadMidi() { }
+    protected override void LoadVisuals() { }
 
-    protected override void ReloadVisuals() { }
-
-    protected override void ReloadAudio() {
+    protected override void LoadAudio() {
         LoadAudio();
         AudioTime = AudioOffset / 1000f;
     }

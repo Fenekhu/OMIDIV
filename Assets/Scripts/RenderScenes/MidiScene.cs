@@ -72,9 +72,9 @@ public abstract class MidiScene : OmidivComponent {
     public static event Action OnPlayStopped;
     public static event Action OnReset;
     public static event Action OnRestart;
-    public static event Action OnReloadMidi;
-    public static event Action OnReloadAudio;
-    public static event Action OnReloadVisuals;
+    public static event Action OnLoadMidi;
+    public static event Action OnLoadAudio;
+    public static event Action OnLoadVisuals;
     public static bool NeedsStartPlay = false;
     public static bool NeedsStopPlay = false;
     public static bool NeedsReset = false;
@@ -223,15 +223,15 @@ public abstract class MidiScene : OmidivComponent {
         if (NeedsMidiReload) {
             NeedsMidiReload = false;
             NeedsVisualReload = false;
-            OnReloadMidi?.Invoke();
+            OnLoadMidi?.Invoke();
         }
         if (NeedsVisualReload) {
             NeedsVisualReload = false;
-            OnReloadVisuals?.Invoke();
+            OnLoadVisuals?.Invoke();
         }
         if (NeedsAudioReload) {
             NeedsAudioReload = false;
-            OnReloadAudio?.Invoke();
+            OnLoadAudio?.Invoke();
         }
         if (NeedsStartPlay) {
             StartPlay();
@@ -292,8 +292,8 @@ public abstract class MidiScene : OmidivComponent {
     }
 
     protected override void Reset_() {
-        OnReloadMidi?.Invoke();
-        OnReloadAudio?.Invoke();
+        OnLoadMidi?.Invoke();
+        OnLoadAudio?.Invoke();
         OnRestart?.Invoke();
     }
 
@@ -304,12 +304,12 @@ public abstract class MidiScene : OmidivComponent {
         simulatedTime = recordingTime = 0;
     }
 
-    protected override void ReloadMidi() {
+    protected override void LoadMidi() {
         InitMidi();
-        OnReloadVisuals?.Invoke();
+        OnLoadVisuals?.Invoke();
     }
 
-    protected override void ReloadVisuals() {
+    protected override void LoadVisuals() {
         ClearVisuals();
         InitVisuals();
     }
