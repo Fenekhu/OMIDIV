@@ -7,6 +7,12 @@ public abstract class OmidivComponent : MonoBehaviour {
     /// <summary>Is the visualization currently playing.</summary>
     public static bool IsPlaying { get; protected set; } = false;
 
+    /// <summary>
+    /// Use this to give different instances in difference scenes different saved config.<br/>
+    /// </summary>
+    /// <remarks>You must manually add this to your config keys (for now?).</remarks>
+    public string ConfigTag = "def";
+
     /// <remarks>
     /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
     /// </remarks>
@@ -24,7 +30,7 @@ public abstract class OmidivComponent : MonoBehaviour {
     }
 
     /// <remarks>
-    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// Please call <c>base.OnDisable()</c> if overriding this, unless you really know what you're doing.
     /// </remarks>
     protected virtual void OnDisable() {
         ImGuiManager.Draw -= DrawGUI;
@@ -40,14 +46,14 @@ public abstract class OmidivComponent : MonoBehaviour {
     }
 
     /// <remarks>
-    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// Please call <c>base.Awake()</c> if overriding this, unless you really know what you're doing.
     /// </remarks>
     protected virtual void Awake() {
         ReadConfig();
     }
 
     /// <remarks>
-    /// Please call <c>base.OnEnable()</c> if overriding this, unless you really know what you're doing.
+    /// Please call <c>base.OnDestroy()</c> if overriding this, unless you really know what you're doing.
     /// </remarks>
     protected virtual void OnDestroy() {
         WriteConfig();
@@ -60,12 +66,14 @@ public abstract class OmidivComponent : MonoBehaviour {
     protected virtual void DrawGUI() { }
 
     /// <summary>
-    /// Override this. Read from <see cref="Config"/> here.
+    /// Override this. Read from <see cref="Config"/> here.<br/>
+    /// Don't forget to include <see cref="ConfigTag"/> in your config keys.
     /// </summary>
     protected virtual void ReadConfig() { }
 
     /// <summary>
-    /// Override this. Write to <see cref="Config"/> here.
+    /// Override this. Write to <see cref="Config"/> here.<br/>
+    /// Don't forget to include <see cref="ConfigTag"/> in your config keys.
     /// </summary>
     protected virtual void WriteConfig() { }
 
@@ -81,19 +89,19 @@ public abstract class OmidivComponent : MonoBehaviour {
 
     /// <summary>
     /// Override this. Called when <see cref="MidiScene.OnReset"/> is fired. 
-    /// <see cref="LoadAudio"/> and <see cref="LoadMidi"/> will also be called, so don't do any of that here,
-    /// but do reload any other resources you're component needs.
+    /// <see cref="LoadAudio"/> and <see cref="LoadMidi"/> will also be called afterwards, so don't do any of that here,
+    /// but do reload any other resources your component needs.
     /// </summary>
     /// <remarks>Reset() is a Unity message, hence the <c>_</c></remarks>
     protected virtual void Reset_() { }
 
     /// <summary>
-    /// Override this. Called when the visualization restarts.
+    /// Override this. Called when the visualization restarts (R is pressed).
     /// </summary>
     protected virtual void Restart() { }
 
     /// <summary>
-    /// Override this. Called when the midi information needs to be loaded from the file. <see cref="LoadVisuals"/> will also be called, so don't do any of that here.
+    /// Override this. Called when the midi information needs to be loaded from the file. <see cref="LoadVisuals"/> will also be called afterwards, so don't do any of that here.
     /// </summary>
     protected virtual void LoadMidi() { }
 

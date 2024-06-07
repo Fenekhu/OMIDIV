@@ -63,6 +63,9 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">FFmpegController2 Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component that bridges <a class="el" href="class_f_fmpeg_wrapper2.html" title="Provides a wrapper around the ffmpeg command line and process.">FFmpegWrapper2</a> into Unity and the OMIDIV environment.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for FFmpegController2:</div>
 <div class="dyncontent">
@@ -70,7 +73,7 @@ Inheritance diagram for FFmpegController2:</div>
   <img src="class_f_fmpeg_controller2.png" usemap="#FFmpegController2_map" alt=""/>
   <map id="FFmpegController2_map" name="FFmpegController2_map">
 <area href="class_recorder_controller.html" alt="RecorderController" shape="rect" coords="0,112,121,136"/>
-<area href="class_omidiv_component.html" alt="OmidivComponent" shape="rect" coords="0,56,121,80"/>
+<area href="class_omidiv_component.html" title="A base component that is subscribed to a bunch of events." alt="OmidivComponent" shape="rect" coords="0,56,121,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -79,9 +82,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af65e4080be7a434235443d309ef72a2a" id="r_af65e4080be7a434235443d309ef72a2a"><td class="memItemLeft" align="right" valign="top"><a id="af65e4080be7a434235443d309ef72a2a" name="af65e4080be7a434235443d309ef72a2a"></a>
 override Status&#160;</td><td class="memItemRight" valign="bottom"><b>GetStatus</b> ()</td></tr>
 <tr class="separator:af65e4080be7a434235443d309ef72a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a173766e664d182ef907060f8ad5a322f" id="r_a173766e664d182ef907060f8ad5a322f"><td class="memItemLeft" align="right" valign="top"><a id="a173766e664d182ef907060f8ad5a322f" name="a173766e664d182ef907060f8ad5a322f"></a>
-override float&#160;</td><td class="memItemRight" valign="bottom"><b>GetFramerate</b> ()</td></tr>
-<tr class="separator:a173766e664d182ef907060f8ad5a322f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eb0cb540682387bb5a956369dbe6115" id="r_a9eb0cb540682387bb5a956369dbe6115"><td class="memItemLeft" align="right" valign="top"><a id="a9eb0cb540682387bb5a956369dbe6115" name="a9eb0cb540682387bb5a956369dbe6115"></a>
+override double&#160;</td><td class="memItemRight" valign="bottom"><b>GetFramerate</b> ()</td></tr>
+<tr class="separator:a9eb0cb540682387bb5a956369dbe6115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7352451d2fd34f924e411760520ca4d6" id="r_a7352451d2fd34f924e411760520ca4d6"><td class="memItemLeft" align="right" valign="top"><a id="a7352451d2fd34f924e411760520ca4d6" name="a7352451d2fd34f924e411760520ca4d6"></a>
 override void&#160;</td><td class="memItemRight" valign="bottom"><b>StartRecording</b> ()</td></tr>
 <tr class="separator:a7352451d2fd34f924e411760520ca4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -92,9 +95,9 @@ override void&#160;</td><td class="memItemRight" valign="bottom"><b>StopRecordin
 <tr class="memitem:a5f38ccdea7a37debadbed4aa5991a822 inherit pub_methods_class_recorder_controller" id="r_a5f38ccdea7a37debadbed4aa5991a822"><td class="memItemLeft" align="right" valign="top">
 Status&#160;</td><td class="memItemRight" valign="bottom"><b>GetStatus</b> ()</td></tr>
 <tr class="separator:a5f38ccdea7a37debadbed4aa5991a822 inherit pub_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74601dc15b396f0c55fd577ce0b0a80f inherit pub_methods_class_recorder_controller" id="r_a74601dc15b396f0c55fd577ce0b0a80f"><td class="memItemLeft" align="right" valign="top">
-float&#160;</td><td class="memItemRight" valign="bottom"><b>GetFramerate</b> ()</td></tr>
-<tr class="separator:a74601dc15b396f0c55fd577ce0b0a80f inherit pub_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ce850b5d5d7db0e2d51b0b9cbd1fd5d inherit pub_methods_class_recorder_controller" id="r_a0ce850b5d5d7db0e2d51b0b9cbd1fd5d"><td class="memItemLeft" align="right" valign="top">
+double&#160;</td><td class="memItemRight" valign="bottom"><b>GetFramerate</b> ()</td></tr>
+<tr class="separator:a0ce850b5d5d7db0e2d51b0b9cbd1fd5d inherit pub_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f4ba59a835166ee42a48386fd8754e7 inherit pub_methods_class_recorder_controller" id="r_a5f4ba59a835166ee42a48386fd8754e7"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>StartIfEnabled</b> ()</td></tr>
 <tr class="separator:a5f4ba59a835166ee42a48386fd8754e7 inherit pub_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,6 +120,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a7a44fb654ad3bdd8757b261af478cd52" id="r_a7a44fb654ad3bdd8757b261af478cd52"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a44fb654ad3bdd8757b261af478cd52">OnDestroy</a> ()</td></tr>
 <tr class="separator:a7a44fb654ad3bdd8757b261af478cd52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ca6032b93d8774c81053134ba0df004" id="r_a0ca6032b93d8774c81053134ba0df004"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ca6032b93d8774c81053134ba0df004">DrawGUI</a> ()</td></tr>
+<tr class="memdesc:a0ca6032b93d8774c81053134ba0df004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Use ImGui to draw most UI elements here.  <br /></td></tr>
 <tr class="separator:a0ca6032b93d8774c81053134ba0df004"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_recorder_controller"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_recorder_controller')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_recorder_controller.html">RecorderController</a></td></tr>
 <tr class="memitem:a8dc07625d864d8bca371df5e86953b18 inherit pro_methods_class_recorder_controller" id="r_a8dc07625d864d8bca371df5e86953b18"><td class="memItemLeft" align="right" valign="top">
@@ -132,44 +136,53 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>FireOnAfterFrame</b> 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>FireOnRecordingEnd</b> ()</td></tr>
 <tr class="separator:aa1ab74b3753d95f1e7975d5679cd5e17 inherit pro_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e2ca37d98f260a58e59411a16f6617d inherit pro_methods_class_recorder_controller" id="r_a5e2ca37d98f260a58e59411a16f6617d"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_recorder_controller.html#a5e2ca37d98f260a58e59411a16f6617d">OnPlayStart</a> ()</td></tr>
+<tr class="memdesc:a5e2ca37d98f260a58e59411a16f6617d inherit pro_methods_class_recorder_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization starts playing. May be starting from the beginning or resuming.  <br /></td></tr>
 <tr class="separator:a5e2ca37d98f260a58e59411a16f6617d inherit pro_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac402ce6875796811bac279ea076f62e7 inherit pro_methods_class_recorder_controller" id="r_ac402ce6875796811bac279ea076f62e7"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_recorder_controller.html#ac402ce6875796811bac279ea076f62e7">OnPlayStop</a> ()</td></tr>
+<tr class="memdesc:ac402ce6875796811bac279ea076f62e7 inherit pro_methods_class_recorder_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization stops playing.  <br /></td></tr>
 <tr class="separator:ac402ce6875796811bac279ea076f62e7 inherit pro_methods_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
-<tr class="memitem:ac61e862857fd91c862696c997857a497 inherit pro_methods_class_omidiv_component" id="r_ac61e862857fd91c862696c997857a497"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr>
+<tr class="memitem:ac61e862857fd91c862696c997857a497 inherit pro_methods_class_omidiv_component" id="r_ac61e862857fd91c862696c997857a497"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#ac61e862857fd91c862696c997857a497">Awake</a> ()</td></tr>
 <tr class="separator:ac61e862857fd91c862696c997857a497 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafea45c91e42424e6387c8c8fcb6c449 inherit pro_methods_class_omidiv_component" id="r_aafea45c91e42424e6387c8c8fcb6c449"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadConfig</b> ()</td></tr>
+<tr class="memitem:aafea45c91e42424e6387c8c8fcb6c449 inherit pro_methods_class_omidiv_component" id="r_aafea45c91e42424e6387c8c8fcb6c449"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#aafea45c91e42424e6387c8c8fcb6c449">ReadConfig</a> ()</td></tr>
+<tr class="memdesc:aafea45c91e42424e6387c8c8fcb6c449 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Read from Config here.<br  />
+ Don't forget to include <a class="el" href="class_omidiv_component.html#ac819e5375ad7a17e2b0f7726e266faee" title="Use this to give different instances in difference scenes different saved config.">ConfigTag</a> in your config keys.  <br /></td></tr>
 <tr class="separator:aafea45c91e42424e6387c8c8fcb6c449 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62743605c88ef04be45b0055977765c2 inherit pro_methods_class_omidiv_component" id="r_a62743605c88ef04be45b0055977765c2"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>WriteConfig</b> ()</td></tr>
+<tr class="memitem:a62743605c88ef04be45b0055977765c2 inherit pro_methods_class_omidiv_component" id="r_a62743605c88ef04be45b0055977765c2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a62743605c88ef04be45b0055977765c2">WriteConfig</a> ()</td></tr>
+<tr class="memdesc:a62743605c88ef04be45b0055977765c2 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Write to Config here.<br  />
+ Don't forget to include <a class="el" href="class_omidiv_component.html#ac819e5375ad7a17e2b0f7726e266faee" title="Use this to give different instances in difference scenes different saved config.">ConfigTag</a> in your config keys.  <br /></td></tr>
 <tr class="separator:a62743605c88ef04be45b0055977765c2 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component" id="r_a2882924ccbcceeea8d693a30ae4a1bcb"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Reset_</b> ()</td></tr>
+<tr class="memitem:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component" id="r_a2882924ccbcceeea8d693a30ae4a1bcb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a2882924ccbcceeea8d693a30ae4a1bcb">Reset_</a> ()</td></tr>
+<tr class="memdesc:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when <a class="el" href="class_midi_scene.html#a45eb0cdade1a88db4e65e9d5d6f4c63c" title="OnLoadAudio and OnLoadMidi will also be called afterwards, so don&#39;t do any of that here,...">MidiScene.OnReset</a> is fired. <a class="el" href="class_omidiv_component.html#a08ffae33c64c287c5fb9115aedd1ba69" title="Override this. Called when the audio needs to be loaded from the file.">LoadAudio</a> and <a class="el" href="class_omidiv_component.html#acb50bd5ef9e3bf16c086e4663135a9b2" title="Override this. Called when the midi information needs to be loaded from the file. LoadVisuals will al...">LoadMidi</a> will also be called afterwards, so don't do any of that here, but do reload any other resources your component needs.  <br /></td></tr>
 <tr class="separator:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeb9539fb0e45f31d39f95499b0edcee inherit pro_methods_class_omidiv_component" id="r_aeeb9539fb0e45f31d39f95499b0edcee"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Restart</b> ()</td></tr>
+<tr class="memitem:aeeb9539fb0e45f31d39f95499b0edcee inherit pro_methods_class_omidiv_component" id="r_aeeb9539fb0e45f31d39f95499b0edcee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#aeeb9539fb0e45f31d39f95499b0edcee">Restart</a> ()</td></tr>
+<tr class="memdesc:aeeb9539fb0e45f31d39f95499b0edcee inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization restarts (R is pressed).  <br /></td></tr>
 <tr class="separator:aeeb9539fb0e45f31d39f95499b0edcee inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97e0d46dc17cbbf1ce0e2dea6ca9c22e inherit pro_methods_class_omidiv_component" id="r_a97e0d46dc17cbbf1ce0e2dea6ca9c22e"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ReloadMidi</b> ()</td></tr>
-<tr class="separator:a97e0d46dc17cbbf1ce0e2dea6ca9c22e inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dbad1bb1e8fcc37bf402fceeb381772 inherit pro_methods_class_omidiv_component" id="r_a0dbad1bb1e8fcc37bf402fceeb381772"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ReloadVisuals</b> ()</td></tr>
-<tr class="separator:a0dbad1bb1e8fcc37bf402fceeb381772 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfc350b79b16e00dfc9bafe82e848186 inherit pro_methods_class_omidiv_component" id="r_adfc350b79b16e00dfc9bafe82e848186"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ReloadAudio</b> ()</td></tr>
-<tr class="separator:adfc350b79b16e00dfc9bafe82e848186 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb50bd5ef9e3bf16c086e4663135a9b2 inherit pro_methods_class_omidiv_component" id="r_acb50bd5ef9e3bf16c086e4663135a9b2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#acb50bd5ef9e3bf16c086e4663135a9b2">LoadMidi</a> ()</td></tr>
+<tr class="memdesc:acb50bd5ef9e3bf16c086e4663135a9b2 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the midi information needs to be loaded from the file. <a class="el" href="class_omidiv_component.html#a18c9a02d79c147840b11fc0e5b826c42" title="Override this. Called when the visuals need to be recreated (like when something in the MIDI Controls...">LoadVisuals</a> will also be called afterwards, so don't do any of that here.  <br /></td></tr>
+<tr class="separator:acb50bd5ef9e3bf16c086e4663135a9b2 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c9a02d79c147840b11fc0e5b826c42 inherit pro_methods_class_omidiv_component" id="r_a18c9a02d79c147840b11fc0e5b826c42"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a18c9a02d79c147840b11fc0e5b826c42">LoadVisuals</a> ()</td></tr>
+<tr class="memdesc:a18c9a02d79c147840b11fc0e5b826c42 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visuals need to be recreated (like when something in the MIDI Controls window is changed).  <br /></td></tr>
+<tr class="separator:a18c9a02d79c147840b11fc0e5b826c42 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ffae33c64c287c5fb9115aedd1ba69 inherit pro_methods_class_omidiv_component" id="r_a08ffae33c64c287c5fb9115aedd1ba69"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a08ffae33c64c287c5fb9115aedd1ba69">LoadAudio</a> ()</td></tr>
+<tr class="memdesc:a08ffae33c64c287c5fb9115aedd1ba69 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the audio needs to be loaded from the file.  <br /></td></tr>
+<tr class="separator:a08ffae33c64c287c5fb9115aedd1ba69 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:af82de29e47715776d77ff6d0572ce80f" id="r_af82de29e47715776d77ff6d0572ce80f"><td class="memItemLeft" align="right" valign="top"><a id="af82de29e47715776d77ff6d0572ce80f" name="af82de29e47715776d77ff6d0572ce80f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>AutoHideUI</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:af82de29e47715776d77ff6d0572ce80f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to disable the UI when recording begins. <br /></td></tr>
 <tr class="separator:af82de29e47715776d77ff6d0572ce80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_class_recorder_controller"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_class_recorder_controller')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_recorder_controller.html">RecorderController</a></td></tr>
 <tr class="memitem:a301ecc306153c7087d681743334b8b37 inherit properties_class_recorder_controller" id="r_a301ecc306153c7087d681743334b8b37"><td class="memItemLeft" align="right" valign="top">
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>RecordingEnabled</b> = false<code> [get, set]</code></td></tr>
 <tr class="separator:a301ecc306153c7087d681743334b8b37 inherit properties_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
+<tr class="memitem:ab9362674bcd53d675c4932da5a5f26a5 inherit properties_class_omidiv_component" id="r_ab9362674bcd53d675c4932da5a5f26a5"><td class="memItemLeft" align="right" valign="top">
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPlaying</b> = false<code> [get, protected set]</code></td></tr>
+<tr class="memdesc:ab9362674bcd53d675c4932da5a5f26a5 inherit properties_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the visualization currently playing. <br /></td></tr>
+<tr class="separator:ab9362674bcd53d675c4932da5a5f26a5 inherit properties_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -180,10 +193,11 @@ Additional Inherited Members</h2></td></tr>
 , <b>ProcessingBackground</b>
  }</td></tr>
 <tr class="separator:ae4f70f250d8c901659f3869b42f3bb09 inherit pub_types_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_static_attribs_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_static_attribs_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
-<tr class="memitem:ab9362674bcd53d675c4932da5a5f26a5 inherit pro_static_attribs_class_omidiv_component" id="r_ab9362674bcd53d675c4932da5a5f26a5"><td class="memItemLeft" align="right" valign="top">
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPlaying</b> = false</td></tr>
-<tr class="separator:ab9362674bcd53d675c4932da5a5f26a5 inherit pro_static_attribs_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
+<tr class="memitem:ac819e5375ad7a17e2b0f7726e266faee inherit pub_attribs_class_omidiv_component" id="r_ac819e5375ad7a17e2b0f7726e266faee"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#ac819e5375ad7a17e2b0f7726e266faee">ConfigTag</a> = &quot;def&quot;</td></tr>
+<tr class="memdesc:ac819e5375ad7a17e2b0f7726e266faee inherit pub_attribs_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this to give different instances in difference scenes different saved config.<br  />
+  <br /></td></tr>
+<tr class="separator:ac819e5375ad7a17e2b0f7726e266faee inherit pub_attribs_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header events_class_recorder_controller"><td colspan="2" onclick="javascript:dynsection.toggleInherit('events_class_recorder_controller')"><img src="closed.png" alt="-"/>&#160;Events inherited from <a class="el" href="class_recorder_controller.html">RecorderController</a></td></tr>
 <tr class="memitem:a0290b60db9b40580d943a6f5f00cb735 inherit events_class_recorder_controller" id="r_a0290b60db9b40580d943a6f5f00cb735"><td class="memItemLeft" align="right" valign="top">
 Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRecordingBegin</b></td></tr>
@@ -198,7 +212,9 @@ Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnAfterFrame</b></t
 Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRecordingEnd</b></td></tr>
 <tr class="separator:a72eb7f95250f11345a8b0dda394ba51a inherit events_class_recorder_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A component that bridges <a class="el" href="class_f_fmpeg_wrapper2.html" title="Provides a wrapper around the ffmpeg command line and process.">FFmpegWrapper2</a> into Unity and the OMIDIV environment. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0ca6032b93d8774c81053134ba0df004" name="a0ca6032b93d8774c81053134ba0df004"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ca6032b93d8774c81053134ba0df004">&#9670;&#160;</a></span>DrawGUI()</h2>
 
@@ -222,7 +238,10 @@ Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRecordingEnd</b><
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Override this. Use ImGui to draw most UI elements here. </p>
+<p>Subscribe to <a class="el" href="class_im_gui_manager.html#a51bd4bedcad2ee460b20381f9002b171" title="Called with the name of the tab for each main menu tab.">ImGuiManager.DrawMainMenuItems</a> to add to main menu bar menus instead of here.</p>
+
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#acbc155e211903854e90af948aa2ee00e">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -248,8 +267,9 @@ Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRecordingEnd</b><
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.OnDestroy()</code> if overriding this, unless you really know what you're doing. </p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#a38bd8c85a0712cc4417fe509722e2e71">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -275,8 +295,9 @@ Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRecordingEnd</b><
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.OnDisable()</code> if overriding this, unless you really know what you're doing. </p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#ae9681cad2f5b173a7ed9a0d09f121553">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -302,8 +323,9 @@ Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRecordingEnd</b><
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.OnEnable()</code> if overriding this, unless you really know what you're doing. </p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#a04285c9365a5027276f712e84389be85">OmidivComponent</a>.</p>
 
 </div>
 </div>

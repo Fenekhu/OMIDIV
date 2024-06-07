@@ -16,6 +16,8 @@ public class FFmpegRenderFeature : ScriptableRendererFeature {
         Graphics.Blit(tex0, tex);
         GL.sRGBWrite = srgbreset;
 
+        // RequestIntoNativeArray doesn't finish in order, causing ReceiveFrame to be called with out of order.
+        // The frame number will be used by ReceiveFrame to buffer and reorder frames.
         var narray = new NativeArray<byte>(tex.width * tex.height * 4, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
         var request = AsyncGPUReadback.RequestIntoNativeArray(ref narray, tex, 0, TextureFormat.ARGB32, (AsyncGPUReadbackRequest req) => {
             if (!req.hasError) {

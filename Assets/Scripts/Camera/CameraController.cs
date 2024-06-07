@@ -1,9 +1,9 @@
-﻿using ImGuiNET;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// <see cref="OmidivComponent"/> that provides a GUI and input controls for a camera.
+/// </summary>
 public abstract class CameraController : OmidivComponent {
-    [SerializeField]
-    protected string SceneTag = "";
     public Color BGColor { get { return GetBGColor(); } set { SetBGColor(value); } }
 
     protected abstract Color GetBGColor();

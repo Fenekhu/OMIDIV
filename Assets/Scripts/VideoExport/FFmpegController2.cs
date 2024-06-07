@@ -47,7 +47,7 @@ public class FFmpegController2 : RecorderController {
         return Status.Standby;
     }
 
-    public override float GetFramerate() {
+    public override double GetFramerate() {
         return FFmpegWrapper2.FrameRate;
     }
 

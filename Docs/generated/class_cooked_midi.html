@@ -63,10 +63,14 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">CookedMidi Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Represents all the relevant information in a midi file in ways that are easier to work with than in a <a class="el" href="class_raw_midi.html" title="A structure representing an entire midi file.">RawMidi</a>.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_cooked_midi_1_1_tempo_map__.html">TempoMap_</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the tempo changes within the midi.  <a href="class_cooked_midi_1_1_tempo_map__.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -74,8 +78,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6df65341cf5539f8967d00351ab829f7" id="r_a6df65341cf5539f8967d00351ab829f7"><td class="memItemLeft" align="right" valign="top"><a id="a6df65341cf5539f8967d00351ab829f7" name="a6df65341cf5539f8967d00351ab829f7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>CookedMidi</b> (<a class="el" href="class_raw_midi.html">RawMidi</a> raw)</td></tr>
 <tr class="separator:a6df65341cf5539f8967d00351ab829f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a624151b9319a1c85da7ee7e817e2c0" id="r_a9a624151b9319a1c85da7ee7e817e2c0"><td class="memItemLeft" align="right" valign="top"><a id="a9a624151b9319a1c85da7ee7e817e2c0" name="a9a624151b9319a1c85da7ee7e817e2c0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Cook</b> (<a class="el" href="class_raw_midi.html">RawMidi</a> raw)</td></tr>
+<tr class="memitem:a9a624151b9319a1c85da7ee7e817e2c0" id="r_a9a624151b9319a1c85da7ee7e817e2c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a624151b9319a1c85da7ee7e817e2c0">Cook</a> (<a class="el" href="class_raw_midi.html">RawMidi</a> raw)</td></tr>
+<tr class="memdesc:a9a624151b9319a1c85da7ee7e817e2c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a <a class="el" href="class_raw_midi.html" title="A structure representing an entire midi file.">RawMidi</a>.  <br /></td></tr>
 <tr class="separator:a9a624151b9319a1c85da7ee7e817e2c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
@@ -99,6 +103,29 @@ byte&#160;</td><td class="memItemRight" valign="bottom"><b>LowestNote</b><code> 
 byte&#160;</td><td class="memItemRight" valign="bottom"><b>NoteRange</b><code> [get]</code></td></tr>
 <tr class="separator:a8892d82c7ec5005c3966ef775467e804"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents all the relevant information in a midi file in ways that are easier to work with than in a <a class="el" href="class_raw_midi.html" title="A structure representing an entire midi file.">RawMidi</a>. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9a624151b9319a1c85da7ee7e817e2c0" name="a9a624151b9319a1c85da7ee7e817e2c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a624151b9319a1c85da7ee7e817e2c0">&#9670;&#160;</a></span>Cook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CookedMidi.Cook </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_raw_midi.html">RawMidi</a></td>          <td class="paramname"><span class="paramname"><em>raw</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Processes a <a class="el" href="class_raw_midi.html" title="A structure representing an entire midi file.">RawMidi</a>. </p>
+<p>If you need to extract other information from the midi to use in a visualization, do it by modifying this function. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>L:/Coding/Unity/OMIDIV/Assets/Scripts/MIDI/<b>CookedMidi.cs</b></li>
 </ul>

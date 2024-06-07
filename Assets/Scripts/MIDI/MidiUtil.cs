@@ -149,9 +149,13 @@ public enum EMidiMetaEvent {
 }
 #endregion
 
-public sealed class MidiUtil {
-    
-    // Big-Endian Variable-Length Value to uint. ref offset will be updated based on the number of bytes read.
+public static class MidiUtil {
+
+    /// <summary>
+    /// Big-Endian Variable-Length Value to uint
+    /// </summary>
+    /// <param name="bytes">An array of bytes that contains a variable length value./param>
+    /// <param name="offset">The offset into the array that the value begins at. Will be updated based on the number of bytes read.</param>
     public static uint BEVLVToUint(byte[] bytes, ref int offset) {
         uint ret = 0;
         while ((bytes[offset] & 0b1000_0000) != 0) {
@@ -162,10 +166,19 @@ public sealed class MidiUtil {
         ret |= bytes[offset++];
         return ret;
     }
+
+    /// <summary>
+    /// Big-Endian Variable-Length Value to uint
+    /// </summary>
+    /// <param name="bytes">An array of bytes that contains a variable length value./param>
+    /// <param name="offset">The offset into the array that the value begins at.</param>
     public static uint BEVLVToUint(byte[] bytes, int offset = 0) {
         return BEVLVToUint(bytes, ref offset);
     }
 
+    /// <summary>
+    /// uint to Big-Endian Variable-Length Value
+    /// </summary>
     public static byte[] UintToBEVLV(uint num) {
         if (num >= 0x0FFF_FFFF) throw new ArgumentOutOfRangeException(nameof(num), num, "UintToBEVLV must be less than 0x0FFFFFFF (268,435,455)");
 
@@ -190,6 +203,9 @@ public sealed class MidiUtil {
         return bytes;
     }
 
+    /// <summary>
+    /// Used when interpreting tempo events.
+    /// </summary>
     public static uint TempoMicros(byte[] data) {
         if (data.Length < 3) throw new ArgumentException("data must be at least 3 bytes long", nameof(data));
 
@@ -200,8 +216,12 @@ public sealed class MidiUtil {
         return BitConverter.ToUInt32(ret, 0);
     }
 
+    public static uint TempoMicros(double bpm) {
+        return (uint)(6e7d / bpm);
+    }
+
     public static double TempoBPM(uint micros) {
-        return 6e7f / micros;
+        return 6e7d / micros;
     }
 
     public static double TempoBPM(byte[] data) {

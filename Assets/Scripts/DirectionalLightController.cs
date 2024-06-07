@@ -5,12 +5,8 @@ using UnityEngine;
 /// <see cref="OmidivComponent"/> for providing GUI controls for a directional light.
 /// </summary>
 public class DirectionalLightController : OmidivComponent {
-    [SerializeField] private GameObject Light;
-
-    /// <summary>
-    /// Use this to give different instances in difference scenes different saved config.
-    /// </summary>
-    public string ConfigTag = "def";
+    /// <summary>The light being controlled by this object.</summary>
+    public GameObject Light;
 
     protected override void DrawGUI() {
         if (ImGui.Begin("Misc Controls")) {

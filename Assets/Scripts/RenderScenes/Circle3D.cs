@@ -1,16 +1,17 @@
 using ImGuiNET;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
+/// <summary>
+/// A visualization similar to <see cref="Standard3D"/>, except notes are placed radially instead of vertically.
+/// </summary>
 public class Circle3D : Base3D<Circle3D.TrackInfo> {
 
     public class TrackInfo : Base3DTrackInfo {
         public float angleOffset = 0;
     }
+
+    public Circle3D() { ConfigTag = "c3d"; }
 
     float StartRadius = 300.0f;
     float DeltaRadius = -16f;
@@ -19,10 +20,12 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
     protected override void ResetTracks() {
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo info = ref Tracks[j];
+
             Transform tfm = info.obj.transform;
             bool ignore = IgnoreTrack(info);
             info.obj.SetActive(!ignore);
             if (ignore) continue;
+
             tfm.localEulerAngles = new Vector3(AngleOffset + info.angleOffset, 0f, 0f);
             Vector3 scale = tfm.localScale;
             scale.x = info.lengthFactor;
@@ -85,8 +88,6 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
     protected override void TrackListChanged(ref bool updateTracks, ref bool updateNotes) {
         updateTracks = updateNotes = true;
     }
-
-    protected override string GetConfigTag() => "c3d";
 
     protected override void WriteConfig() {
         base.WriteConfig();

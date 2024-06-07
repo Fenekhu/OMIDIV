@@ -56,7 +56,6 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
@@ -66,62 +65,38 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">MidiScene Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The base class for a component that draws a visualization. This class itself controls a lot of things about the visualization, such as events. There should only be one of these per scene.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MidiScene:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_midi_scene.png" usemap="#MidiScene_map" alt=""/>
   <map id="MidiScene_map" name="MidiScene_map">
-<area href="class_omidiv_component.html" alt="OmidivComponent" shape="rect" coords="71,56,204,80"/>
-<area href="class_base3_d.html" alt="Base3D&lt; TrackInfo &gt;" shape="rect" coords="0,168,133,192"/>
-<area href="class_circle2_d.html" alt="Circle2D" shape="rect" coords="143,168,276,192"/>
+<area href="class_omidiv_component.html" title="A base component that is subscribed to a bunch of events." alt="OmidivComponent" shape="rect" coords="71,56,204,80"/>
+<area href="class_base3_d.html" title="A base class for Standard3D and Circle3D visualizations, since they share much of the same code...." alt="Base3D&lt; TrackInfo &gt;" shape="rect" coords="0,168,133,192"/>
+<area href="class_circle2_d.html" title="A visualization where the pitches of the track appear as pads placed radially. The pads light up when..." alt="Circle2D" shape="rect" coords="143,168,276,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:aaee9c9f5d808c3a219836d70003e9095" id="r_aaee9c9f5d808c3a219836d70003e9095"><td class="memItemLeft" align="right" valign="top"><a id="aaee9c9f5d808c3a219836d70003e9095" name="aaee9c9f5d808c3a219836d70003e9095"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>AutoReload</b> = true</td></tr>
-<tr class="separator:aaee9c9f5d808c3a219836d70003e9095"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa02ece3e1ff4aa61f81b393f053b3b1" id="r_aaa02ece3e1ff4aa61f81b393f053b3b1"><td class="memItemLeft" align="right" valign="top"><a id="aaa02ece3e1ff4aa61f81b393f053b3b1" name="aaa02ece3e1ff4aa61f81b393f053b3b1"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsStartPlay</b> = false</td></tr>
-<tr class="separator:aaa02ece3e1ff4aa61f81b393f053b3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a442cd583fbef03e6c78529a7b9e271e8" id="r_a442cd583fbef03e6c78529a7b9e271e8"><td class="memItemLeft" align="right" valign="top"><a id="a442cd583fbef03e6c78529a7b9e271e8" name="a442cd583fbef03e6c78529a7b9e271e8"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsStopPlay</b> = false</td></tr>
-<tr class="separator:a442cd583fbef03e6c78529a7b9e271e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b9dc3a8f8ebaa7a9affccb3f5625881" id="r_a7b9dc3a8f8ebaa7a9affccb3f5625881"><td class="memItemLeft" align="right" valign="top"><a id="a7b9dc3a8f8ebaa7a9affccb3f5625881" name="a7b9dc3a8f8ebaa7a9affccb3f5625881"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsReset</b> = false</td></tr>
-<tr class="separator:a7b9dc3a8f8ebaa7a9affccb3f5625881"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcde71a3d410b68aa0ca8ccb35acb89a" id="r_afcde71a3d410b68aa0ca8ccb35acb89a"><td class="memItemLeft" align="right" valign="top"><a id="afcde71a3d410b68aa0ca8ccb35acb89a" name="afcde71a3d410b68aa0ca8ccb35acb89a"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsRestart</b> = false</td></tr>
-<tr class="separator:afcde71a3d410b68aa0ca8ccb35acb89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acad02d44fa775d9d997f0f65dcb24ec4" id="r_acad02d44fa775d9d997f0f65dcb24ec4"><td class="memItemLeft" align="right" valign="top"><a id="acad02d44fa775d9d997f0f65dcb24ec4" name="acad02d44fa775d9d997f0f65dcb24ec4"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsMidiReload</b> = false</td></tr>
-<tr class="separator:acad02d44fa775d9d997f0f65dcb24ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2139cc697f789a678a888845a14dc0f9" id="r_a2139cc697f789a678a888845a14dc0f9"><td class="memItemLeft" align="right" valign="top"><a id="a2139cc697f789a678a888845a14dc0f9" name="a2139cc697f789a678a888845a14dc0f9"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsVisualReload</b> = false</td></tr>
-<tr class="separator:a2139cc697f789a678a888845a14dc0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31ca0c9a7bc8af62b0b20fdbc60ae3bd" id="r_a31ca0c9a7bc8af62b0b20fdbc60ae3bd"><td class="memItemLeft" align="right" valign="top"><a id="a31ca0c9a7bc8af62b0b20fdbc60ae3bd" name="a31ca0c9a7bc8af62b0b20fdbc60ae3bd"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsAudioReload</b> = false</td></tr>
-<tr class="separator:a31ca0c9a7bc8af62b0b20fdbc60ae3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a35ab9e993ff377ae5ca251c65497c13f" id="r_a35ab9e993ff377ae5ca251c65497c13f"><td class="memItemLeft" align="right" valign="top"><a id="a35ab9e993ff377ae5ca251c65497c13f" name="a35ab9e993ff377ae5ca251c65497c13f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InitVisuals</b> ()</td></tr>
-<tr class="separator:a35ab9e993ff377ae5ca251c65497c13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad61a49dcee53a04816a26fce6be5dbc6" id="r_ad61a49dcee53a04816a26fce6be5dbc6"><td class="memItemLeft" align="right" valign="top"><a id="ad61a49dcee53a04816a26fce6be5dbc6" name="ad61a49dcee53a04816a26fce6be5dbc6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ClearVisuals</b> ()</td></tr>
+<tr class="memitem:ab529e8423151cad1c4e1dcffbd253cef" id="r_ab529e8423151cad1c4e1dcffbd253cef"><td class="memItemLeft" align="right" valign="top"><a id="ab529e8423151cad1c4e1dcffbd253cef" name="ab529e8423151cad1c4e1dcffbd253cef"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CreateVisuals</b> ()</td></tr>
+<tr class="memdesc:ab529e8423151cad1c4e1dcffbd253cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create your visualization here. Happens every time visuals reload after a call to <a class="el" href="#ad61a49dcee53a04816a26fce6be5dbc6" title="Clear all created visuals here.">ClearVisuals</a>. <br /></td></tr>
+<tr class="separator:ab529e8423151cad1c4e1dcffbd253cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad61a49dcee53a04816a26fce6be5dbc6" id="r_ad61a49dcee53a04816a26fce6be5dbc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad61a49dcee53a04816a26fce6be5dbc6">ClearVisuals</a> ()</td></tr>
+<tr class="memdesc:ad61a49dcee53a04816a26fce6be5dbc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all created visuals here.  <br /></td></tr>
 <tr class="separator:ad61a49dcee53a04816a26fce6be5dbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0c4068b7532d355764a74e56acfaef9" id="r_aa0c4068b7532d355764a74e56acfaef9"><td class="memItemLeft" align="right" valign="top"><a id="aa0c4068b7532d355764a74e56acfaef9" name="aa0c4068b7532d355764a74e56acfaef9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MovePlay</b> (double ticks)</td></tr>
-<tr class="separator:aa0c4068b7532d355764a74e56acfaef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad427290e5865f417a3937a8b040e05f7" id="r_ad427290e5865f417a3937a8b040e05f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad427290e5865f417a3937a8b040e05f7">MovePlay</a> (decimal ticks)</td></tr>
+<tr class="memdesc:ad427290e5865f417a3937a8b040e05f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move your visualization forward or backward (in case midi delay is adjusted).  <br /></td></tr>
+<tr class="separator:ad427290e5865f417a3937a8b040e05f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d9e582f241ab7077336f242ecf09857" id="r_a7d9e582f241ab7077336f242ecf09857"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d9e582f241ab7077336f242ecf09857">OnEnable</a> ()</td></tr>
 <tr class="separator:a7d9e582f241ab7077336f242ecf09857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a854586ef0742ff3f718e665044f3b88a" id="r_a854586ef0742ff3f718e665044f3b88a"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a854586ef0742ff3f718e665044f3b88a">OnDisable</a> ()</td></tr>
 <tr class="separator:a854586ef0742ff3f718e665044f3b88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79a291430df488e3b44f25d76f185176" id="r_a79a291430df488e3b44f25d76f185176"><td class="memItemLeft" align="right" valign="top"><a id="a79a291430df488e3b44f25d76f185176" name="a79a291430df488e3b44f25d76f185176"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
+<tr class="memitem:a79a291430df488e3b44f25d76f185176" id="r_a79a291430df488e3b44f25d76f185176"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79a291430df488e3b44f25d76f185176">Start</a> ()</td></tr>
 <tr class="separator:a79a291430df488e3b44f25d76f185176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af80c2bffd1bcdb7eb7243b738e9ca54c" id="r_af80c2bffd1bcdb7eb7243b738e9ca54c"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af80c2bffd1bcdb7eb7243b738e9ca54c">OnDestroy</a> ()</td></tr>
 <tr class="separator:af80c2bffd1bcdb7eb7243b738e9ca54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,54 +106,50 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()<
 <tr class="separator:a3a8a47de614127c33eb0f0ceb5f795c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbd90512094745ea0de9995c26ef4eb8" id="r_adbd90512094745ea0de9995c26ef4eb8"><td class="memItemLeft" align="right" valign="top"><a id="adbd90512094745ea0de9995c26ef4eb8" name="adbd90512094745ea0de9995c26ef4eb8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>CustomFixedUpdate</b> ()</td></tr>
+<tr class="memdesc:adbd90512094745ea0de9995c26ef4eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Happens possibly multiple times per frame, dependent on tempo with consideration to recording.<br  />
+ You probably want to use this instead of the FixedUpdate Unity message.<br  />
+ Use <a class="el" href="#aab4ce5fbc5b63a3023204cab5dba2fa1" title="Time.deltaTime when not recording, 1/recording framerate when recording. In most cases,...">MidiScene.FrameDeltaTime</a> instead of Time.deltaTime. <br /></td></tr>
 <tr class="separator:adbd90512094745ea0de9995c26ef4eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac453f34b3ebeda024937d885e313d4b8" id="r_ac453f34b3ebeda024937d885e313d4b8"><td class="memItemLeft" align="right" valign="top"><a id="ac453f34b3ebeda024937d885e313d4b8" name="ac453f34b3ebeda024937d885e313d4b8"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> ()</td></tr>
+<tr class="memitem:ac453f34b3ebeda024937d885e313d4b8" id="r_ac453f34b3ebeda024937d885e313d4b8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac453f34b3ebeda024937d885e313d4b8">Update</a> ()</td></tr>
 <tr class="separator:ac453f34b3ebeda024937d885e313d4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76e23d2841b95493d156af643e13564" id="r_aa76e23d2841b95493d156af643e13564"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa76e23d2841b95493d156af643e13564">Restart</a> ()</td></tr>
+<tr class="memdesc:aa76e23d2841b95493d156af643e13564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization restarts (R is pressed).  <br /></td></tr>
+<tr class="separator:aa76e23d2841b95493d156af643e13564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b069665afa38a9fdb77772d93fcd1e1" id="r_a4b069665afa38a9fdb77772d93fcd1e1"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b069665afa38a9fdb77772d93fcd1e1">LoadMidi</a> ()</td></tr>
+<tr class="memdesc:a4b069665afa38a9fdb77772d93fcd1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently just reads the midi from the file into Midi  <br /></td></tr>
+<tr class="separator:a4b069665afa38a9fdb77772d93fcd1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57e75522066b48649651a9c4d7354bc1" id="r_a57e75522066b48649651a9c4d7354bc1"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57e75522066b48649651a9c4d7354bc1">LoadVisuals</a> ()</td></tr>
+<tr class="memdesc:a57e75522066b48649651a9c4d7354bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears and creates the visuals.  <br /></td></tr>
+<tr class="separator:a57e75522066b48649651a9c4d7354bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab918faf2b8e7fbd8e378c4459df30732" id="r_ab918faf2b8e7fbd8e378c4459df30732"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab918faf2b8e7fbd8e378c4459df30732">DrawGUI</a> ()</td></tr>
 <tr class="separator:ab918faf2b8e7fbd8e378c4459df30732"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1319c18a77e86ecfb1d785941344d3f" id="r_ab1319c18a77e86ecfb1d785941344d3f"><td class="memItemLeft" align="right" valign="top"><a id="ab1319c18a77e86ecfb1d785941344d3f" name="ab1319c18a77e86ecfb1d785941344d3f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawMainMenuItems</b> (string menuName)</td></tr>
+<tr class="memitem:ab1319c18a77e86ecfb1d785941344d3f" id="r_ab1319c18a77e86ecfb1d785941344d3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1319c18a77e86ecfb1d785941344d3f">DrawMainMenuItems</a> (string menuName)</td></tr>
 <tr class="separator:ab1319c18a77e86ecfb1d785941344d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb64c0c41976580fd8a6926cc95c81ce" id="r_aeb64c0c41976580fd8a6926cc95c81ce"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb64c0c41976580fd8a6926cc95c81ce">Reset_</a> ()</td></tr>
-<tr class="separator:aeb64c0c41976580fd8a6926cc95c81ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa76e23d2841b95493d156af643e13564" id="r_aa76e23d2841b95493d156af643e13564"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa76e23d2841b95493d156af643e13564">Restart</a> ()</td></tr>
-<tr class="separator:aa76e23d2841b95493d156af643e13564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a021d57835e48ac43fc9deb9719395f94" id="r_a021d57835e48ac43fc9deb9719395f94"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a021d57835e48ac43fc9deb9719395f94">ReloadMidi</a> ()</td></tr>
-<tr class="separator:a021d57835e48ac43fc9deb9719395f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e3c1f2fc7dd6b7ff2bae8d43a0592ed" id="r_a8e3c1f2fc7dd6b7ff2bae8d43a0592ed"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e3c1f2fc7dd6b7ff2bae8d43a0592ed">ReloadVisuals</a> ()</td></tr>
-<tr class="separator:a8e3c1f2fc7dd6b7ff2bae8d43a0592ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0d782e510ea03cebcbb5523163adc60" id="r_aa0d782e510ea03cebcbb5523163adc60"><td class="memItemLeft" align="right" valign="top"><a id="aa0d782e510ea03cebcbb5523163adc60" name="aa0d782e510ea03cebcbb5523163adc60"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>MicrosToTicks</b> (long start, long micros)</td></tr>
-<tr class="separator:aa0d782e510ea03cebcbb5523163adc60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54866741cf823b6db0b8cbc2bbd97a43" id="r_a54866741cf823b6db0b8cbc2bbd97a43"><td class="memItemLeft" align="right" valign="top">decimal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54866741cf823b6db0b8cbc2bbd97a43">MicrosToTicks</a> (decimal start, decimal micros)</td></tr>
+<tr class="memdesc:a54866741cf823b6db0b8cbc2bbd97a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a number of microseconds into a number of ticks.<br  />
+ This is dependent on tempo and tempo changes, so the <em>start</em>  time is needed.  <br /></td></tr>
+<tr class="separator:a54866741cf823b6db0b8cbc2bbd97a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
-<tr class="memitem:ac61e862857fd91c862696c997857a497 inherit pro_methods_class_omidiv_component" id="r_ac61e862857fd91c862696c997857a497"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr>
+<tr class="memitem:ac61e862857fd91c862696c997857a497 inherit pro_methods_class_omidiv_component" id="r_ac61e862857fd91c862696c997857a497"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#ac61e862857fd91c862696c997857a497">Awake</a> ()</td></tr>
 <tr class="separator:ac61e862857fd91c862696c997857a497 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00a503b47d4ac08f163e7672494431b8 inherit pro_methods_class_omidiv_component" id="r_a00a503b47d4ac08f163e7672494431b8"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnPlayStart</b> ()</td></tr>
+<tr class="memitem:a00a503b47d4ac08f163e7672494431b8 inherit pro_methods_class_omidiv_component" id="r_a00a503b47d4ac08f163e7672494431b8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a00a503b47d4ac08f163e7672494431b8">OnPlayStart</a> ()</td></tr>
+<tr class="memdesc:a00a503b47d4ac08f163e7672494431b8 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization starts playing. May be starting from the beginning or resuming.  <br /></td></tr>
 <tr class="separator:a00a503b47d4ac08f163e7672494431b8 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afebd2c0c2a95abab4391b55876ab6970 inherit pro_methods_class_omidiv_component" id="r_afebd2c0c2a95abab4391b55876ab6970"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnPlayStop</b> ()</td></tr>
+<tr class="memitem:afebd2c0c2a95abab4391b55876ab6970 inherit pro_methods_class_omidiv_component" id="r_afebd2c0c2a95abab4391b55876ab6970"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#afebd2c0c2a95abab4391b55876ab6970">OnPlayStop</a> ()</td></tr>
+<tr class="memdesc:afebd2c0c2a95abab4391b55876ab6970 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization stops playing.  <br /></td></tr>
 <tr class="separator:afebd2c0c2a95abab4391b55876ab6970 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfc350b79b16e00dfc9bafe82e848186 inherit pro_methods_class_omidiv_component" id="r_adfc350b79b16e00dfc9bafe82e848186"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ReloadAudio</b> ()</td></tr>
-<tr class="separator:adfc350b79b16e00dfc9bafe82e848186 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component" id="r_a2882924ccbcceeea8d693a30ae4a1bcb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a2882924ccbcceeea8d693a30ae4a1bcb">Reset_</a> ()</td></tr>
+<tr class="memdesc:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when <a class="el" href="#a45eb0cdade1a88db4e65e9d5d6f4c63c" title="OnLoadAudio and OnLoadMidi will also be called afterwards, so don&#39;t do any of that here,...">MidiScene.OnReset</a> is fired. <a class="el" href="class_omidiv_component.html#a08ffae33c64c287c5fb9115aedd1ba69" title="Override this. Called when the audio needs to be loaded from the file.">LoadAudio</a> and <a class="el" href="class_omidiv_component.html#acb50bd5ef9e3bf16c086e4663135a9b2" title="Override this. Called when the midi information needs to be loaded from the file. LoadVisuals will al...">LoadMidi</a> will also be called afterwards, so don't do any of that here, but do reload any other resources your component needs.  <br /></td></tr>
+<tr class="separator:a2882924ccbcceeea8d693a30ae4a1bcb inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ffae33c64c287c5fb9115aedd1ba69 inherit pro_methods_class_omidiv_component" id="r_a08ffae33c64c287c5fb9115aedd1ba69"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a08ffae33c64c287c5fb9115aedd1ba69">LoadAudio</a> ()</td></tr>
+<tr class="memdesc:a08ffae33c64c287c5fb9115aedd1ba69 inherit pro_methods_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the audio needs to be loaded from the file.  <br /></td></tr>
+<tr class="separator:a08ffae33c64c287c5fb9115aedd1ba69 inherit pro_methods_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:aac5cfa3a0159b310f8760c028f51032f" id="r_aac5cfa3a0159b310f8760c028f51032f"><td class="memItemLeft" align="right" valign="top"><a id="aac5cfa3a0159b310f8760c028f51032f" name="aac5cfa3a0159b310f8760c028f51032f"></a>
 <a class="el" href="class_recorder_controller.html">RecorderController</a>&#160;</td><td class="memItemRight" valign="bottom"><b>VideoRecorder</b></td></tr>
 <tr class="separator:aac5cfa3a0159b310f8760c028f51032f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a164ec84bc079eec4dd8e3ddaa9320758" id="r_a164ec84bc079eec4dd8e3ddaa9320758"><td class="memItemLeft" align="right" valign="top"><a id="a164ec84bc079eec4dd8e3ddaa9320758" name="a164ec84bc079eec4dd8e3ddaa9320758"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTickDouble</b> = 0</td></tr>
-<tr class="separator:a164ec84bc079eec4dd8e3ddaa9320758"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab071a1f6f23954a125ba81db0690bedc" id="r_ab071a1f6f23954a125ba81db0690bedc"><td class="memItemLeft" align="right" valign="top"><a id="ab071a1f6f23954a125ba81db0690bedc" name="ab071a1f6f23954a125ba81db0690bedc"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTimeDouble</b> = 0</td></tr>
-<tr class="separator:ab071a1f6f23954a125ba81db0690bedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7d7b1265655cd92309293ffad48d83a" id="r_aa7d7b1265655cd92309293ffad48d83a"><td class="memItemLeft" align="right" valign="top"><a id="aa7d7b1265655cd92309293ffad48d83a" name="aa7d7b1265655cd92309293ffad48d83a"></a>
-uint&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTempo</b> = 500000</td></tr>
-<tr class="separator:aa7d7b1265655cd92309293ffad48d83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
@@ -197,48 +168,133 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>midiDelayChang
 <tr class="memitem:a412485102c6a3e75bdb829cfb5a27ae4" id="r_a412485102c6a3e75bdb829cfb5a27ae4"><td class="memItemLeft" align="right" valign="top"><a id="a412485102c6a3e75bdb829cfb5a27ae4" name="a412485102c6a3e75bdb829cfb5a27ae4"></a>
 static readonly List&lt; Color &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>TrackColors</b> = new List&lt;Color&gt;()</td></tr>
 <tr class="separator:a412485102c6a3e75bdb829cfb5a27ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_static_attribs_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_static_attribs_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
-<tr class="memitem:ab9362674bcd53d675c4932da5a5f26a5 inherit pro_static_attribs_class_omidiv_component" id="r_ab9362674bcd53d675c4932da5a5f26a5"><td class="memItemLeft" align="right" valign="top">
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPlaying</b> = false</td></tr>
-<tr class="separator:ab9362674bcd53d675c4932da5a5f26a5 inherit pro_static_attribs_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a4b604d1439e05ae4bc5b52c8d28a8a69" id="r_a4b604d1439e05ae4bc5b52c8d28a8a69"><td class="memItemLeft" align="right" valign="top"><a id="a4b604d1439e05ae4bc5b52c8d28a8a69" name="a4b604d1439e05ae4bc5b52c8d28a8a69"></a>
-static float&#160;</td><td class="memItemRight" valign="bottom"><b>DeltaTime</b><code> [get]</code></td></tr>
-<tr class="separator:a4b604d1439e05ae4bc5b52c8d28a8a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b43f4ea4628b9101b69b0835db6bce3" id="r_a6b43f4ea4628b9101b69b0835db6bce3"><td class="memItemLeft" align="right" valign="top"><a id="a6b43f4ea4628b9101b69b0835db6bce3" name="a6b43f4ea4628b9101b69b0835db6bce3"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTick</b><code> [get]</code></td></tr>
-<tr class="separator:a6b43f4ea4628b9101b69b0835db6bce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a146e439596023f2f66f266cdf808762f" id="r_a146e439596023f2f66f266cdf808762f"><td class="memItemLeft" align="right" valign="top"><a id="a146e439596023f2f66f266cdf808762f" name="a146e439596023f2f66f266cdf808762f"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTime</b><code> [get]</code></td></tr>
-<tr class="separator:a146e439596023f2f66f266cdf808762f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90da3f0ac04c40143041b20f8abe7674" id="r_a90da3f0ac04c40143041b20f8abe7674"><td class="memItemLeft" align="right" valign="top">static decimal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90da3f0ac04c40143041b20f8abe7674">CurrentTick</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a90da3f0ac04c40143041b20f8abe7674"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current midi tick the visualization is on. May be negative with a midi delay.  <br /></td></tr>
+<tr class="separator:a90da3f0ac04c40143041b20f8abe7674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26dbf4669ae50f7ce4f139ed80db5b9" id="r_aa26dbf4669ae50f7ce4f139ed80db5b9"><td class="memItemLeft" align="right" valign="top">static decimal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa26dbf4669ae50f7ce4f139ed80db5b9">CurrentTime</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aa26dbf4669ae50f7ce4f139ed80db5b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current midi time in microseconds. May be negative with a midi delay.  <br /></td></tr>
+<tr class="separator:aa26dbf4669ae50f7ce4f139ed80db5b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57aa6a2f5d916136f797f57625e13d39" id="r_a57aa6a2f5d916136f797f57625e13d39"><td class="memItemLeft" align="right" valign="top"><a id="a57aa6a2f5d916136f797f57625e13d39" name="a57aa6a2f5d916136f797f57625e13d39"></a>
+static uint&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTempoMicros</b> = 500000<code> [get, set]</code></td></tr>
+<tr class="memdesc:a57aa6a2f5d916136f797f57625e13d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current tempo in microseconds per quarter note (as per the midi file format). <br /></td></tr>
+<tr class="separator:a57aa6a2f5d916136f797f57625e13d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a161501eeaca1c8f420de49b2be22c936" id="r_a161501eeaca1c8f420de49b2be22c936"><td class="memItemLeft" align="right" valign="top"><a id="a161501eeaca1c8f420de49b2be22c936" name="a161501eeaca1c8f420de49b2be22c936"></a>
+static double&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTempoBPM</b><code> [get, set]</code></td></tr>
+<tr class="separator:a161501eeaca1c8f420de49b2be22c936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab51aa3688682fa44be0a20d43c924abc" id="r_ab51aa3688682fa44be0a20d43c924abc"><td class="memItemLeft" align="right" valign="top"><a id="ab51aa3688682fa44be0a20d43c924abc" name="ab51aa3688682fa44be0a20d43c924abc"></a>
+static decimal&#160;</td><td class="memItemRight" valign="bottom"><b>TickDeltaTime</b><code> [get]</code></td></tr>
+<tr class="memdesc:ab51aa3688682fa44be0a20d43c924abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">High precision duration of one tick.<br  />
+ Consider using this instead of Time.fixedDeltaTime. <br /></td></tr>
+<tr class="separator:ab51aa3688682fa44be0a20d43c924abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4ce5fbc5b63a3023204cab5dba2fa1" id="r_aab4ce5fbc5b63a3023204cab5dba2fa1"><td class="memItemLeft" align="right" valign="top"><a id="aab4ce5fbc5b63a3023204cab5dba2fa1" name="aab4ce5fbc5b63a3023204cab5dba2fa1"></a>
+static double&#160;</td><td class="memItemRight" valign="bottom"><b>FrameDeltaTime</b><code> [get]</code></td></tr>
+<tr class="memdesc:aab4ce5fbc5b63a3023204cab5dba2fa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time.deltaTime when not recording, <code>1/recording framerate</code> when recording. In most cases, use this instead of Time.deltaTime so that recordings work properly. <br /></td></tr>
+<tr class="separator:aab4ce5fbc5b63a3023204cab5dba2fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaee9c9f5d808c3a219836d70003e9095" id="r_aaee9c9f5d808c3a219836d70003e9095"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaee9c9f5d808c3a219836d70003e9095">AutoReload</a> = true<code> [get, set]</code></td></tr>
+<tr class="separator:aaee9c9f5d808c3a219836d70003e9095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa02ece3e1ff4aa61f81b393f053b3b1" id="r_aaa02ece3e1ff4aa61f81b393f053b3b1"><td class="memItemLeft" align="right" valign="top"><a id="aaa02ece3e1ff4aa61f81b393f053b3b1" name="aaa02ece3e1ff4aa61f81b393f053b3b1"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsStartPlay</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:aaa02ece3e1ff4aa61f81b393f053b3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442cd583fbef03e6c78529a7b9e271e8" id="r_a442cd583fbef03e6c78529a7b9e271e8"><td class="memItemLeft" align="right" valign="top"><a id="a442cd583fbef03e6c78529a7b9e271e8" name="a442cd583fbef03e6c78529a7b9e271e8"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsStopPlay</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:a442cd583fbef03e6c78529a7b9e271e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9dc3a8f8ebaa7a9affccb3f5625881" id="r_a7b9dc3a8f8ebaa7a9affccb3f5625881"><td class="memItemLeft" align="right" valign="top"><a id="a7b9dc3a8f8ebaa7a9affccb3f5625881" name="a7b9dc3a8f8ebaa7a9affccb3f5625881"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsReset</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:a7b9dc3a8f8ebaa7a9affccb3f5625881"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcde71a3d410b68aa0ca8ccb35acb89a" id="r_afcde71a3d410b68aa0ca8ccb35acb89a"><td class="memItemLeft" align="right" valign="top"><a id="afcde71a3d410b68aa0ca8ccb35acb89a" name="afcde71a3d410b68aa0ca8ccb35acb89a"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsRestart</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:afcde71a3d410b68aa0ca8ccb35acb89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acad02d44fa775d9d997f0f65dcb24ec4" id="r_acad02d44fa775d9d997f0f65dcb24ec4"><td class="memItemLeft" align="right" valign="top"><a id="acad02d44fa775d9d997f0f65dcb24ec4" name="acad02d44fa775d9d997f0f65dcb24ec4"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsMidiReload</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:acad02d44fa775d9d997f0f65dcb24ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2139cc697f789a678a888845a14dc0f9" id="r_a2139cc697f789a678a888845a14dc0f9"><td class="memItemLeft" align="right" valign="top"><a id="a2139cc697f789a678a888845a14dc0f9" name="a2139cc697f789a678a888845a14dc0f9"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsVisualReload</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:a2139cc697f789a678a888845a14dc0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ca0c9a7bc8af62b0b20fdbc60ae3bd" id="r_a31ca0c9a7bc8af62b0b20fdbc60ae3bd"><td class="memItemLeft" align="right" valign="top"><a id="a31ca0c9a7bc8af62b0b20fdbc60ae3bd" name="a31ca0c9a7bc8af62b0b20fdbc60ae3bd"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsAudioReload</b> = false<code> [get, set]</code></td></tr>
+<tr class="separator:a31ca0c9a7bc8af62b0b20fdbc60ae3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
+<tr class="memitem:ab9362674bcd53d675c4932da5a5f26a5 inherit properties_class_omidiv_component" id="r_ab9362674bcd53d675c4932da5a5f26a5"><td class="memItemLeft" align="right" valign="top">
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPlaying</b> = false<code> [get, protected set]</code></td></tr>
+<tr class="memdesc:ab9362674bcd53d675c4932da5a5f26a5 inherit properties_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the visualization currently playing. <br /></td></tr>
+<tr class="separator:ab9362674bcd53d675c4932da5a5f26a5 inherit properties_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="events" name="events"></a>
 Events</h2></td></tr>
 <tr class="memitem:af5ebb7a830eab6efef0f91afb76b2c5c" id="r_af5ebb7a830eab6efef0f91afb76b2c5c"><td class="memItemLeft" align="right" valign="top"><a id="af5ebb7a830eab6efef0f91afb76b2c5c" name="af5ebb7a830eab6efef0f91afb76b2c5c"></a>
 static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnPlayStarted</b></td></tr>
+<tr class="memdesc:af5ebb7a830eab6efef0f91afb76b2c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the visualization starts playing. May be starting from the beginning or resuming. <br /></td></tr>
 <tr class="separator:af5ebb7a830eab6efef0f91afb76b2c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a827283bb4d8aa4fbc88693442c3c1954" id="r_a827283bb4d8aa4fbc88693442c3c1954"><td class="memItemLeft" align="right" valign="top"><a id="a827283bb4d8aa4fbc88693442c3c1954" name="a827283bb4d8aa4fbc88693442c3c1954"></a>
 static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnPlayStopped</b></td></tr>
+<tr class="memdesc:a827283bb4d8aa4fbc88693442c3c1954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the visualization stops playing. <br /></td></tr>
 <tr class="separator:a827283bb4d8aa4fbc88693442c3c1954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45eb0cdade1a88db4e65e9d5d6f4c63c" id="r_a45eb0cdade1a88db4e65e9d5d6f4c63c"><td class="memItemLeft" align="right" valign="top"><a id="a45eb0cdade1a88db4e65e9d5d6f4c63c" name="a45eb0cdade1a88db4e65e9d5d6f4c63c"></a>
 static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReset</b></td></tr>
+<tr class="memdesc:a45eb0cdade1a88db4e65e9d5d6f4c63c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="#a87cefa7297fc82d302df4c2b07589c88" title="Called when the audio needs to be loaded from the file.">OnLoadAudio</a> and <a class="el" href="#a4b1c884f35afb954cc3b73e5bb973103" title="Called when the midi information needs to be loaded from the file. OnLoadVisuals will also be called ...">OnLoadMidi</a> will also be called afterwards, so don't do any of that here, but do reload any other resources your component needs. <br /></td></tr>
 <tr class="separator:a45eb0cdade1a88db4e65e9d5d6f4c63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a566b54aade44251ba190b5589eb4ca48" id="r_a566b54aade44251ba190b5589eb4ca48"><td class="memItemLeft" align="right" valign="top"><a id="a566b54aade44251ba190b5589eb4ca48" name="a566b54aade44251ba190b5589eb4ca48"></a>
 static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnRestart</b></td></tr>
+<tr class="memdesc:a566b54aade44251ba190b5589eb4ca48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the visualization restarts (<code>R</code> is pressed). <br /></td></tr>
 <tr class="separator:a566b54aade44251ba190b5589eb4ca48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a0d9722a51e8651a3ae3839c1016803" id="r_a2a0d9722a51e8651a3ae3839c1016803"><td class="memItemLeft" align="right" valign="top"><a id="a2a0d9722a51e8651a3ae3839c1016803" name="a2a0d9722a51e8651a3ae3839c1016803"></a>
-static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadMidi</b></td></tr>
-<tr class="separator:a2a0d9722a51e8651a3ae3839c1016803"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe71a6c52b7dadd4dcad18bd420a0d6c" id="r_abe71a6c52b7dadd4dcad18bd420a0d6c"><td class="memItemLeft" align="right" valign="top"><a id="abe71a6c52b7dadd4dcad18bd420a0d6c" name="abe71a6c52b7dadd4dcad18bd420a0d6c"></a>
-static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadAudio</b></td></tr>
-<tr class="separator:abe71a6c52b7dadd4dcad18bd420a0d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c5d1c7b25b4a269bdff77eaf02a8249" id="r_a5c5d1c7b25b4a269bdff77eaf02a8249"><td class="memItemLeft" align="right" valign="top"><a id="a5c5d1c7b25b4a269bdff77eaf02a8249" name="a5c5d1c7b25b4a269bdff77eaf02a8249"></a>
-static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisuals</b></td></tr>
-<tr class="separator:a5c5d1c7b25b4a269bdff77eaf02a8249"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1c884f35afb954cc3b73e5bb973103" id="r_a4b1c884f35afb954cc3b73e5bb973103"><td class="memItemLeft" align="right" valign="top"><a id="a4b1c884f35afb954cc3b73e5bb973103" name="a4b1c884f35afb954cc3b73e5bb973103"></a>
+static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnLoadMidi</b></td></tr>
+<tr class="memdesc:a4b1c884f35afb954cc3b73e5bb973103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the midi information needs to be loaded from the file. <a class="el" href="#aec1970bdc8b108fe473916526ad7aeb9" title="Called when the visuals need to be recreated (like when something in the MIDI Controls window is chan...">OnLoadVisuals</a> will also be called afterwards, so don't do any of that here. <br /></td></tr>
+<tr class="separator:a4b1c884f35afb954cc3b73e5bb973103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec1970bdc8b108fe473916526ad7aeb9" id="r_aec1970bdc8b108fe473916526ad7aeb9"><td class="memItemLeft" align="right" valign="top"><a id="aec1970bdc8b108fe473916526ad7aeb9" name="aec1970bdc8b108fe473916526ad7aeb9"></a>
+static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnLoadVisuals</b></td></tr>
+<tr class="memdesc:aec1970bdc8b108fe473916526ad7aeb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the visuals need to be recreated (like when something in the MIDI Controls window is changed). <br /></td></tr>
+<tr class="separator:aec1970bdc8b108fe473916526ad7aeb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87cefa7297fc82d302df4c2b07589c88" id="r_a87cefa7297fc82d302df4c2b07589c88"><td class="memItemLeft" align="right" valign="top"><a id="a87cefa7297fc82d302df4c2b07589c88" name="a87cefa7297fc82d302df4c2b07589c88"></a>
+static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnLoadAudio</b></td></tr>
+<tr class="memdesc:a87cefa7297fc82d302df4c2b07589c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the audio needs to be loaded from the file. <br /></td></tr>
+<tr class="separator:a87cefa7297fc82d302df4c2b07589c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_class_omidiv_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_omidiv_component')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_omidiv_component.html">OmidivComponent</a></td></tr>
+<tr class="memitem:ac819e5375ad7a17e2b0f7726e266faee inherit pub_attribs_class_omidiv_component" id="r_ac819e5375ad7a17e2b0f7726e266faee"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#ac819e5375ad7a17e2b0f7726e266faee">ConfigTag</a> = &quot;def&quot;</td></tr>
+<tr class="memdesc:ac819e5375ad7a17e2b0f7726e266faee inherit pub_attribs_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this to give different instances in difference scenes different saved config.<br  />
+  <br /></td></tr>
+<tr class="separator:ac819e5375ad7a17e2b0f7726e266faee inherit pub_attribs_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The base class for a component that draws a visualization. This class itself controls a lot of things about the visualization, such as events. There should only be one of these per scene. </p>
+<p>I will consider making some of the protected fields public so that you can have multiple components reading midi information and drawing visuals. Or I may find another solution to this, such as a component class that has access to midi information and responds to events, but doesn't control the simulation.<br  />
+ On further thought, yes.<br  />
+ TODO: separate <a class="el" href="class_midi_scene.html" title="The base class for a component that draws a visualization. This class itself controls a lot of things...">MidiScene</a> into VisualsComponent and SceneController. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad61a49dcee53a04816a26fce6be5dbc6" name="ad61a49dcee53a04816a26fce6be5dbc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad61a49dcee53a04816a26fce6be5dbc6">&#9670;&#160;</a></span>ClearVisuals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MidiScene.ClearVisuals </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clear all created visuals here. </p>
+<p>May be called before visuals have been created, so don't assume the visuals will be there.</p>
+
+</div>
+</div>
 <a id="ab918faf2b8e7fbd8e378c4459df30732" name="ab918faf2b8e7fbd8e378c4459df30732"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab918faf2b8e7fbd8e378c4459df30732">&#9670;&#160;</a></span>DrawGUI()</h2>
 
@@ -261,8 +317,168 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.DrawGUI()</code> if overriding this.</p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#acbc155e211903854e90af948aa2ee00e">OmidivComponent</a>.</p>
+
+</div>
+</div>
+<a id="ab1319c18a77e86ecfb1d785941344d3f" name="ab1319c18a77e86ecfb1d785941344d3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1319c18a77e86ecfb1d785941344d3f">&#9670;&#160;</a></span>DrawMainMenuItems()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MidiScene.DrawMainMenuItems </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>menuName</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Please call <code>base.DrawMainMenuItems()</code> if overriding this.</p>
+
+</div>
+</div>
+<a id="a4b069665afa38a9fdb77772d93fcd1e1" name="a4b069665afa38a9fdb77772d93fcd1e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b069665afa38a9fdb77772d93fcd1e1">&#9670;&#160;</a></span>LoadMidi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">override void MidiScene.LoadMidi </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Currently just reads the midi from the file into Midi </p>
+<p>Please call <code>base.LoadMidi()</code> if overriding this.</p>
+
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#acb50bd5ef9e3bf16c086e4663135a9b2">OmidivComponent</a>.</p>
+
+</div>
+</div>
+<a id="a57e75522066b48649651a9c4d7354bc1" name="a57e75522066b48649651a9c4d7354bc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57e75522066b48649651a9c4d7354bc1">&#9670;&#160;</a></span>LoadVisuals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">override void MidiScene.LoadVisuals </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clears and creates the visuals. </p>
+<p>Please call <code>base.LoadVisuals()</code> if overriding this.</p>
+
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#a18c9a02d79c147840b11fc0e5b826c42">OmidivComponent</a>.</p>
+
+</div>
+</div>
+<a id="a54866741cf823b6db0b8cbc2bbd97a43" name="a54866741cf823b6db0b8cbc2bbd97a43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54866741cf823b6db0b8cbc2bbd97a43">&#9670;&#160;</a></span>MicrosToTicks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decimal MidiScene.MicrosToTicks </td>
+          <td>(</td>
+          <td class="paramtype">decimal</td>          <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">decimal</td>          <td class="paramname"><span class="paramname"><em>micros</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts a number of microseconds into a number of ticks.<br  />
+ This is dependent on tempo and tempo changes, so the <em>start</em>  time is needed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>The microsecond of playback to start at. May be negative.</td></tr>
+    <tr><td class="paramname">micros</td><td>The number of microseconds to convert</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Known very small issue: If there is a tempo change at, say 1000 microseconds, start is 1000.xxx, and micros is negative, 0.xxx micros will be converted at the previous tempo. Keep in mind this is <em>nanoseconds</em> of error. </p>
+
+</div>
+</div>
+<a id="ad427290e5865f417a3937a8b040e05f7" name="ad427290e5865f417a3937a8b040e05f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad427290e5865f417a3937a8b040e05f7">&#9670;&#160;</a></span>MovePlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MidiScene.MovePlay </td>
+          <td>(</td>
+          <td class="paramtype">decimal</td>          <td class="paramname"><span class="paramname"><em>ticks</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move your visualization forward or backward (in case midi delay is adjusted). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ticks</td><td>Will usually be 1 except if the midi uses SMPTE time format, or the midi delay is adjusted.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -288,8 +504,10 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Clears visuals by default.<br  />
+ Please call <code>base.OnDestroy()</code> if overriding this, unless you really know what you're doing. </p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#a38bd8c85a0712cc4417fe509722e2e71">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -315,8 +533,9 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.OnDisable()</code> if overriding this, unless you really know what you're doing. </p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#ae9681cad2f5b173a7ed9a0d09f121553">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -342,8 +561,9 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.OnEnable()</code> if overriding this, unless you really know what you're doing. </p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#a04285c9365a5027276f712e84389be85">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -369,89 +589,9 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.ReadConfig()</code> if overriding this unless you know what you're doing.</p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
-
-</div>
-</div>
-<a id="a021d57835e48ac43fc9deb9719395f94" name="a021d57835e48ac43fc9deb9719395f94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a021d57835e48ac43fc9deb9719395f94">&#9670;&#160;</a></span>ReloadMidi()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">override void MidiScene.ReloadMidi </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
-
-</div>
-</div>
-<a id="a8e3c1f2fc7dd6b7ff2bae8d43a0592ed" name="a8e3c1f2fc7dd6b7ff2bae8d43a0592ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e3c1f2fc7dd6b7ff2bae8d43a0592ed">&#9670;&#160;</a></span>ReloadVisuals()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">override void MidiScene.ReloadVisuals </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
-
-</div>
-</div>
-<a id="aeb64c0c41976580fd8a6926cc95c81ce" name="aeb64c0c41976580fd8a6926cc95c81ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb64c0c41976580fd8a6926cc95c81ce">&#9670;&#160;</a></span>Reset_()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">override void MidiScene.Reset_ </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#aafea45c91e42424e6387c8c8fcb6c449">OmidivComponent</a>.</p>
 
 </div>
 </div>
@@ -478,7 +618,65 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Override this. Called when the visualization restarts (R is pressed). </p>
+
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#aeeb9539fb0e45f31d39f95499b0edcee">OmidivComponent</a>.</p>
+
+</div>
+</div>
+<a id="a79a291430df488e3b44f25d76f185176" name="a79a291430df488e3b44f25d76f185176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79a291430df488e3b44f25d76f185176">&#9670;&#160;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void MidiScene.Start </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Please call <code>base.Start()</code> if overriding this, unless you really know what you're doing. </p>
+
+<p>Reimplemented in <a class="el" href="class_base3_d.html#acbdeec8e1cea68a928fe7040700a87f7">Base3D&lt; TrackInfo &gt;</a>, and <a class="el" href="class_circle2_d.html#aaf30b0c8ebe119e50ab390ed209002f0">Circle2D</a>.</p>
+
+</div>
+</div>
+<a id="ac453f34b3ebeda024937d885e313d4b8" name="ac453f34b3ebeda024937d885e313d4b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac453f34b3ebeda024937d885e313d4b8">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void MidiScene.Update </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Please call <code>base.Update()</code> if overriding this.</p>
+
+<p>Reimplemented in <a class="el" href="class_base3_d.html#aff324f6ce73c7291469ba6fb89c4a906">Base3D&lt; TrackInfo &gt;</a>, and <a class="el" href="class_circle2_d.html#ad71acf776b84d7afb023f3a35a6ff2f1">Circle2D</a>.</p>
 
 </div>
 </div>
@@ -504,8 +702,83 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnReloadVisu
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Please call <code>base.WriteConfig()</code> if overriding this unless you know what you're doing.</p>
 
-<p>Reimplemented from <a class="el" href="class_omidiv_component.html">OmidivComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="class_omidiv_component.html#a62743605c88ef04be45b0055977765c2">OmidivComponent</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="aaee9c9f5d808c3a219836d70003e9095" name="aaee9c9f5d808c3a219836d70003e9095"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaee9c9f5d808c3a219836d70003e9095">&#9670;&#160;</a></span>AutoReload</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MidiScene.AutoReload = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Doesn't make changes you make automatically apply. Instead, chack the value of this for whether or not you should apply the changes when they happen.</p>
+
+</div>
+</div>
+<a id="a90da3f0ac04c40143041b20f8abe7674" name="a90da3f0ac04c40143041b20f8abe7674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90da3f0ac04c40143041b20f8abe7674">&#9670;&#160;</a></span>CurrentTick</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decimal MidiScene.CurrentTick</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The current midi tick the visualization is on. May be negative with a midi delay. </p>
+<dl class="section see"><dt>See also</dt><dd>CurrentTickLong, CurrentTickDouble</dd></dl>
+
+</div>
+</div>
+<a id="aa26dbf4669ae50f7ce4f139ed80db5b9" name="aa26dbf4669ae50f7ce4f139ed80db5b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa26dbf4669ae50f7ce4f139ed80db5b9">&#9670;&#160;</a></span>CurrentTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decimal MidiScene.CurrentTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The current midi time in microseconds. May be negative with a midi delay. </p>
+<dl class="section see"><dt>See also</dt><dd>CurrentTimeLong, CurrentTimeDouble</dd></dl>
 
 </div>
 </div>

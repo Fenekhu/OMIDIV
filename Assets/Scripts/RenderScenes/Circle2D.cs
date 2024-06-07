@@ -1,10 +1,14 @@
 using ImGuiNET;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
+/// <summary>
+/// A visualization where the pitches of the track appear as pads placed radially. The pads light up when that pitch is played.
+/// </summary>
 public class Circle2D : MidiScene {
 
     struct TrackInfo {
@@ -22,6 +26,8 @@ public class Circle2D : MidiScene {
     }
 
     static readonly float GlobalScale = 1/128.0f;
+
+    public Circle2D() { ConfigTag = "c2d"; }
 
     [SerializeField] GameObject NotePrefab;
 
@@ -67,7 +73,7 @@ public class Circle2D : MidiScene {
                 if (track.fadeTimes[i] > 0) {
                     mat.color = track.trackColor.WithAlpha(math.remap(0, NoteFadeTime, NoteAlpha, 1, track.fadeTimes[i]));
                     mat.SetColor("_EmissionColor", track.trackColor * math.min(4, 8 * math.unlerp(0, NoteFadeTime, track.fadeTimes[i])));
-                    track.fadeTimes[i] -= DeltaTime;
+                    track.fadeTimes[i] -= (float)FrameDeltaTime;
                     if (track.fadeTimes[i] == 0) track.fadeTimes[i]--; // ensure that this doesn't land on exactly zero and enters the next block next frame
                 } else if (track.fadeTimes[i] < 0) { // properly "shut off" the note only once (instead of every frame if this was <= 0)
                     mat.color = track.trackColor.WithAlpha(NoteAlpha);
@@ -106,7 +112,7 @@ public class Circle2D : MidiScene {
         }
     }
 
-    protected override void InitVisuals() {
+    protected override void CreateVisuals() {
         Tracks = new TrackInfo[Midi.Tracks.Count];
         for (int i = 0; i < Midi.Tracks.Count; i++) {
             GameObject go = new GameObject(Midi.Tracks[i].name);
@@ -173,7 +179,10 @@ public class Circle2D : MidiScene {
             for (int i = 0; i < trackInfo.obj.transform.childCount; i++) {
                 Transform obj = trackInfo.obj.transform.GetChild(i);
 
-                obj.GetComponent<MeshRenderer>().material.color = trackInfo.trackColor.WithAlpha(NoteAlpha);
+                Material mat = obj.GetComponent<MeshRenderer>().material;
+                mat.color = trackInfo.trackColor.WithAlpha(NoteAlpha);
+                mat.SetColor("_EmissionColor", Color.black);
+                mat.DisableKeyword("_EMISSION");
                 if (justColors) continue;
 
                 if (newMesh is not null) obj.GetComponent<MeshFilter>().mesh = newMesh;
@@ -186,6 +195,8 @@ public class Circle2D : MidiScene {
                 obj.localEulerAngles = new Vector3(0, 0, NoteRotation - Mathf.Rad2Deg * noteTheta);
             }
             trackInfo.updateMeshes = false;
+
+            Array.Clear(trackInfo.fadeTimes, 0, trackInfo.fadeTimes.Length);
 
             j++;
         }
@@ -212,7 +223,8 @@ public class Circle2D : MidiScene {
         ResetNotes(true);
     }
 
-    protected override void MovePlay(double ticks) {}
+    // nothing needs to be done here because visuals only need to know the current time.
+    protected override void MovePlay(decimal ticks) {}
 
     protected override void DrawGUI() {
         base.DrawGUI();

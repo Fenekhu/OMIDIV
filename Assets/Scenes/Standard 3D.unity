@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef22c0cba7aaac48bf92ef45290bab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConfigTag: s3d
   VideoRecorder: {fileID: 1973330334}
   NotePrefab: {fileID: 2667171377042357618, guid: f761491f78900514787fecf689077a05,
     type: 3}
@@ -570,6 +571,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7393445385733941884, guid: 103668deaa4d3dd4db528bfa08662e2f,
+        type: 3}
+      propertyPath: ConfigTag
+      value: s3d
+      objectReference: {fileID: 0}
     - target: {fileID: 8106160093819679794, guid: 103668deaa4d3dd4db528bfa08662e2f,
         type: 3}
       propertyPath: m_Name
@@ -711,6 +717,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 5250792412558364911, guid: 2d0e047dccfb9e4468677d6b3f0b8709,
+        type: 3}
+      propertyPath: ConfigTag
+      value: s3d
+      objectReference: {fileID: 0}
     - target: {fileID: 8101555389580240981, guid: 2d0e047dccfb9e4468677d6b3f0b8709,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -777,6 +788,11 @@ PrefabInstance:
     - target: {fileID: 2579979078807705148, guid: 0ed6a01a2160e4240bfaeafd11e99bdc,
         type: 3}
       propertyPath: SceneTag
+      value: s3d
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579979078807705148, guid: 0ed6a01a2160e4240bfaeafd11e99bdc,
+        type: 3}
+      propertyPath: ConfigTag
       value: s3d
       objectReference: {fileID: 0}
     - target: {fileID: 4749444125355302152, guid: 0ed6a01a2160e4240bfaeafd11e99bdc,

@@ -1,10 +1,14 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering.Universal;
+﻿using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using ImGuiNET;
 
+/// <summary>
+/// <see cref="OmidivComponent"/> drawing a GUI to control post-processing effects.
+/// </summary>
 public class PostProcessingController : OmidivComponent {
-    [SerializeField] protected Volume GlobalVolume;
+    /// <summary>The volume being controlled by this.</summary>
+    public Volume GlobalVolume;
+    /// <summary>The bloom part of the post-processing effects.</summary>
     protected Bloom Bloom;
 
     private void Start() {

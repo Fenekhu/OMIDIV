@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: FFmpegRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  m_mat: {fileID: 0}
   rpevent: 600
 --- !u!114 &-3162921515803259265
 MonoBehaviour:

@@ -67,50 +67,49 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">CookedMidi.TempoMap_ Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Stores the tempo changes within the midi.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8f2923b35f8ecdf9d26172515e4bd785" id="r_a8f2923b35f8ecdf9d26172515e4bd785"><td class="memItemLeft" align="right" valign="top"><a id="a8f2923b35f8ecdf9d26172515e4bd785" name="a8f2923b35f8ecdf9d26172515e4bd785"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Clear</b> ()</td></tr>
 <tr class="separator:a8f2923b35f8ecdf9d26172515e4bd785"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeb6685252ea5fed855932b3e7c7d2ab" id="r_aaeb6685252ea5fed855932b3e7c7d2ab"><td class="memItemLeft" align="right" valign="top"><a id="aaeb6685252ea5fed855932b3e7c7d2ab" name="aaeb6685252ea5fed855932b3e7c7d2ab"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Set</b> (long timeMicros, uint tempoMicros, bool autoUpdate=true)</td></tr>
-<tr class="separator:aaeb6685252ea5fed855932b3e7c7d2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23a8451044cdc6a8a771a9b6bbb8eae4" id="r_a23a8451044cdc6a8a771a9b6bbb8eae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23a8451044cdc6a8a771a9b6bbb8eae4">Set</a> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>, uint tempoMicros)</td></tr>
+<tr class="separator:a23a8451044cdc6a8a771a9b6bbb8eae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65da585fb83984b8c4b8b7be73169ebb" id="r_a65da585fb83984b8c4b8b7be73169ebb"><td class="memItemLeft" align="right" valign="top"><a id="a65da585fb83984b8c4b8b7be73169ebb" name="a65da585fb83984b8c4b8b7be73169ebb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateChanges</b> ()</td></tr>
+<tr class="memdesc:a65da585fb83984b8c4b8b7be73169ebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies changes made with <a class="el" href="#a23a8451044cdc6a8a771a9b6bbb8eae4">Set</a>. <br /></td></tr>
 <tr class="separator:a65da585fb83984b8c4b8b7be73169ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4bc724a618433454be090f423c7cf18" id="r_ab4bc724a618433454be090f423c7cf18"><td class="memItemLeft" align="right" valign="top"><a id="ab4bc724a618433454be090f423c7cf18" name="ab4bc724a618433454be090f423c7cf18"></a>
 long uint tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>GetAtIndex</b> (int index)</td></tr>
 <tr class="separator:ab4bc724a618433454be090f423c7cf18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a139e1771f40b291fc8e7ec40d72017d9" id="r_a139e1771f40b291fc8e7ec40d72017d9"><td class="memItemLeft" align="right" valign="top"><a id="a139e1771f40b291fc8e7ec40d72017d9" name="a139e1771f40b291fc8e7ec40d72017d9"></a>
-int?&#160;</td><td class="memItemRight" valign="bottom"><b>GTIndex</b> (long timeMicros)</td></tr>
+<tr class="memitem:a139e1771f40b291fc8e7ec40d72017d9" id="r_a139e1771f40b291fc8e7ec40d72017d9"><td class="memItemLeft" align="right" valign="top">int?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a139e1771f40b291fc8e7ec40d72017d9">GTIndex</a> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:a139e1771f40b291fc8e7ec40d72017d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af35aed37c7033fecaead4f30816248da" id="r_af35aed37c7033fecaead4f30816248da"><td class="memItemLeft" align="right" valign="top"><a id="af35aed37c7033fecaead4f30816248da" name="af35aed37c7033fecaead4f30816248da"></a>
-long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>GT</b> (long timeMicros)</td></tr>
+long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>GT</b> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:af35aed37c7033fecaead4f30816248da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b814c91c4893f49041e6755ad11539f" id="r_a8b814c91c4893f49041e6755ad11539f"><td class="memItemLeft" align="right" valign="top"><a id="a8b814c91c4893f49041e6755ad11539f" name="a8b814c91c4893f49041e6755ad11539f"></a>
-int?&#160;</td><td class="memItemRight" valign="bottom"><b>GTEIndex</b> (long timeMicros)</td></tr>
+<tr class="memitem:a8b814c91c4893f49041e6755ad11539f" id="r_a8b814c91c4893f49041e6755ad11539f"><td class="memItemLeft" align="right" valign="top">int?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b814c91c4893f49041e6755ad11539f">GTEIndex</a> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:a8b814c91c4893f49041e6755ad11539f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad09816f7b371531721d69b8ca2ed6ef7" id="r_ad09816f7b371531721d69b8ca2ed6ef7"><td class="memItemLeft" align="right" valign="top"><a id="ad09816f7b371531721d69b8ca2ed6ef7" name="ad09816f7b371531721d69b8ca2ed6ef7"></a>
-long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>GTE</b> (long timeMicros)</td></tr>
+long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>GTE</b> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:ad09816f7b371531721d69b8ca2ed6ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc92ff0bf1fda2b9d22726441b02f5cb" id="r_abc92ff0bf1fda2b9d22726441b02f5cb"><td class="memItemLeft" align="right" valign="top"><a id="abc92ff0bf1fda2b9d22726441b02f5cb" name="abc92ff0bf1fda2b9d22726441b02f5cb"></a>
-int?&#160;</td><td class="memItemRight" valign="bottom"><b>LTIndex</b> (long timeMicros)</td></tr>
+<tr class="memitem:abc92ff0bf1fda2b9d22726441b02f5cb" id="r_abc92ff0bf1fda2b9d22726441b02f5cb"><td class="memItemLeft" align="right" valign="top">int?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc92ff0bf1fda2b9d22726441b02f5cb">LTIndex</a> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:abc92ff0bf1fda2b9d22726441b02f5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc117ecacc038fa55a99c1e936e784ab" id="r_abc117ecacc038fa55a99c1e936e784ab"><td class="memItemLeft" align="right" valign="top"><a id="abc117ecacc038fa55a99c1e936e784ab" name="abc117ecacc038fa55a99c1e936e784ab"></a>
-long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>LT</b> (long timeMicros)</td></tr>
+long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>LT</b> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:abc117ecacc038fa55a99c1e936e784ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a0884b274a3439cf337c6fbca0ce9be" id="r_a2a0884b274a3439cf337c6fbca0ce9be"><td class="memItemLeft" align="right" valign="top"><a id="a2a0884b274a3439cf337c6fbca0ce9be" name="a2a0884b274a3439cf337c6fbca0ce9be"></a>
-int?&#160;</td><td class="memItemRight" valign="bottom"><b>LTEIndex</b> (long timeMicros)</td></tr>
+<tr class="memitem:a2a0884b274a3439cf337c6fbca0ce9be" id="r_a2a0884b274a3439cf337c6fbca0ce9be"><td class="memItemLeft" align="right" valign="top">int?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a0884b274a3439cf337c6fbca0ce9be">LTEIndex</a> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:a2a0884b274a3439cf337c6fbca0ce9be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a663833dbb42f0e18245753397934284c" id="r_a663833dbb42f0e18245753397934284c"><td class="memItemLeft" align="right" valign="top"><a id="a663833dbb42f0e18245753397934284c" name="a663833dbb42f0e18245753397934284c"></a>
-long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>LTE</b> (long timeMicros)</td></tr>
+long uint? tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>LTE</b> (long <a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a>)</td></tr>
 <tr class="separator:a663833dbb42f0e18245753397934284c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a8bdb99757fe221738acd96e841998805" id="r_a8bdb99757fe221738acd96e841998805"><td class="memItemLeft" align="right" valign="top"><a id="a8bdb99757fe221738acd96e841998805" name="a8bdb99757fe221738acd96e841998805"></a>
-long&#160;</td><td class="memItemRight" valign="bottom"><b>timeMicros</b></td></tr>
+<tr class="memitem:a8bdb99757fe221738acd96e841998805" id="r_a8bdb99757fe221738acd96e841998805"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bdb99757fe221738acd96e841998805">timeMicros</a></td></tr>
+<tr class="memdesc:a8bdb99757fe221738acd96e841998805"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the tempo at a given time in microseconds, as well as the time where it is set.  <br /></td></tr>
 <tr class="separator:a8bdb99757fe221738acd96e841998805"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
@@ -122,6 +121,125 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Count</b><code> [get]<
 long uint tempoMicros&#160;</td><td class="memItemRight" valign="bottom"><b>this[long timeMicros]</b><code> [get]</code></td></tr>
 <tr class="separator:abc87fc5a6bdada302a7a4a85c566b5f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Stores the tempo changes within the midi. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8b814c91c4893f49041e6755ad11539f" name="a8b814c91c4893f49041e6755ad11539f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b814c91c4893f49041e6755ad11539f">&#9670;&#160;</a></span>GTEIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int? CookedMidi.TempoMap_.GTEIndex </td>
+          <td>(</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>timeMicros</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The index of the tempo change at or after <em>timeMicros</em> , or null if there is no next tempo change. </dd></dl>
+
+</div>
+</div>
+<a id="a139e1771f40b291fc8e7ec40d72017d9" name="a139e1771f40b291fc8e7ec40d72017d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139e1771f40b291fc8e7ec40d72017d9">&#9670;&#160;</a></span>GTIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int? CookedMidi.TempoMap_.GTIndex </td>
+          <td>(</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>timeMicros</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The index of the next tempo change after (not including) <em>timeMicros</em> , or null if there is no next tempo change. </dd></dl>
+
+</div>
+</div>
+<a id="a2a0884b274a3439cf337c6fbca0ce9be" name="a2a0884b274a3439cf337c6fbca0ce9be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a0884b274a3439cf337c6fbca0ce9be">&#9670;&#160;</a></span>LTEIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int? CookedMidi.TempoMap_.LTEIndex </td>
+          <td>(</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>timeMicros</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The index of the tempo change at or before <em>timeMicros</em> , or null if there is no previous tempo change. </dd></dl>
+
+</div>
+</div>
+<a id="abc92ff0bf1fda2b9d22726441b02f5cb" name="abc92ff0bf1fda2b9d22726441b02f5cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc92ff0bf1fda2b9d22726441b02f5cb">&#9670;&#160;</a></span>LTIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int? CookedMidi.TempoMap_.LTIndex </td>
+          <td>(</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>timeMicros</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The index of the previous tempo change before (not including) <em>timeMicros</em> , or null if there is no previous tempo change. </dd></dl>
+
+</div>
+</div>
+<a id="a23a8451044cdc6a8a771a9b6bbb8eae4" name="a23a8451044cdc6a8a771a9b6bbb8eae4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23a8451044cdc6a8a771a9b6bbb8eae4">&#9670;&#160;</a></span>Set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CookedMidi.TempoMap_.Set </td>
+          <td>(</td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>timeMicros</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint</td>          <td class="paramname"><span class="paramname"><em>tempoMicros</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Changes will not be applied until <a class="el" href="#a65da585fb83984b8c4b8b7be73169ebb" title="Applies changes made with Set.">UpdateChanges</a> is called.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8bdb99757fe221738acd96e841998805" name="a8bdb99757fe221738acd96e841998805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bdb99757fe221738acd96e841998805">&#9670;&#160;</a></span>timeMicros</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long CookedMidi.TempoMap_.timeMicros</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the tempo at a given time in microseconds, as well as the time where it is set. </p>
+<dl class="section return"><dt>Returns</dt><dd>The nth tempo change's time and tempo.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The next tempo change after (not including) <em>timeMicros</em> , or null if there is no next tempo change. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The tempo change at or after <em>timeMicros</em> , or null if there is no next tempo change. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The previous tempo change before (not including) <em>timeMicros</em> , or null if there is no previous tempo change. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The tempo change at or before <em>timeMicros</em> , or null if there is no previous tempo change. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>L:/Coding/Unity/OMIDIV/Assets/Scripts/MIDI/<b>CookedMidi.cs</b></li>
 </ul>

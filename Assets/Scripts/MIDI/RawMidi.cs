@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// A structure representing an entire midi file.
+/// </summary>
 public class RawMidi {
     public HeaderChunk header;
     public List<TrackChunk> tracks = new List<TrackChunk>();

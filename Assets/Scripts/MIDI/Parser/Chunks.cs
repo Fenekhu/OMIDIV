@@ -1,14 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Debug = UnityEngine.Debug;
 
-public class Chunk {
+/// <summary>
+/// Base class for midi chunks.
+/// </summary>
+public abstract class Chunk {
     public uint type = 0;
     public uint length = 0;
 
-    public Chunk() { }
     public Chunk(EMidiChunkType type, uint length) {
         this.type = (uint)type;
         this.length = length;
@@ -27,30 +28,55 @@ public class Chunk {
     }
 }
 
+/// <summary>
+/// The midi file header. Contains meta information about the midi.
+/// </summary>
 public class HeaderChunk : Chunk {
     public ushort format = 0;
     public ushort ntrks = 0;
 
+    /// <summary>
+    /// The raw 2 bytes representing the time division exactly as in the file header. <br/>
+    /// Combines <see cref="fmt"/>, <see cref="ticksPerQuarter"/>, and <see cref="ticksPerFrame"/>
+    /// </summary>
     public ushort divisionU = 0;
-    public int ticksPerQuarter {
-        get { return divisionU & 0x7FFF; }
-        set { divisionU = (ushort)(value & 0x7FFF); }
-    }
+
+    /// <summary>
+    /// The format that time is expressed in in this midi.
+    /// </summary>
     public EMidiDivisionFormat fmt {
         get { return (EMidiDivisionFormat)((divisionU & 0x8000) >> 15); }
         set { if (value == EMidiDivisionFormat.TPQN) { divisionU &= 0x7FFF; } else if (value == EMidiDivisionFormat.SMPTE) { divisionU |= 0x8000; } }
     }
+
+    /// <summary>
+    /// The number of midi ticks per quarter note. Only meaningful if <see cref="fmt"/> is <see cref="EMidiDivisionFormat.TPQN"/>.
+    /// </summary>
+    public int ticksPerQuarter {
+        get { return divisionU & 0x7FFF; }
+        set { divisionU = (ushort)(value & 0x7FFF); }
+    }
+
+    /// <summary>
+    /// The number of ticks per frame. Only meaningful if <see cref="fmt"/> is <see cref="EMidiDivisionFormat.SMPTE"/>.
+    /// </summary>
     public byte ticksPerFrame {
         get { return (byte)(divisionU >> 8); }
         set { divisionU = (ushort)((divisionU & 0x00FF) + (value << 8)); }
     }
 
+    /// <summary>
+    /// The number of frames per second. Only meaningful if <see cref="fmt"/> is <see cref="EMidiDivisionFormat.SMPTE"/>.<br/>
+    /// Will be one of the values in <see cref="EMidiSMPTEFPS"/>.
+    /// </summary>
+    /// <seealso cref="EMidiSMPTEFPS"/>
     public sbyte smpte {
         get { return (sbyte)(divisionU & 0x00FF); }
         set { divisionU = (ushort)((divisionU & 0xFF00) + value); }
     }
 
     public HeaderChunk() : base(EMidiChunkType.Header, 6) { }
+
     public HeaderChunk(FileStream file) : this() {
         if (!MidiUtil.ReadU32(file, out length)) return;
         long pos = file.Position;
@@ -82,10 +108,14 @@ public class HeaderChunk : Chunk {
 #endif
 }
 
+/// <summary>
+/// A midi track as it appears in the midi file.
+/// </summary>
 public class TrackChunk : Chunk {
-    public List<MTrkEvent> events = new List<MTrkEvent>();
+    public readonly List<MTrkEvent> events = new List<MTrkEvent>();
 
     public TrackChunk() : base(EMidiChunkType.Track, 0) { }
+
     public TrackChunk(FileStream file) : this() {
         if (!MidiUtil.ReadU32(file, out length)) return;
         long pos = file.Position;

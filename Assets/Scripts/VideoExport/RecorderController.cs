@@ -14,7 +14,7 @@ public abstract class RecorderController : OmidivComponent {
     }
 
     public abstract Status GetStatus();
-    public abstract float GetFramerate();
+    public abstract double GetFramerate();
 
     public void StartIfEnabled() {
         if (RecordingEnabled) StartRecording();

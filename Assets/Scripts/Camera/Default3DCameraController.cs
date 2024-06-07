@@ -1,15 +1,18 @@
 ﻿using ImGuiNET;
-using System.Dynamic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// <see cref="CameraController"/> implementing 3-dimensional movement for a camera.
+/// </summary>
 public class Default3DCameraController : CameraController {
 
     private Vector3 homePos = new Vector3(0f, 0f, -8f);
     private Quaternion homeRot = Quaternion.identity;
     private float fov = 60f;
 
-    [SerializeField] private Camera MainCam;
+    /// <summary>The camera being controlled by this.</summary>
+    public Camera MainCam;
 
     protected override Color GetBGColor() {
         return MainCam?.backgroundColor ?? Color.black;
@@ -81,7 +84,7 @@ public class Default3DCameraController : CameraController {
 
     protected override void ReadConfig() {
         BGColor = Config.Get<Color>("bg.color") ?? Color.black;
-        string tag = (SceneTag == null || SceneTag.Length == 0)? "def3d" : SceneTag;
+        string tag = ConfigTag;
         Config.TryGet(tag+".cam.fov", ref fov);
         Config.TryGet(tag+".cam.homePos", ref homePos);
         Config.TryGet(tag+".cam.homeRot", ref homeRot);
@@ -95,7 +98,7 @@ public class Default3DCameraController : CameraController {
 
     protected override void WriteConfig() {
         Config.Set("bg.color", BGColor);
-        string tag = (SceneTag == null || SceneTag.Length == 0)? "def3d" : SceneTag;
+        string tag = ConfigTag;
         Config.Set(tag+".cam.fov", fov);
         Config.Set(tag+".cam.homePos", homePos);
         Config.Set(tag+".cam.homeRot", homeRot);
@@ -106,9 +109,9 @@ public class Default3DCameraController : CameraController {
     }
 
     private void UpdateInputs() {
-        float speed = 2.0f * MidiScene.DeltaTime;
+        float speed = (float)(2 * MidiScene.FrameDeltaTime);
         Vector3 ds = Vector3.zero;
-        float rotSpeed = 60f * MidiScene.DeltaTime;
+        float rotSpeed = (float)(60 * MidiScene.FrameDeltaTime);
         (float x, float y) rot = (0, 0);
 
         if (Keyboard.current.aKey.isPressed) {

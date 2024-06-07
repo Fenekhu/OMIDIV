@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ImGuiNET;
-using TrackInfo = Base3DTrackInfo;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
+/// <summary>
+/// The standard 3D note visualization.
+/// </summary>
 public class Standard3D : Base3D<Standard3D.TrackInfo> {
+
+    public Standard3D() { ConfigTag = "s3d"; }
 
     public class TrackInfo : Base3DTrackInfo {
         public int pitchOffset = 0;
@@ -19,9 +20,11 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
         int i = 0;
         for (int j = 0; j < Tracks.Length; j++) {
             ref TrackInfo info = ref Tracks[j];
+
             bool ignore = IgnoreTrack(info);
             info.obj.SetActive(!ignore);
             if (ignore) continue;
+
             float posX = info.obj.transform.localPosition.x;
             info.obj.transform.localPosition = new Vector3(posX, info.pitchOffset * (NoteHeight + NoteVSpacing), ZSpacing * i);
             Vector3 scale = info.obj.transform.localScale;
@@ -80,8 +83,6 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
     protected override void TrackListChanged(ref bool updateTracks, ref bool updateNotes) {
         updateTracks = true;
     }
-
-    protected override string GetConfigTag() => "s3d";
 
     protected override void WriteConfig() {
         base.WriteConfig();

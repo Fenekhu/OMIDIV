@@ -63,13 +63,16 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">HeaderChunk Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The midi file header. Contains meta information about the midi.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for HeaderChunk:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_header_chunk.png" usemap="#HeaderChunk_map" alt=""/>
   <map id="HeaderChunk_map" name="HeaderChunk_map">
-<area href="class_chunk.html" alt="Chunk" shape="rect" coords="0,0,90,24"/>
+<area href="class_chunk.html" title="Base class for midi chunks." alt="Chunk" shape="rect" coords="0,0,90,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -102,6 +105,8 @@ ushort&#160;</td><td class="memItemRight" valign="bottom"><b>ntrks</b> = 0</td><
 <tr class="separator:ae1f79e28e65ca62b5e8821eb7231e57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c77fa0afed50091b37e35abda40efd8" id="r_a7c77fa0afed50091b37e35abda40efd8"><td class="memItemLeft" align="right" valign="top"><a id="a7c77fa0afed50091b37e35abda40efd8" name="a7c77fa0afed50091b37e35abda40efd8"></a>
 ushort&#160;</td><td class="memItemRight" valign="bottom"><b>divisionU</b> = 0</td></tr>
+<tr class="memdesc:a7c77fa0afed50091b37e35abda40efd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The raw 2 bytes representing the time division exactly as in the file header. <br  />
+ Combines <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a>, <a class="el" href="#a011bcab7222ddf0ebac2a8d8c787c50d" title="The number of midi ticks per quarter note. Only meaningful if fmt is EMidiDivisionFormat....">ticksPerQuarter</a>, and <a class="el" href="#a651f633b75e5b1e4c0c21c2714981b30" title="The number of ticks per frame. Only meaningful if fmt is EMidiDivisionFormat.SMPTE.">ticksPerFrame</a> <br /></td></tr>
 <tr class="separator:a7c77fa0afed50091b37e35abda40efd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_class_chunk"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_chunk')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_chunk.html">Chunk</a></td></tr>
 <tr class="memitem:a4a2fb6a65e7811cb684891e174a2e2e4 inherit pub_attribs_class_chunk" id="r_a4a2fb6a65e7811cb684891e174a2e2e4"><td class="memItemLeft" align="right" valign="top">
@@ -113,19 +118,52 @@ uint&#160;</td><td class="memItemRight" valign="bottom"><b>length</b> = 0</td></
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a011bcab7222ddf0ebac2a8d8c787c50d" id="r_a011bcab7222ddf0ebac2a8d8c787c50d"><td class="memItemLeft" align="right" valign="top"><a id="a011bcab7222ddf0ebac2a8d8c787c50d" name="a011bcab7222ddf0ebac2a8d8c787c50d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerQuarter</b><code> [get, set]</code></td></tr>
-<tr class="separator:a011bcab7222ddf0ebac2a8d8c787c50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae54aba56105cc477877844392c8ecd95" id="r_ae54aba56105cc477877844392c8ecd95"><td class="memItemLeft" align="right" valign="top"><a id="ae54aba56105cc477877844392c8ecd95" name="ae54aba56105cc477877844392c8ecd95"></a>
 EMidiDivisionFormat&#160;</td><td class="memItemRight" valign="bottom"><b>fmt</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:ae54aba56105cc477877844392c8ecd95"><td class="mdescLeft">&#160;</td><td class="mdescRight">The format that time is expressed in in this midi. <br /></td></tr>
 <tr class="separator:ae54aba56105cc477877844392c8ecd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a011bcab7222ddf0ebac2a8d8c787c50d" id="r_a011bcab7222ddf0ebac2a8d8c787c50d"><td class="memItemLeft" align="right" valign="top"><a id="a011bcab7222ddf0ebac2a8d8c787c50d" name="a011bcab7222ddf0ebac2a8d8c787c50d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerQuarter</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:a011bcab7222ddf0ebac2a8d8c787c50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of midi ticks per quarter note. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.TPQN. <br /></td></tr>
+<tr class="separator:a011bcab7222ddf0ebac2a8d8c787c50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a651f633b75e5b1e4c0c21c2714981b30" id="r_a651f633b75e5b1e4c0c21c2714981b30"><td class="memItemLeft" align="right" valign="top"><a id="a651f633b75e5b1e4c0c21c2714981b30" name="a651f633b75e5b1e4c0c21c2714981b30"></a>
 byte&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerFrame</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:a651f633b75e5b1e4c0c21c2714981b30"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of ticks per frame. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE. <br /></td></tr>
 <tr class="separator:a651f633b75e5b1e4c0c21c2714981b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaf29723e54c08bb057543746a996dec" id="r_aeaf29723e54c08bb057543746a996dec"><td class="memItemLeft" align="right" valign="top"><a id="aeaf29723e54c08bb057543746a996dec" name="aeaf29723e54c08bb057543746a996dec"></a>
-sbyte&#160;</td><td class="memItemRight" valign="bottom"><b>smpte</b><code> [get, set]</code></td></tr>
+<tr class="memitem:aeaf29723e54c08bb057543746a996dec" id="r_aeaf29723e54c08bb057543746a996dec"><td class="memItemLeft" align="right" valign="top">sbyte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaf29723e54c08bb057543746a996dec">smpte</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aeaf29723e54c08bb057543746a996dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
+ Will be one of the values in EMidiSMPTEFPS.  <br /></td></tr>
 <tr class="separator:aeaf29723e54c08bb057543746a996dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The midi file header. Contains meta information about the midi. </p>
+</div><h2 class="groupheader">Property Documentation</h2>
+<a id="aeaf29723e54c08bb057543746a996dec" name="aeaf29723e54c08bb057543746a996dec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaf29723e54c08bb057543746a996dec">&#9670;&#160;</a></span>smpte</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sbyte HeaderChunk.smpte</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The number of frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
+ Will be one of the values in EMidiSMPTEFPS. </p>
+<dl class="section see"><dt>See also</dt><dd>EMidiSMPTEFPS</dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>L:/Coding/Unity/OMIDIV/Assets/Scripts/MIDI/Parser/<b>Chunks.cs</b></li>
 </ul>

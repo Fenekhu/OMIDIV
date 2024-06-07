@@ -3,14 +3,17 @@ using System.Buffers.Binary;
 using System.IO;
 using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// A base class for events in a track.
+/// </summary>
 public abstract class MTrkEvent {
     private static byte lastMsg;
 
     public uint delta { get; set; }
+
     public abstract byte EventType { get; }
 
-#nullable enable
-    public static MTrkEvent? Create(FileStream file) {
+    public static MTrkEvent Create(FileStream file) {
         if (!MidiUtil.ReadBEVLV(file, out uint delta)) return null;
         if (!MidiUtil.ReadU8(file, out byte mtype)) return null;
 
@@ -131,7 +134,7 @@ public abstract class MTrkEvent {
 public class SysexEvent : MTrkEvent {
     public byte f = 0;
     public uint length = 0;
-    public byte[]? data;
+    public byte[] data;
 
     public override byte EventType { get { return f; } }
 

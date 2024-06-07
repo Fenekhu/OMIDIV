@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base TrackInfo for a scene that inherits from <see cref="Base3DTrackInfo"/>
+/// </summary>
 public class Base3DTrackInfo {
+    /// <summary>The game object that contains all of this track's notes.</summary>
     public GameObject obj;
+    /// <summary>The <see cref="CookedMidi.Tracks"/> index that this info represents.</summary>
     public int midiTrack;
     public bool enabled = true;
     public Color trackColor;
@@ -14,14 +19,25 @@ public class Base3DTrackInfo {
     public bool updateMeshes = true;
 }
 
+/// <summary>
+/// A base class for <see cref="Standard3D"/> and <see cref="Circle3D"/> visualizations, since they share much of the same code.<br/>
+/// Custom subclasses can be made as well that lay out notes in unique ways. 
+/// If you do that, respect <see cref="GlobalScale"/> by making any GameObjects children of this, or manually adjusting their scale.
+/// </summary>
+/// <typeparam name="TrackInfo"></typeparam>
 public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrackInfo, new() {
 
     protected static readonly float GlobalScale = 1/128.0f;
 
     [SerializeField] protected GameObject NotePrefab;
 
+    /// <remarks>
+    /// Note: the index of a track in here may not be the same as the midi track it represents (such as if it's been reordered).
+    /// See <see cref="Base3DTrackInfo.midiTrack"/>.
+    /// </remarks>
     protected TrackInfo[] Tracks = new TrackInfo[0];
 
+    // See user guide for a description of most of these.
     protected float VelocityFactor = 0.75f;
     protected int SideCount = 4;
     protected uint SideCountPrev = 0;
@@ -30,6 +46,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
     protected float NoteHSpacing = 2f;
     protected float PlayedAlpha = 0.05f;
 
+    // these are used to auto-reload the visuals if its been a certain amount of time since a variable was changed requiring a reload.
     protected float LastTrackUpdate = -1f;
     protected float LastNoteUpdate = -1f;
     protected float LastReloadVisuals = -1f;
@@ -40,6 +57,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
     }
 
     protected override void Update() {
+        // check if we need to reload first, becase base.Update() calls the reload.
         if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { NeedsVisualReload = true; LastReloadVisuals = -1f; }
         base.Update();
         if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.1f) { ResetTracks(); LastTrackUpdate = -1f; }
@@ -51,6 +69,9 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
     }
 
     protected enum NoteState { Unplayed, Playing, Played }
+    /// <summary>
+    /// Updates the visuals for a note at a given <paramref name="noteIndex"/> of a specific <paramref name="trackInfo"/>.
+    /// </summary>
     protected virtual void SetNoteState(TrackInfo trackInfo, int noteIndex, NoteState state) {
         MidiNote midiNote = Midi.Tracks[trackInfo.midiTrack].notes[noteIndex];
         Material mat = trackInfo.obj.transform.GetChild(noteIndex).GetComponent<MeshRenderer>().material;
@@ -104,7 +125,8 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         }
     }
 
-    protected override void InitVisuals() {
+    protected override void CreateVisuals() {
+        // creates all the tracks and GameObjects, but doesn't actually place them.
         Tracks = new TrackInfo[Midi.Tracks.Count];
         for (int i = 0; i < Midi.Tracks.Count; i++) {
             GameObject go = new GameObject(Midi.Tracks[i].name);
@@ -124,6 +146,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
             Tracks[i] = info;
         }
 
+        // now we actually place the tracks and notes.
         ResetTracks();
         ResetNotes();
     }
@@ -132,7 +155,10 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
 
     protected bool IgnoreTrack(TrackInfo trackInfo) => !trackInfo.enabled || !TrackHasNotes(trackInfo);
 
+    /// <summary>Updates the GameObjects for track objects, and other things that don't need to be changed per-note.</summary>
     protected abstract void ResetTracks();
+    /// <summary>Updates GameObjects for note objects.</summary>
+    /// <param name="justColors">If true, only reset note states to <see cref="NoteState.Unplayed"/>. Otherwise, recalculate positions, meshes, etc.</param>
     protected abstract void ResetNotes(bool justColors = false);
 
     protected override void ClearVisuals() {
@@ -145,6 +171,8 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
     protected override void Restart() {
         for (int i = 0; i < Tracks.Length; i++) {
             ref TrackInfo track = ref Tracks[i];
+            
+            // reset the x of each track
             Vector3 newPos = track.obj.transform.localPosition;
             newPos.x = 0;
             track.obj.transform.localPosition = newPos;
@@ -160,19 +188,41 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         base.Restart();
     }
 
-    protected override void MovePlay(double ticks) {
+    protected override void MovePlay(decimal ticks) {
         //MainCam.transform.Translate((float)ticks, 0, 0, Space.World);
         foreach (TrackInfo info in Tracks) {
-            Vector3 ds = new Vector3((float)ticks * info.lengthFactor, 0, 0);
+            Vector3 ds = new Vector3((float)(ticks * (decimal)info.lengthFactor), 0, 0);
             info.obj.transform.localPosition -= ds;
         }
     }
 
-    // trees cant be added to my making a treenode with the same name
+    /// <summary>
+    /// Draw the general controls in the MIDI Controls window for this visualization.
+    /// </summary>
+    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
+    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
     protected virtual void DrawGeneralMidiControls(ref bool updateTracks, ref bool updateNotes) { }
+
+    /// <summary>
+    /// Draw the individual controls within the tree for a track. Will be called for each track.
+    /// </summary>
+    /// <param name="trackInfo">The track thats going to have its controls drawn.</param>
+    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
+    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
     protected virtual void DrawIndividualTrackControls(ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes) { }
+
+    /// <summary>
+    /// Draw the controls for the "Note Controls" tree.
+    /// </summary>
+    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
+    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
     protected virtual void DrawNoteControls(ref bool updateTracks, ref bool updateNotes) { }
-    // Circle3D needs to update notes when these are changed, but Standard3D only needs to update tracks.
+
+    /// <summary>
+    /// Called when the track order has been changed or tracks have been enabled/disabled.
+    /// </summary>
+    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
+    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
     protected abstract void TrackListChanged(ref bool updateTracks, ref bool updateNotes);
 
     protected override void DrawGUI() {
@@ -256,12 +306,10 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         }
     }
 
-    protected abstract string GetConfigTag();
-
     protected override void WriteConfig() {
         base.WriteConfig();
 
-        string tag = GetConfigTag();
+        string tag = ConfigTag;
 
         Config.Set(tag+".velFactor", VelocityFactor);
         Config.Set(tag+".noteSides", SideCount);
@@ -286,7 +334,7 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
     protected override void ReadConfig() {
         base.ReadConfig();
 
-        string tag = GetConfigTag();
+        string tag = ConfigTag;
 
         Config.TryGet(tag+".velFactor", ref VelocityFactor);
         Config.TryGet(tag+".noteSides", ref SideCount);

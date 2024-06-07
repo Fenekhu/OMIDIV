@@ -63,88 +63,372 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">FFmpegWrapper2 Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Provides a wrapper around the ffmpeg command line and process.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a549823d50375eb132ee03628d5534bc5" id="r_a549823d50375eb132ee03628d5534bc5"><td class="memItemLeft" align="right" valign="top"><a id="a549823d50375eb132ee03628d5534bc5" name="a549823d50375eb132ee03628d5534bc5"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>SetCmdParam</b> (string name, string value)</td></tr>
+<tr class="memitem:a549823d50375eb132ee03628d5534bc5" id="r_a549823d50375eb132ee03628d5534bc5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a549823d50375eb132ee03628d5534bc5">SetCmdParam</a> (string name, string value)</td></tr>
+<tr class="memdesc:a549823d50375eb132ee03628d5534bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <em>value</em>  for a variable that can be used in the command arguments.  <br /></td></tr>
 <tr class="separator:a549823d50375eb132ee03628d5534bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb9f737c0a77063d3d75a8aa1dc58182" id="r_abb9f737c0a77063d3d75a8aa1dc58182"><td class="memItemLeft" align="right" valign="top"><a id="abb9f737c0a77063d3d75a8aa1dc58182" name="abb9f737c0a77063d3d75a8aa1dc58182"></a>
-static string&#160;</td><td class="memItemRight" valign="bottom"><b>GetCmdParam</b> (string name)</td></tr>
+<tr class="memitem:abb9f737c0a77063d3d75a8aa1dc58182" id="r_abb9f737c0a77063d3d75a8aa1dc58182"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb9f737c0a77063d3d75a8aa1dc58182">GetCmdParam</a> (string name)</td></tr>
+<tr class="memdesc:abb9f737c0a77063d3d75a8aa1dc58182"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value that a command variable will be replaced with.  <br /></td></tr>
 <tr class="separator:abb9f737c0a77063d3d75a8aa1dc58182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afae4caec6bfd3f964f41d1416cd9d30d" id="r_afae4caec6bfd3f964f41d1416cd9d30d"><td class="memItemLeft" align="right" valign="top"><a id="afae4caec6bfd3f964f41d1416cd9d30d" name="afae4caec6bfd3f964f41d1416cd9d30d"></a>
-static string&#160;</td><td class="memItemRight" valign="bottom"><b>GetExecutableDir</b> ()</td></tr>
+<tr class="memitem:afae4caec6bfd3f964f41d1416cd9d30d" id="r_afae4caec6bfd3f964f41d1416cd9d30d"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afae4caec6bfd3f964f41d1416cd9d30d">GetExecutableDir</a> ()</td></tr>
 <tr class="separator:afae4caec6bfd3f964f41d1416cd9d30d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4d6d492d402b4888b79a6da42b38470" id="r_aa4d6d492d402b4888b79a6da42b38470"><td class="memItemLeft" align="right" valign="top"><a id="aa4d6d492d402b4888b79a6da42b38470" name="aa4d6d492d402b4888b79a6da42b38470"></a>
-static string&#160;</td><td class="memItemRight" valign="bottom"><b>GetExecutablePath</b> (bool quoted=false)</td></tr>
+<tr class="memitem:aa4d6d492d402b4888b79a6da42b38470" id="r_aa4d6d492d402b4888b79a6da42b38470"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4d6d492d402b4888b79a6da42b38470">GetExecutablePath</a> (bool quoted=false)</td></tr>
 <tr class="separator:aa4d6d492d402b4888b79a6da42b38470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6080b039fb64b6f368bb6adc1d932af4" id="r_a6080b039fb64b6f368bb6adc1d932af4"><td class="memItemLeft" align="right" valign="top"><a id="a6080b039fb64b6f368bb6adc1d932af4" name="a6080b039fb64b6f368bb6adc1d932af4"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>ExecutableExists</b> (bool actuallyCheck=false)</td></tr>
+<tr class="memitem:a6080b039fb64b6f368bb6adc1d932af4" id="r_a6080b039fb64b6f368bb6adc1d932af4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6080b039fb64b6f368bb6adc1d932af4">ExecutableExists</a> (bool actuallyCheck=false)</td></tr>
 <tr class="separator:a6080b039fb64b6f368bb6adc1d932af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a315b785f23b7028bf75a12af6fd6aa47" id="r_a315b785f23b7028bf75a12af6fd6aa47"><td class="memItemLeft" align="right" valign="top"><a id="a315b785f23b7028bf75a12af6fd6aa47" name="a315b785f23b7028bf75a12af6fd6aa47"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsRunning</b> ()</td></tr>
+<tr class="memdesc:a315b785f23b7028bf75a12af6fd6aa47"><td class="mdescLeft">&#160;</td><td class="mdescRight"><dl class="section return"><dt>Returns</dt><dd>Whether the ffmpeg executable is running.</dd></dl>
+<br /></td></tr>
 <tr class="separator:a315b785f23b7028bf75a12af6fd6aa47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d6e49cecbefa1456890eda8b5721eca" id="r_a2d6e49cecbefa1456890eda8b5721eca"><td class="memItemLeft" align="right" valign="top"><a id="a2d6e49cecbefa1456890eda8b5721eca" name="a2d6e49cecbefa1456890eda8b5721eca"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>InitParams</b> ()</td></tr>
+<tr class="memitem:a2d6e49cecbefa1456890eda8b5721eca" id="r_a2d6e49cecbefa1456890eda8b5721eca"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d6e49cecbefa1456890eda8b5721eca">InitParams</a> ()</td></tr>
+<tr class="memdesc:a2d6e49cecbefa1456890eda8b5721eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes certain parameters, such as video output size (based on window size) and output file name (based on current time).  <br /></td></tr>
 <tr class="separator:a2d6e49cecbefa1456890eda8b5721eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f5c5f2c473fd6ca87ead7d4b7f70fbc" id="r_a7f5c5f2c473fd6ca87ead7d4b7f70fbc"><td class="memItemLeft" align="right" valign="top"><a id="a7f5c5f2c473fd6ca87ead7d4b7f70fbc" name="a7f5c5f2c473fd6ca87ead7d4b7f70fbc"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>LoadConfig</b> ()</td></tr>
+<tr class="memdesc:a7f5c5f2c473fd6ca87ead7d4b7f70fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads some settings from PlayerPrefs. <br /></td></tr>
 <tr class="separator:a7f5c5f2c473fd6ca87ead7d4b7f70fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60416a88c8c8b99847a5c22f3194e72a" id="r_a60416a88c8c8b99847a5c22f3194e72a"><td class="memItemLeft" align="right" valign="top"><a id="a60416a88c8c8b99847a5c22f3194e72a" name="a60416a88c8c8b99847a5c22f3194e72a"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>SaveConfig</b> ()</td></tr>
+<tr class="memdesc:a60416a88c8c8b99847a5c22f3194e72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves some settings to PlayerPrefs. <br /></td></tr>
 <tr class="separator:a60416a88c8c8b99847a5c22f3194e72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3c3be91225e581b492e94ac0ae1c01c" id="r_af3c3be91225e581b492e94ac0ae1c01c"><td class="memItemLeft" align="right" valign="top"><a id="af3c3be91225e581b492e94ac0ae1c01c" name="af3c3be91225e581b492e94ac0ae1c01c"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>StartRecording</b> ()</td></tr>
+<tr class="memdesc:af3c3be91225e581b492e94ac0ae1c01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the FFmpeg executable, which will be ready to accept frames sent to it with <a class="el" href="#a67208a358ac0ac269cbf0185f207e12a" title="Passes a frame to FFmpeg while recording.">ReceiveFrame(ref NativeArray&lt;byte&gt;, uint)</a>. <br /></td></tr>
 <tr class="separator:af3c3be91225e581b492e94ac0ae1c01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67208a358ac0ac269cbf0185f207e12a" id="r_a67208a358ac0ac269cbf0185f207e12a"><td class="memItemLeft" align="right" valign="top"><a id="a67208a358ac0ac269cbf0185f207e12a" name="a67208a358ac0ac269cbf0185f207e12a"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>ReceiveFrame</b> (ref NativeArray&lt; byte &gt; narray, uint frameNum)</td></tr>
+<tr class="memitem:a67208a358ac0ac269cbf0185f207e12a" id="r_a67208a358ac0ac269cbf0185f207e12a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67208a358ac0ac269cbf0185f207e12a">ReceiveFrame</a> (ref NativeArray&lt; byte &gt; narray, uint frameNum)</td></tr>
+<tr class="memdesc:a67208a358ac0ac269cbf0185f207e12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passes a frame to FFmpeg while recording.  <br /></td></tr>
 <tr class="separator:a67208a358ac0ac269cbf0185f207e12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c231b11b7d2e2780256de3ce8ba681e" id="r_a4c231b11b7d2e2780256de3ce8ba681e"><td class="memItemLeft" align="right" valign="top"><a id="a4c231b11b7d2e2780256de3ce8ba681e" name="a4c231b11b7d2e2780256de3ce8ba681e"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>EndRecording</b> ()</td></tr>
+<tr class="memdesc:a4c231b11b7d2e2780256de3ce8ba681e"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Asynchronously) waits half a second for frames to finish being sent, then tells ffmpeg that frames are done being sent and closes ffmpeg. <br /></td></tr>
 <tr class="separator:a4c231b11b7d2e2780256de3ce8ba681e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa905482321d956cd003ec7c7d28c0283" id="r_aa905482321d956cd003ec7c7d28c0283"><td class="memItemLeft" align="right" valign="top"><a id="aa905482321d956cd003ec7c7d28c0283" name="aa905482321d956cd003ec7c7d28c0283"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>ForceKill</b> ()</td></tr>
+<tr class="memdesc:aa905482321d956cd003ec7c7d28c0283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forcibly closes ffmpeg. <br /></td></tr>
 <tr class="separator:aa905482321d956cd003ec7c7d28c0283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6cb20d0caa7fffb89f478e30fe1c97a4" id="r_a6cb20d0caa7fffb89f478e30fe1c97a4"><td class="memItemLeft" align="right" valign="top"><a id="a6cb20d0caa7fffb89f478e30fe1c97a4" name="a6cb20d0caa7fffb89f478e30fe1c97a4"></a>
 static float&#160;</td><td class="memItemRight" valign="bottom"><b>VideoScale</b> = 1f</td></tr>
+<tr class="memdesc:a6cb20d0caa7fffb89f478e30fe1c97a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The amount the output resolution will be scaled by from the window resolution. <br /></td></tr>
 <tr class="separator:a6cb20d0caa7fffb89f478e30fe1c97a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af03d0b86e38caac24b9aaf0ca98f68bb" id="r_af03d0b86e38caac24b9aaf0ca98f68bb"><td class="memItemLeft" align="right" valign="top"><a id="af03d0b86e38caac24b9aaf0ca98f68bb" name="af03d0b86e38caac24b9aaf0ca98f68bb"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>w</b></td></tr>
+<tr class="memitem:af03d0b86e38caac24b9aaf0ca98f68bb" id="r_af03d0b86e38caac24b9aaf0ca98f68bb"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af03d0b86e38caac24b9aaf0ca98f68bb">w</a></td></tr>
+<tr class="memdesc:af03d0b86e38caac24b9aaf0ca98f68bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The final output size, based on the window size and <a class="el" href="#a6cb20d0caa7fffb89f478e30fe1c97a4" title="The amount the output resolution will be scaled by from the window resolution.">VideoScale</a>.  <br /></td></tr>
 <tr class="separator:af03d0b86e38caac24b9aaf0ca98f68bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af83a692fd42cd581adadbd32ded2bfa1" id="r_af83a692fd42cd581adadbd32ded2bfa1"><td class="memItemLeft" align="right" valign="top">static readonly string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af83a692fd42cd581adadbd32ded2bfa1">ExecArgsDef</a></td></tr>
+<tr class="memdesc:af83a692fd42cd581adadbd32ded2bfa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default execution arguments, with unparsed variables.  <br /></td></tr>
 <tr class="separator:af83a692fd42cd581adadbd32ded2bfa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a275b22ec40b2a6d0c7c31878da0cf9c0" id="r_a275b22ec40b2a6d0c7c31878da0cf9c0"><td class="memItemLeft" align="right" valign="top"><a id="a275b22ec40b2a6d0c7c31878da0cf9c0" name="a275b22ec40b2a6d0c7c31878da0cf9c0"></a>
-static readonly float&#160;</td><td class="memItemRight" valign="bottom"><b>ArgsVer</b> = 1f</td></tr>
+<tr class="memitem:a275b22ec40b2a6d0c7c31878da0cf9c0" id="r_a275b22ec40b2a6d0c7c31878da0cf9c0"><td class="memItemLeft" align="right" valign="top">static readonly float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a275b22ec40b2a6d0c7c31878da0cf9c0">ArgsVer</a> = 1f</td></tr>
 <tr class="separator:a275b22ec40b2a6d0c7c31878da0cf9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:ad12e444df5a9097a02854a227c64c5e9" id="r_ad12e444df5a9097a02854a227c64c5e9"><td class="memItemLeft" align="right" valign="top"><a id="ad12e444df5a9097a02854a227c64c5e9" name="ad12e444df5a9097a02854a227c64c5e9"></a>
 static uint&#160;</td><td class="memItemRight" valign="bottom"><b>FrameRate</b><code> [get, set]</code></td></tr>
+<tr class="memdesc:ad12e444df5a9097a02854a227c64c5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The framerate the video will be recorded with. <br /></td></tr>
 <tr class="separator:ad12e444df5a9097a02854a227c64c5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a088a9e017e6dc26aa0406185d7f552c6" id="r_a088a9e017e6dc26aa0406185d7f552c6"><td class="memItemLeft" align="right" valign="top"><a id="a088a9e017e6dc26aa0406185d7f552c6" name="a088a9e017e6dc26aa0406185d7f552c6"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsRecording</b> = false<code> [get, set]</code></td></tr>
+<tr class="memdesc:a088a9e017e6dc26aa0406185d7f552c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is ffmpeg currently running and recording frames. <br /></td></tr>
 <tr class="separator:a088a9e017e6dc26aa0406185d7f552c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb40a372ae0cb6147e2f57e81293c650" id="r_adb40a372ae0cb6147e2f57e81293c650"><td class="memItemLeft" align="right" valign="top"><a id="adb40a372ae0cb6147e2f57e81293c650" name="adb40a372ae0cb6147e2f57e81293c650"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsReencoding</b> = false<code> [get, set]</code></td></tr>
+<tr class="memdesc:adb40a372ae0cb6147e2f57e81293c650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Currently not used, but may be used if the initial output needs to be modified, such as recompressed, changed, or audio added. <br /></td></tr>
 <tr class="separator:adb40a372ae0cb6147e2f57e81293c650"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67a1189a8f318dbf817d1fa3fc6c48b2" id="r_a67a1189a8f318dbf817d1fa3fc6c48b2"><td class="memItemLeft" align="right" valign="top"><a id="a67a1189a8f318dbf817d1fa3fc6c48b2" name="a67a1189a8f318dbf817d1fa3fc6c48b2"></a>
 static int int h&#160;</td><td class="memItemRight" valign="bottom"><b>VideoSize</b><code> [get]</code></td></tr>
 <tr class="separator:a67a1189a8f318dbf817d1fa3fc6c48b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ac97b9511291e51a8f9ffc76223fe3b" id="r_a1ac97b9511291e51a8f9ffc76223fe3b"><td class="memItemLeft" align="right" valign="top"><a id="a1ac97b9511291e51a8f9ffc76223fe3b" name="a1ac97b9511291e51a8f9ffc76223fe3b"></a>
-static string&#160;</td><td class="memItemRight" valign="bottom"><b>ExecArgs</b> = ExecArgsDef<code> [get, set]</code></td></tr>
+static string&#160;</td><td class="memItemRight" valign="bottom"><b>ExecArgs</b> = <a class="el" href="#af83a692fd42cd581adadbd32ded2bfa1">ExecArgsDef</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a1ac97b9511291e51a8f9ffc76223fe3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current execution arguments, with unparsed variables. <br /></td></tr>
 <tr class="separator:a1ac97b9511291e51a8f9ffc76223fe3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33525a539876f1c49b3797ba0b161fa7" id="r_a33525a539876f1c49b3797ba0b161fa7"><td class="memItemLeft" align="right" valign="top"><a id="a33525a539876f1c49b3797ba0b161fa7" name="a33525a539876f1c49b3797ba0b161fa7"></a>
 static string&#160;</td><td class="memItemRight" valign="bottom"><b>OutDir</b> = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)+&quot;/OMIDIV/&quot;<code> [get, set]</code></td></tr>
+<tr class="memdesc:a33525a539876f1c49b3797ba0b161fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The output directory of. <br /></td></tr>
 <tr class="separator:a33525a539876f1c49b3797ba0b161fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bb84e9127ec6b59b29df5a7201e1b1f" id="r_a0bb84e9127ec6b59b29df5a7201e1b1f"><td class="memItemLeft" align="right" valign="top"><a id="a0bb84e9127ec6b59b29df5a7201e1b1f" name="a0bb84e9127ec6b59b29df5a7201e1b1f"></a>
-static string&#160;</td><td class="memItemRight" valign="bottom"><b>OutFile</b> = &quot;&quot;<code> [get, set]</code></td></tr>
+<tr class="memitem:a0bb84e9127ec6b59b29df5a7201e1b1f" id="r_a0bb84e9127ec6b59b29df5a7201e1b1f"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bb84e9127ec6b59b29df5a7201e1b1f">OutFile</a> = &quot;&quot;<code> [get, set]</code></td></tr>
+<tr class="memdesc:a0bb84e9127ec6b59b29df5a7201e1b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The full filename for the output file.  <br /></td></tr>
 <tr class="separator:a0bb84e9127ec6b59b29df5a7201e1b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provides a wrapper around the ffmpeg command line and process. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6080b039fb64b6f368bb6adc1d932af4" name="a6080b039fb64b6f368bb6adc1d932af4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6080b039fb64b6f368bb6adc1d932af4">&#9670;&#160;</a></span>ExecutableExists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool FFmpegWrapper2.ExecutableExists </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>actuallyCheck</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">actuallyCheck</td><td>If true, queries the file system, otherwise returns a cached value. See remarks.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the executable exists.</dd></dl>
+<p>This method is called on each draw, so <em>actuallyCheck</em>  reduces the amount of filesystem ops. It is called with <em>actuallyCheck</em> <code> = true</code> when the VideoRecorder refresh button is pressed. </p>
+
+</div>
+</div>
+<a id="abb9f737c0a77063d3d75a8aa1dc58182" name="abb9f737c0a77063d3d75a8aa1dc58182"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb9f737c0a77063d3d75a8aa1dc58182">&#9670;&#160;</a></span>GetCmdParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string FFmpegWrapper2.GetCmdParam </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the value that a command variable will be replaced with. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The variable that will be replaced.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value it will be replaced with.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a549823d50375eb132ee03628d5534bc5" title="Sets the value  for a variable that can be used in the command arguments.">SetCmdParam(string, string)</a></dd></dl>
+
+</div>
+</div>
+<a id="afae4caec6bfd3f964f41d1416cd9d30d" name="afae4caec6bfd3f964f41d1416cd9d30d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afae4caec6bfd3f964f41d1416cd9d30d">&#9670;&#160;</a></span>GetExecutableDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string FFmpegWrapper2.GetExecutableDir </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The directory of the ffmpeg executable.</dd></dl>
+<p>This will be Application.streamingAssetsPath/ffmpeg/</p>
+
+</div>
+</div>
+<a id="aa4d6d492d402b4888b79a6da42b38470" name="aa4d6d492d402b4888b79a6da42b38470"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4d6d492d402b4888b79a6da42b38470">&#9670;&#160;</a></span>GetExecutablePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string FFmpegWrapper2.GetExecutablePath </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>quoted</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">quoted</td><td>If true, puts the path in quotes (useful if it contains spaces).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The full path of the executable, with platform file types accounted for.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">PlatformNotSupportedException</td><td>If the platform is not Windows, Mac, or Linux Standalone/Editor.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2d6e49cecbefa1456890eda8b5721eca" name="a2d6e49cecbefa1456890eda8b5721eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d6e49cecbefa1456890eda8b5721eca">&#9670;&#160;</a></span>InitParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void FFmpegWrapper2.InitParams </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes certain parameters, such as video output size (based on window size) and output file name (based on current time). </p>
+<p>Will be called by <a class="el" href="#af3c3be91225e581b492e94ac0ae1c01c" title="Starts the FFmpeg executable, which will be ready to accept frames sent to it with ReceiveFrame(ref N...">StartRecording</a>, so you don't need to call it yourself.</p>
+
+</div>
+</div>
+<a id="a67208a358ac0ac269cbf0185f207e12a" name="a67208a358ac0ac269cbf0185f207e12a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67208a358ac0ac269cbf0185f207e12a">&#9670;&#160;</a></span>ReceiveFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void FFmpegWrapper2.ReceiveFrame </td>
+          <td>(</td>
+          <td class="paramtype">ref NativeArray&lt; byte &gt;</td>          <td class="paramname"><span class="paramname"><em>narray</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint</td>          <td class="paramname"><span class="paramname"><em>frameNum</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Passes a frame to FFmpeg while recording. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">narray</td><td>The frame data. Should be VideoSize width*height*4 in size.</td></tr>
+    <tr><td class="paramname">frameNum</td><td>The number of the frame being sent. Can be sent out of order with a gap of up to 15.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Frames are sent from Unity's AsyncGPUReadback in <a class="el" href="class_f_fmpeg_render_feature.html">FFmpegRenderFeature</a>. Unfortunately, they aren't sent in order, so they have to be buffered and reordered. </p>
+
+</div>
+</div>
+<a id="a549823d50375eb132ee03628d5534bc5" name="a549823d50375eb132ee03628d5534bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549823d50375eb132ee03628d5534bc5">&#9670;&#160;</a></span>SetCmdParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void FFmpegWrapper2.SetCmdParam </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the <em>value</em>  for a variable that can be used in the command arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The variable that will be replaced.</td></tr>
+    <tr><td class="paramname">value</td><td>The value to replace it with.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Exec Args:<br  />
+ <code>-loglevel loglevel% -f ...</code> </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a549823d50375eb132ee03628d5534bc5">SetCmdParam</a>(<span class="stringliteral">&quot;loglevel&quot;</span>, <span class="stringliteral">&quot;error&quot;</span>)</div>
+<div class="ttc" id="aclass_f_fmpeg_wrapper2_html_a549823d50375eb132ee03628d5534bc5"><div class="ttname"><a href="#a549823d50375eb132ee03628d5534bc5">FFmpegWrapper2.SetCmdParam</a></div><div class="ttdeci">static void SetCmdParam(string name, string value)</div><div class="ttdoc">Sets the value  for a variable that can be used in the command arguments.</div><div class="ttdef"><b>Definition</b> FFmpegWrapper2.cs:41</div></div>
+</div><!-- fragment --><p> Parsed command args passed to ffmpeg:<br  />
+ <code>-loglevel error -f ...</code> </p>
+<p>Use fields/properties/setters within this class if they exist, for example <a class="el" href="#a33525a539876f1c49b3797ba0b161fa7" title="The output directory of.">OutDir</a></p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#abb9f737c0a77063d3d75a8aa1dc58182" title="Get the value that a command variable will be replaced with.">GetCmdParam(string)</a></dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a275b22ec40b2a6d0c7c31878da0cf9c0" name="a275b22ec40b2a6d0c7c31878da0cf9c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a275b22ec40b2a6d0c7c31878da0cf9c0">&#9670;&#160;</a></span>ArgsVer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly float FFmpegWrapper2.ArgsVer = 1f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Changed when the default args are changed enough that the user's overriden arguments should be replaced with the default.</p>
+
+</div>
+</div>
 <a id="af83a692fd42cd581adadbd32ded2bfa1" name="af83a692fd42cd581adadbd32ded2bfa1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af83a692fd42cd581adadbd32ded2bfa1">&#9670;&#160;</a></span>ExecArgsDef</h2>
 
@@ -180,6 +464,61 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>OutFile</b> 
 <div class="line">        <span class="stringliteral">&quot;-crf %crf% &quot;</span> +</div>
 <div class="line">        <span class="stringliteral">&quot;\&quot;%outfile%.%file_ext%\&quot;&quot;</span></div>
 </div><!-- fragment -->
+<p>The default execution arguments, with unparsed variables. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a1ac97b9511291e51a8f9ffc76223fe3b" title="The current execution arguments, with unparsed variables.">ExecArgs</a></dd></dl>
+
+</div>
+</div>
+<a id="af03d0b86e38caac24b9aaf0ca98f68bb" name="af03d0b86e38caac24b9aaf0ca98f68bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af03d0b86e38caac24b9aaf0ca98f68bb">&#9670;&#160;</a></span>w</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FFmpegWrapper2.w</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The final output size, based on the window size and <a class="el" href="#a6cb20d0caa7fffb89f478e30fe1c97a4" title="The amount the output resolution will be scaled by from the window resolution.">VideoScale</a>. </p>
+<p>Both dimensions will be rounded down to a multiple of 2.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a0bb84e9127ec6b59b29df5a7201e1b1f" name="a0bb84e9127ec6b59b29df5a7201e1b1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bb84e9127ec6b59b29df5a7201e1b1f">&#9670;&#160;</a></span>OutFile</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string FFmpegWrapper2.OutFile = &quot;&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The full filename for the output file. </p>
+<p>Only valid during and after a recording has started.</p>
+<p>Only valid during and after a recording has started.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

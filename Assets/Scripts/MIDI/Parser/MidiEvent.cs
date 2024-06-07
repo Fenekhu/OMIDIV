@@ -1,7 +1,11 @@
 ﻿using System.IO;
 using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// A class representing realtime events on a specific channel.
+/// </summary>
 public class MidiEvent : MTrkEvent {
+    
     public struct Message {
         public byte v;
         public int status {
