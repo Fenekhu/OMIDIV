@@ -1,6 +1,7 @@
 using ImGuiNET;
 using Unity.Mathematics;
 using UnityEngine;
+using static MidiManager;
 
 /// <summary>
 /// A visualization similar to <see cref="Standard3D"/>, except notes are placed radially instead of vertically.

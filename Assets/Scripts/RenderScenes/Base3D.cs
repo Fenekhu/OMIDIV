@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using System.Collections.Generic;
 using UnityEngine;
+using static MidiManager;
 
 /// <summary>
 /// Base TrackInfo for a scene that inherits from <see cref="Base3DTrackInfo"/>
@@ -25,7 +26,7 @@ public class Base3DTrackInfo {
 /// If you do that, respect <see cref="GlobalScale"/> by making any GameObjects children of this, or manually adjusting their scale.
 /// </summary>
 /// <typeparam name="TrackInfo"></typeparam>
-public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrackInfo, new() {
+public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Base3DTrackInfo, new() {
 
     protected static readonly float GlobalScale = 1/128.0f;
 
@@ -51,15 +52,13 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
     protected float LastNoteUpdate = -1f;
     protected float LastReloadVisuals = -1f;
 
-    protected override void Start() {
-        base.Start();
+    protected void Start() {
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
     }
 
-    protected override void Update() {
+    protected virtual void Update() {
         // check if we need to reload first, becase base.Update() calls the reload.
-        if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { NeedsVisualReload = true; LastReloadVisuals = -1f; }
-        base.Update();
+        if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { SceneController.NeedsVisualReload = true; LastReloadVisuals = -1f; }
         if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.1f) { ResetTracks(); LastTrackUpdate = -1f; }
         if (LastNoteUpdate > 0 && Time.realtimeSinceStartup - LastNoteUpdate > 0.5f) { ResetNotes(false); LastNoteUpdate = -1f; }
 
@@ -300,9 +299,17 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         }
         ImGui.End();
 
-        if (AutoReload) {
+        if (AutoApplyChanges) {
             if (updateTracks) LastTrackUpdate = Time.unscaledTime;
             if (updateNotes) LastNoteUpdate = Time.unscaledTime;
+        }
+    }
+
+    private struct icpair {
+        public int i; public Color c;
+        public icpair(int i, Color c) {
+            this.i = i;
+            this.c = c;
         }
     }
 
@@ -319,15 +326,9 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         Config.Set(tag+".lengthScale", transform.localScale.x / GlobalScale);
         Config.Set(tag+".playedAlpha", PlayedAlpha);
 
-        List<Color> trackColors = new List<Color>();
-        trackColors.AddRange(TrackColors);
-        for (int i = 0; i < Tracks.Length; i++) {
-            if (i < trackColors.Count - 1) {
-                trackColors[i] = Tracks[i].trackColor;
-            } else {
-                trackColors.Add(Tracks[i].trackColor);
-            }
-        }
+        List<icpair> trackColors = new List<icpair>(TrackColors.Count);
+        foreach (var kvp in TrackColors)
+            trackColors.Add(new icpair(kvp.Key, kvp.Value));
         Config.Set(tag+".trackColors", trackColors.ToArray());
     }
 
@@ -345,11 +346,10 @@ public abstract class Base3D<TrackInfo> : MidiScene where TrackInfo : Base3DTrac
         Config.TryGet(tag+".lengthScale", ref scale.x); transform.localScale = scale * GlobalScale;
         Config.TryGet(tag+".playedAlpha", ref PlayedAlpha);
 
-        List<Color> trackColors = new List<Color>();
+        List<icpair> trackColors = new List<icpair>();
         Config.Get(tag+".trackColors", trackColors);
-        if (trackColors.Count > 0) {
-            TrackColors.Clear();
-            TrackColors.AddRange(trackColors);
+        foreach (var kvp in trackColors) {
+            TrackColors[kvp.i] = kvp.c;
         }
     }
 }

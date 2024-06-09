@@ -4,12 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using static MidiManager;
 
 /// <summary>
 /// A visualization where the pitches of the track appear as pads placed radially. The pads light up when that pitch is played.
 /// </summary>
-public class Circle2D : MidiScene {
+public class Circle2D : VisualsComponent {
 
     struct TrackInfo {
         public GameObject obj;
@@ -50,14 +50,12 @@ public class Circle2D : MidiScene {
     protected float LastNoteUpdate = -1f;
     protected float LastReloadVisuals = -1f;
 
-    protected override void Start() {
-        base.Start();
+    protected void Start() {
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
     }
 
-    protected override void Update() {
-        if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { NeedsVisualReload = true; LastReloadVisuals = -1f; }
-        base.Update();
+    protected void Update() {
+        if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { SceneController.NeedsVisualReload = true; LastReloadVisuals = -1f; }
         if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.2f) { ResetTracks(); LastTrackUpdate = -1f; }
         if (LastNoteUpdate > 0 && Time.realtimeSinceStartup - LastNoteUpdate > 0.2f) { ResetNotes(false); LastNoteUpdate = -1f; }
 
@@ -308,9 +306,17 @@ public class Circle2D : MidiScene {
         }
         ImGui.End();
 
-        if (AutoReload) {
+        if (AutoApplyChanges) {
             if (updateTracks) LastTrackUpdate = Time.unscaledTime;
             if (updateNotes) LastNoteUpdate = Time.unscaledTime;
+        }
+    }
+
+    private struct icpair {
+        public int i; public Color c;
+        public icpair(int i, Color c) {
+            this.i = i;
+            this.c = c;
         }
     }
 
@@ -329,15 +335,9 @@ public class Circle2D : MidiScene {
         Config.Set("c2d.noteAlpha", NoteAlpha);
         Config.Set("c2d.noteFadeTime", NoteFadeTime);
 
-        List<Color> trackColors = new List<Color>();
-        trackColors.AddRange(TrackColors);
-        for (int i = 0; i < Tracks.Length; i++) {
-            if (i < trackColors.Count - 1) {
-                trackColors[i] = Tracks[i].trackColor;
-            } else {
-                trackColors.Add(Tracks[i].trackColor);
-            }
-        }
+        List<icpair> trackColors = new List<icpair>(TrackColors.Count);
+        foreach (var kvp in TrackColors)
+            trackColors.Add(new icpair(kvp.Key, kvp.Value));
         Config.Set("c2d.trackColors", trackColors.ToArray());
     }
 
@@ -356,11 +356,10 @@ public class Circle2D : MidiScene {
         Config.TryGet("c2d.noteAlpha", ref NoteAlpha);
         Config.TryGet("c2d.noteFadeTime", ref NoteFadeTime);
 
-        List<Color> trackColors = new List<Color>();
+        List<icpair> trackColors = new List<icpair>();
         Config.Get("c2d.trackColors", trackColors);
-        if (trackColors.Count > 0) {
-            TrackColors.Clear();
-            TrackColors.AddRange(trackColors);
+        foreach (var kvp in trackColors) {
+            TrackColors[kvp.i] = kvp.c;
         }
     }
 }

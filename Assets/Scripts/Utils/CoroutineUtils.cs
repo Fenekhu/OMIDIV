@@ -22,7 +22,7 @@ public static class CoroutineUtils {
         if(curve != null) func = t => curve.Evaluate(t);
 
         while(time < duration) {
-            float delta = (float)MidiScene.FrameDeltaTime;
+            float delta = (float)SceneController.FrameDeltaTime;
             float t = (time + delta > duration) ? 1 : (time / duration);
             if(inverse) t = 1 - t;
             action(func(t));

@@ -7,15 +7,49 @@ using UnityEngine;
 /// <summary>
 /// A component that bridges FFmpegWrapper2 into Unity and the OMIDIV environment.
 /// </summary>
-public class FFmpegController2 : RecorderController {
+public class VideoRecorder : OmidivComponent {
+
+    public enum Status {
+        Standby, Recording, Processing, ProcessingBackground
+    }
+
+    public static event Action OnRecordingBegin;
+    public static event Action OnBeforeFrame;
+    public static event Action OnAfterFrame;
+    public static event Action OnRecordingEnd;
+
+    private static double recordingTime = 0; // seconds
+    private static double simulatedTime = 0; // seconds
+    private static double recordingDeltaTime = 0; // seconds
+    private static bool overrideTime = false;
+
+    /// <summary>
+    /// This is the source of the custom frame delta used by Omidiv.
+    /// </summary>
+    /// <seealso cref="OmidivComponent.FrameDeltaTime"/>
+    /// <seealso cref="SceneController.FrameDeltaTime"/>
+    public static double FrameDeltaTime_src { get { return overrideTime ? recordingDeltaTime : Time.deltaTime; } }
+
+    public static bool RecordingEnabled { get; set; } = false;
+
+    public static Status GetStatus() {
+        if (FFmpegWrapper2.IsReencoding) return Status.Processing;
+        if (FFmpegWrapper2.IsRecording) return Status.Recording;
+        return Status.Standby;
+    }
+
+    public static double FrameRate => FFmpegWrapper2.FrameRate;
 
     private int _autoHideUI = 0;
-
     /// <summary>Whether to disable the UI when recording begins.</summary>
     public bool AutoHideUI { get { return _autoHideUI != 0; } set { _autoHideUI = value ? 1 : 0; } }
 
     protected override void OnEnable() {
         base.OnEnable();
+        OnRecordingBegin += _OnRecordingBegin;
+        OnBeforeFrame += _OnFrameBegin;
+        OnAfterFrame += _OnFrameEnd;
+        OnRecordingEnd += _OnRecordingEnd;
         FFmpegWrapper2.LoadConfig();
         FFmpegWrapper2.InitParams(); // im not sure if this really needs to be called here.
         _autoHideUI = PlayerPrefs.GetInt("vrec.ffmpeg2.autoHideUI", _autoHideUI);
@@ -23,8 +57,16 @@ public class FFmpegController2 : RecorderController {
 
     protected override void OnDisable() {
         base.OnDisable();
+        OnRecordingBegin -= _OnRecordingBegin;
+        OnBeforeFrame -= _OnFrameBegin;
+        OnAfterFrame -= _OnFrameEnd;
+        OnRecordingEnd -= _OnRecordingEnd;
         FFmpegWrapper2.SaveConfig();
         PlayerPrefs.SetInt("vrec.ffmpeg2.autoHideUI", _autoHideUI);
+    }
+
+    private void Start() {
+        recordingTime = 0;
     }
 
     protected override void OnDestroy() {
@@ -32,35 +74,71 @@ public class FFmpegController2 : RecorderController {
         FFmpegWrapper2.ForceKill();
     }
 
-    /// <summary>Coroutine that fires the <see cref="RecorderController.OnBeforeFrame"/> and <see cref="RecorderController.OnAfterFrame"/> events.</summary>
-    private IEnumerator FrameTrigger() {
-        while (GetStatus() == Status.Recording) {
-            FireOnBeforeFrame();
-            yield return new WaitForEndOfFrame();
-            if (GetStatus() == Status.Recording) FireOnAfterFrame();
+    private static void _OnRecordingBegin() {
+        recordingDeltaTime = 1 / FrameRate;
+        overrideTime = true;
+    }
+
+    // currently does nothing but may be needed in the future.
+    private static void _OnFrameBegin() { }
+
+    private static void _OnFrameEnd() {
+        recordingTime += recordingDeltaTime;
+    }
+
+    private static void _OnRecordingEnd() {
+        simulatedTime = recordingTime = 0;
+        overrideTime = false;
+    }
+
+    protected override void OnPlayStart() {
+        StartIfEnabled();
+    }
+    protected override void OnPlayStop() {
+        StopIfEnabled();
+    }
+
+    private void FixedUpdate() {
+        if (RecordingEnabled && IsPlaying) {
+            while (simulatedTime < recordingTime) {
+                MidiManager.DoTick();
+                simulatedTime += (double)TickDeltaTime;
+            }
+        } else {
+            MidiManager.DoTick();
         }
     }
 
-    public override Status GetStatus() {
-        if (FFmpegWrapper2.IsReencoding) return Status.Processing;
-        if (FFmpegWrapper2.IsRecording) return Status.Recording;
-        return Status.Standby;
+    protected override void Restart() {
+        simulatedTime = recordingTime = 0;
     }
 
-    public override double GetFramerate() {
-        return FFmpegWrapper2.FrameRate;
+    /// <summary>Coroutine that fires the <see cref="RecorderController.OnBeforeFrame"/> and <see cref="RecorderController.OnAfterFrame"/> events.</summary>
+    private IEnumerator FrameTrigger() {
+        while (GetStatus() == Status.Recording) {
+            OnBeforeFrame?.Invoke();
+            yield return new WaitForEndOfFrame();
+            if (GetStatus() == Status.Recording) OnAfterFrame?.Invoke();
+        }
     }
 
-    public override void StartRecording() {
+    public void StartIfEnabled() {
+        if (RecordingEnabled) StartRecording();
+    }
+    public void StopIfEnabled() {
+        if (RecordingEnabled) StopRecording();
+    }
+
+    public void StartRecording() {
         if (AutoHideUI) ImGuiManager.IsEnabled = false;
+        OnRecordingBegin?.Invoke();
         FFmpegWrapper2.StartRecording();
-        FireOnRecordingBegin();
         StartCoroutine(FrameTrigger());
     }
 
-    public override void StopRecording() {
+    public void StopRecording() {
         FFmpegWrapper2.EndRecording();
-        FireOnRecordingEnd();
+        OnRecordingEnd?.Invoke();
     }
 
     protected override void DrawGUI() {

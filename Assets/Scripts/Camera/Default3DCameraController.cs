@@ -109,9 +109,9 @@ public class Default3DCameraController : CameraController {
     }
 
     private void UpdateInputs() {
-        float speed = (float)(2 * MidiScene.FrameDeltaTime);
+        float speed = (float)(2 * FrameDeltaTime);
         Vector3 ds = Vector3.zero;
-        float rotSpeed = (float)(60 * MidiScene.FrameDeltaTime);
+        float rotSpeed = (float)(60 * FrameDeltaTime);
         (float x, float y) rot = (0, 0);
 
         if (Keyboard.current.aKey.isPressed) {

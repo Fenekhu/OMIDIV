@@ -4,8 +4,24 @@
 /// A base component that is subscribed to a bunch of events.
 /// </summary>
 public abstract class OmidivComponent : MonoBehaviour {
+
     /// <summary>Is the visualization currently playing.</summary>
-    public static bool IsPlaying { get; protected set; } = false;
+    /// <remarks>Identical to <see cref="SceneController.IsPlaying"/>.</remarks>
+    public static bool IsPlaying => SceneController.IsPlaying;
+
+    /// <summary>
+    /// High precision duration of one tick.<br/>
+    /// Consider using this instead of <see cref="Time.fixedDeltaTime"/>.
+    /// </summary>
+    /// <remarks>Identical to <see cref="SceneController.TickDeltaTime"/>.</remarks>
+    public static decimal TickDeltaTime => MidiManager.TickDeltaTime_src;
+
+    /// <summary>
+    /// <see cref="Time.deltaTime"/> when not recording, <c>1/recording framerate</c> when recording.
+    /// In most cases, use this instead of <see cref="Time.deltaTime"/> so that recordings work properly.
+    /// </summary>
+    /// <remarks>Identical to <see cref="SceneController.FrameDeltaTime"/>.</remarks>
+    public static double FrameDeltaTime => SceneController.FrameDeltaTime;
 
     /// <summary>
     /// Use this to give different instances in difference scenes different saved config.<br/>
@@ -20,13 +36,13 @@ public abstract class OmidivComponent : MonoBehaviour {
         ImGuiManager.Draw += DrawGUI;
         Config.AfterLoading += ReadConfig;
         Config.BeforeSaving += WriteConfig;
-        MidiScene.OnPlayStarted += OnPlayStart;
-        MidiScene.OnPlayStopped += OnPlayStop;
-        MidiScene.OnReset += Reset_;
-        MidiScene.OnRestart += Restart;
-        MidiScene.OnLoadMidi += LoadMidi;
-        MidiScene.OnLoadVisuals += LoadVisuals;
-        MidiScene.OnLoadAudio += LoadAudio;
+        SceneController.OnPlayStarted += OnPlayStart;
+        SceneController.OnPlayStopped += OnPlayStop;
+        SceneController.OnReset += Reset_;
+        SceneController.OnRestart += Restart;
+        SceneController.OnLoadMidi += LoadMidi;
+        SceneController.OnLoadVisuals += LoadVisuals;
+        SceneController.OnLoadAudio += LoadAudio;
     }
 
     /// <remarks>
@@ -36,13 +52,13 @@ public abstract class OmidivComponent : MonoBehaviour {
         ImGuiManager.Draw -= DrawGUI;
         Config.AfterLoading -= ReadConfig;
         Config.BeforeSaving -= WriteConfig;
-        MidiScene.OnPlayStarted -= OnPlayStart;
-        MidiScene.OnPlayStopped -= OnPlayStop;
-        MidiScene.OnReset -= Reset_;
-        MidiScene.OnRestart -= Restart;
-        MidiScene.OnLoadMidi -= LoadMidi;
-        MidiScene.OnLoadVisuals -= LoadVisuals;
-        MidiScene.OnLoadAudio -= LoadAudio;
+        SceneController.OnPlayStarted -= OnPlayStart;
+        SceneController.OnPlayStopped -= OnPlayStop;
+        SceneController.OnReset -= Reset_;
+        SceneController.OnRestart -= Restart;
+        SceneController.OnLoadMidi -= LoadMidi;
+        SceneController.OnLoadVisuals -= LoadVisuals;
+        SceneController.OnLoadAudio -= LoadAudio;
     }
 
     /// <remarks>
@@ -88,7 +104,7 @@ public abstract class OmidivComponent : MonoBehaviour {
     protected virtual void OnPlayStop() { }
 
     /// <summary>
-    /// Override this. Called when <see cref="MidiScene.OnReset"/> is fired. 
+    /// Override this. Called when <see cref="SceneController.OnReset"/> is fired. 
     /// <see cref="LoadAudio"/> and <see cref="LoadMidi"/> will also be called afterwards, so don't do any of that here,
     /// but do reload any other resources your component needs.
     /// </summary>
@@ -114,4 +130,12 @@ public abstract class OmidivComponent : MonoBehaviour {
     /// Override this. Called when the audio needs to be loaded from the file.
     /// </summary>
     protected virtual void LoadAudio() { }
+
+    /// <summary>
+    /// Override this.<br/>
+    /// Happens possibly multiple times per frame, dependent on tempo with consideration to recording.<br/>
+    /// You probably want to use this instead of the <c>FixedUpdate</c> Unity message.<br/>
+    /// Use <see cref="TickDeltaTime"/> instead of <see cref="Time.fixedDeltaTime"/>.
+    /// </summary>
+    protected virtual void CustomFixedUpdate() { }
 }
