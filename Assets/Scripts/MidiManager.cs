@@ -85,7 +85,7 @@ public class MidiManager : OmidivComponent {
     /// <summary>
     /// The number of midi ticks per update.
     /// </summary>
-    public static decimal TicksPerFrame => 1m / (TickDeltaTime_src * (decimal)FrameDeltaTime);
+    public static decimal TicksPerFrame => MicrosToTicks(CurrentTime, 1e6m * (decimal)FrameDeltaTime);
 
     /// <summary>Resets some things and loads the midi if the path has changed then cooks the rawMidi.</summary>
     private static void InitMidi() {
