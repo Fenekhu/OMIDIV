@@ -188,7 +188,7 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         base.Restart();
     }
 
-    protected override void MovePlay(decimal ticks) {
+    protected override void MovePlay(decimal ticks, decimal microseconds) {
         //MainCam.transform.Translate((float)ticks, 0, 0, Space.World);
         foreach (TrackInfo info in Tracks) {
             Vector3 ds = new Vector3((float)(ticks * (decimal)info.lengthFactor), 0, 0);

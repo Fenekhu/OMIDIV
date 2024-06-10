@@ -41,7 +41,7 @@ public abstract class VisualsComponent : OmidivComponent {
     /// Move your visualization forward or backward (in case midi delay is adjusted).
     /// </summary>
     /// <param name="ticks">Will usually be 1 except if the midi uses SMPTE time format, or the midi delay is adjusted.</param>
-    protected abstract void MovePlay(decimal ticks);
+    protected abstract void MovePlay(decimal ticks, decimal microseconds);
 
     protected override void OnEnable() {
         base.OnEnable();
@@ -73,14 +73,14 @@ public abstract class VisualsComponent : OmidivComponent {
     }
 
     private void OnMidiDelayChanged(long deltaMicros, decimal tickDelta) {
-        MovePlay(tickDelta);
+        MovePlay(tickDelta, deltaMicros);
     }
 
     /// <remarks>Please call <c>base.Update()</c> if overriding this unless you know what you're doing.</remarks>
     protected virtual void Update() {
         if (!IsPlaying) return;
 
-        MovePlay(MidiManager.TicksPerFrame);
+        MovePlay(MidiManager.TicksPerFrame, (decimal)FrameDeltaTime * 1e6m);
     }
 
     /// <summary>Clears and creates the visuals.</summary>
@@ -100,6 +100,7 @@ public abstract class VisualsComponent : OmidivComponent {
     }
 
     protected override void Restart() {
-        MovePlay(MidiManager.MicrosToTicks(0, MidiManager.MidiDelay * -1000m));
+        decimal micros = MidiManager.MidiDelay * -1000m;
+        MovePlay(MidiManager.MicrosToTicks(0, micros), micros);
     }
 }

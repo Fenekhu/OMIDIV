@@ -223,7 +223,7 @@ public class Circle2D : VisualsComponent {
     }
 
     // nothing needs to be done here because visuals only need to know the current time.
-    protected override void MovePlay(decimal ticks) {}
+    protected override void MovePlay(decimal ticks, decimal microseconds) {}
 
     protected override void DrawGUI() {
         base.DrawGUI();
