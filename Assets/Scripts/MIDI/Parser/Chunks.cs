@@ -66,13 +66,24 @@ public class HeaderChunk : Chunk {
     }
 
     /// <summary>
-    /// The number of frames per second. Only meaningful if <see cref="fmt"/> is <see cref="EMidiDivisionFormat.SMPTE"/>.<br/>
-    /// Will be one of the values in <see cref="EMidiSMPTEFPS"/>.
+    /// The raw bits signifying desired frames per second. Only meaningful if <see cref="fmt"/> is <see cref="EMidiDivisionFormat.SMPTE"/>.<br/>
     /// </summary>
     /// <seealso cref="EMidiSMPTEFPS"/>
-    public sbyte smpte {
-        get { return (sbyte)(divisionU & 0x00FF); }
+    public EMidiSMPTEFPS smpte {
+        get { return (EMidiSMPTEFPS)(divisionU & 0x00FF); }
         set { divisionU = (ushort)((divisionU & 0xFF00) + value); }
+    }
+
+    /// <summary>
+    /// The number of frames per second. Only meaningful if <see cref="fmt"/> is <see cref="EMidiDivisionFormat.SMPTE"/>.<br/>
+    /// </summary>
+    public double SMPTEFPS {
+        get {
+            return smpte switch {
+                EMidiSMPTEFPS.ThirtyDrop => 30000d / 1001d,
+                _ => -(double)smpte // The rest of the values are just the negative of their actual value.
+            };
+        }
     }
 
     public HeaderChunk() : base(EMidiChunkType.Header, 6) { }
@@ -96,7 +107,7 @@ public class HeaderChunk : Chunk {
         if (fmt == EMidiDivisionFormat.TPQN) {
             msg += string.Format("ticks/qtr:{0:d}", ticksPerQuarter);
         } else if (fmt == EMidiDivisionFormat.SMPTE) {
-            msg += string.Format("fps:{0:d}  ticks/frame:{1:d}", -smpte, ticksPerFrame);
+            msg += string.Format("fps:{0:d}  ticks/frame:{1:d}", SMPTEFPS, ticksPerFrame);
         }
 
         if (sw is null) {

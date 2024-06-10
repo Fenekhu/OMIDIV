@@ -328,7 +328,7 @@ public class CookedMidi {
         long lastTempoTick = 0;
         long currentTime = 0;
         uint currentTempo = 500000;
-        if (Header.fmt == EMidiDivisionFormat.TPQN) {
+        if (Header.fmt != EMidiDivisionFormat.SMPTE) { // TPQN or invalid
             foreach (var kvp in tempoMapByTick) {
                 long delta = kvp.Key - lastTempoTick;
                 currentTime += currentTempo * delta / Header.ticksPerQuarter;
@@ -338,7 +338,7 @@ public class CookedMidi {
         } else { // SMPTE
             foreach (var kvp in tempoMapByTick) {
                 long delta = kvp.Key - lastTempoTick;
-                currentTime += 1_000_000 * delta / (-Header.smpte * Header.ticksPerFrame);
+                currentTime += (long) (1_000_000 * delta / (Header.SMPTEFPS * Header.ticksPerFrame));
                 currentTempo = kvp.Value;
                 TempoMap.Set(currentTime, currentTempo);
             }

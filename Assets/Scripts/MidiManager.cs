@@ -68,20 +68,24 @@ public class MidiManager : OmidivComponent {
         set { CurrentTempoMicros = MidiUtil.TempoMicros(value); }
     }
 
-    /// <summary>
-    /// The source of <see cref="SceneController.TickDeltaTime"/> and <see cref="OmidivComponent.TickDeltaTime"/>.
-    /// </summary>
-    public static decimal TickDeltaTime_src {
+    public static decimal CurrentTicksPerSecond {
         get {
-            decimal tpqn = CurrentTempoMicros / (Midi.Header.ticksPerQuarter * 1e6m);
-            if (Midi == null) return tpqn;
             return Midi.Header.fmt switch {
-                EMidiDivisionFormat.TPQN => tpqn,
-                EMidiDivisionFormat.SMPTE => 1.0m / (-Midi.Header.smpte * Midi.Header.ticksPerFrame),
-                _ => tpqn,
+                EMidiDivisionFormat.SMPTE => (decimal)(Midi.Header.ticksPerFrame / Midi.Header.SMPTEFPS),
+                EMidiDivisionFormat.TPQN or _ => Midi.Header.ticksPerQuarter * 1e6m / CurrentTempoMicros,
             };
         }
     }
+
+    /// <summary>
+    /// The source of <see cref="SceneController.TickDeltaTime"/> and <see cref="OmidivComponent.TickDeltaTime"/>.
+    /// </summary>
+    public static decimal TickDeltaTime_src => 1m / CurrentTicksPerSecond;
+
+    /// <summary>
+    /// The number of midi ticks per update.
+    /// </summary>
+    public static decimal TicksPerFrame => MicrosToTicks(CurrentTime, 1e6m * (decimal)FrameDeltaTime);
 
     /// <summary>Resets some things and loads the midi if the path has changed then cooks the rawMidi.</summary>
     private static void InitMidi() {
@@ -163,13 +167,13 @@ public class MidiManager : OmidivComponent {
             start += timeSpentInTempo;
             micros -= timeSpentInTempo;
 
-            // convert the time spend in the tempo to a number of ticks.
+            // convert the time spent in the tempo to a number of ticks.
             switch (Midi.Header.fmt) {
             case EMidiDivisionFormat.TPQN:
                 ret += timeSpentInTempo * Midi.Header.ticksPerQuarter / _tempo;
                 break;
             case EMidiDivisionFormat.SMPTE:
-                ret += timeSpentInTempo / (1e6m * -Midi.Header.smpte * Midi.Header.ticksPerFrame);
+                ret += timeSpentInTempo / (1e6m * (decimal)Midi.Header.SMPTEFPS * Midi.Header.ticksPerFrame);
                 break;
             }
         }
