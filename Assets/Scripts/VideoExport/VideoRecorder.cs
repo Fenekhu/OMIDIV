@@ -29,6 +29,7 @@ public class VideoRecorder : OmidivComponent {
     /// <seealso cref="OmidivComponent.FrameDeltaTime"/>
     /// <seealso cref="SceneController.FrameDeltaTime"/>
     public static double FrameDeltaTime_src { get { return overrideTime ? recordingDeltaTime : Time.deltaTime; } }
+    //public static double FrameDeltaTime_src { get { return 1/300d; } } // fixed time for breakpoint debugging, no vsync so it runs at about 300fps in the editor.
 
     public static bool RecordingEnabled { get; set; } = false;
 
@@ -96,17 +97,6 @@ public class VideoRecorder : OmidivComponent {
     }
     protected override void OnPlayStop() {
         StopIfEnabled();
-    }
-
-    private void FixedUpdate() {
-        if (RecordingEnabled && IsPlaying) {
-            while (simulatedTime < recordingTime) {
-                MidiManager.DoTick();
-                simulatedTime += (double)TickDeltaTime;
-            }
-        } else {
-            MidiManager.DoTick();
-        }
     }
 
     protected override void Restart() {

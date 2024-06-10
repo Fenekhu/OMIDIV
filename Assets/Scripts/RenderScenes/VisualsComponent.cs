@@ -46,13 +46,11 @@ public abstract class VisualsComponent : OmidivComponent {
     protected override void OnEnable() {
         base.OnEnable();
         MidiManager.OnMidiDelayChanged += OnMidiDelayChanged;
-        MidiManager.OnMidiTimeChanged += OnMidiTimeChange;
     }
 
     protected override void OnDisable() {
         base.OnDisable();
         MidiManager.OnMidiDelayChanged -= OnMidiDelayChanged;
-        MidiManager.OnMidiTimeChanged += OnMidiTimeChange;
     }
 
     /// <remarks>
@@ -78,8 +76,11 @@ public abstract class VisualsComponent : OmidivComponent {
         MovePlay(tickDelta);
     }
 
-    private void OnMidiTimeChange(decimal deltaMicros, decimal tickDelta) {
-        MovePlay(tickDelta);
+    /// <remarks>Please call <c>base.Update()</c> if overriding this unless you know what you're doing.</remarks>
+    protected virtual void Update() {
+        if (!IsPlaying) return;
+
+        MovePlay(MidiManager.TicksPerFrame);
     }
 
     /// <summary>Clears and creates the visuals.</summary>
@@ -96,5 +97,9 @@ public abstract class VisualsComponent : OmidivComponent {
             if (ImGui.Checkbox("Auto-apply certain changes", ref _autoReload)) AutoApplyChanges = _autoReload;
         }
         ImGui.End();
+    }
+
+    protected override void Restart() {
+        MovePlay(MidiManager.MicrosToTicks(0, MidiManager.MidiDelay * -1000m));
     }
 }

@@ -56,7 +56,8 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
     }
 
-    protected virtual void Update() {
+    protected override void Update() {
+        base.Update();
         // check if we need to reload first, becase base.Update() calls the reload.
         if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { SceneController.NeedsVisualReload = true; LastReloadVisuals = -1f; }
         if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.1f) { ResetTracks(); LastTrackUpdate = -1f; }
