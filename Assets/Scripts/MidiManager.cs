@@ -26,9 +26,9 @@ public class MidiManager : OmidivComponent {
         set {
             long diff = 1000L * (_midiDelay - value);
             decimal tickCount = MicrosToTicks(CurrentTime, diff);
+            OnMidiDelayChanged?.Invoke(diff, tickCount);
             CurrentTime += diff;
             CurrentTick += tickCount;
-            OnMidiDelayChanged?.Invoke(diff, tickCount);
             _midiDelay = value;
         }
     }
@@ -36,16 +36,9 @@ public class MidiManager : OmidivComponent {
     /// <summary><c>&lt;
     /// long diffMicros, decimal tickDelta
     /// &gt;</c><br/>
-    /// Called after <see cref="CurrentTime"/> and <see cref="CurrentTick"/> are updated.
+    /// Called before <see cref="CurrentTime"/> and <see cref="CurrentTick"/> have been updated.
     /// </summary>
     public static event Action<long, decimal> OnMidiDelayChanged;
-
-    /// <summary><c>&lt;
-    /// decimal microsDelta, decimal tickDelta
-    /// &gt;</c><br/>
-    /// Called after <see cref="CurrentTime"/> and <see cref="CurrentTick"/> are updated.
-    /// </summary>
-    public static event Action<decimal, decimal> OnMidiTimeChanged;
 
     /// <summary>
     /// The current midi tick the visualization is on. May be negative with a midi delay.
@@ -68,24 +61,11 @@ public class MidiManager : OmidivComponent {
         set { CurrentTempoMicros = MidiUtil.TempoMicros(value); }
     }
 
-    public static decimal CurrentTicksPerSecond {
-        get {
-            return Midi.Header.fmt switch {
-                EMidiDivisionFormat.SMPTE => (decimal)(Midi.Header.ticksPerFrame / Midi.Header.SMPTEFPS),
-                EMidiDivisionFormat.TPQN or _ => Midi.Header.ticksPerQuarter * 1e6m / CurrentTempoMicros,
-            };
-        }
-    }
-
     /// <summary>
-    /// The source of <see cref="SceneController.TickDeltaTime"/> and <see cref="OmidivComponent.TickDeltaTime"/>.
+    /// The frame delta time converted to ticks, accounting for tempo changes.
+    /// Will be 0 if not playing.
     /// </summary>
-    public static decimal TickDeltaTime_src => 1m / CurrentTicksPerSecond;
-
-    /// <summary>
-    /// The number of midi ticks per update.
-    /// </summary>
-    public static decimal TicksPerFrame => MicrosToTicks(CurrentTime, 1e6m * (decimal)FrameDeltaTime);
+    public static decimal TicksPerFrame { get; private set; }
 
     /// <summary>Resets some things and loads the midi if the path has changed then cooks the rawMidi.</summary>
     private static void InitMidi() {
@@ -108,6 +88,19 @@ public class MidiManager : OmidivComponent {
 
         UpdateTPS();
     }
+
+    /// <summary>The current number of midi ticks per second, dependent on tempo.</summary>
+    public static decimal TicksPerSecond(uint tempoMicros) {
+        return Midi.Header.fmt switch {
+            EMidiDivisionFormat.SMPTE => (decimal)(Midi.Header.ticksPerFrame / Midi.Header.SMPTEFPS),
+            EMidiDivisionFormat.TPQN or _ => Midi.Header.ticksPerQuarter * 1e6m / CurrentTempoMicros,
+        };
+    }
+
+    /// <summary>
+    /// The duration of one midi tick.
+    /// </summary>
+    public static decimal TimePerTick(uint tempoMicros) => 1m / TicksPerSecond(tempoMicros);
 
     /// <summary>
     /// Converts a number of microseconds into a number of ticks.<br/>
@@ -156,7 +149,7 @@ public class MidiManager : OmidivComponent {
                     }
                 }
             } else { // we are moving forwards
-                int? index = tempoMap.GTEIndex((long)start);
+                int? index = tempoMap.GTIndex((long)start);
                 if (!index.HasValue || tempoMap.GetAtIndex(index.Value).timeMicros > (start + micros)) {
                     timeSpentInTempo = micros;
                 } else {
@@ -191,23 +184,8 @@ public class MidiManager : OmidivComponent {
         // if the tempo has changed, update the tempo and the simulation tick rate.
         if (newTempo != CurrentTempoMicros) {
             CurrentTempoMicros = newTempo;
-            Time.fixedDeltaTime = (float)TickDeltaTime_src;
+            Time.fixedDeltaTime = (float)TimePerTick(CurrentTempoMicros);
         }
-    }
-
-    public static void DoTick() {
-        UpdateTPS();
-
-        if (!IsPlaying) return;
-
-        if (VideoRecorder.RecordingEnabled && VideoRecorder.GetStatus() != VideoRecorder.Status.Recording)
-            return;
-
-        CurrentTick++;
-        decimal microDelta = 1e6m * TickDeltaTime;
-        CurrentTime += microDelta;
-
-        OnMidiTimeChanged?.Invoke(microDelta, 1);
     }
 
     //----------------------------------------------------------------------------------------
@@ -230,8 +208,11 @@ public class MidiManager : OmidivComponent {
         if (Midi != null) SceneController.NeedsVisualReload = true;
     }
 
-    /// <remarks>Please call <c>base.Update()</c> if overriding this.</remarks>
-    protected virtual void Update() {
+    private void FixedUpdate() {
+        UpdateTPS();
+    }
+
+    private void Update() {
         if (bOpenMidi) {
             SFB.ExtensionFilter[] exts = {new SFB.ExtensionFilter("MIDI", "mid", "midi")};
             SFB.StandaloneFileBrowser.OpenFilePanelAsync("Open MIDI", "", exts, false, (string[] res) => {
@@ -245,15 +226,31 @@ public class MidiManager : OmidivComponent {
             });
             bOpenMidi = false;
         }
+
+        TicksPerFrame = 0;
+
+        if (!IsPlaying)
+            return;
+
+        if (CurrentTime >= 1e6m/60 && CurrentTime <= 0) {
+            Debug.Log("nop");
+        }
+
+        TicksPerFrame = MicrosToTicks(CurrentTime, 1e6m * (decimal)FrameDeltaTime);
+    }
+
+    private void LateUpdate() {
+        if (!IsPlaying)
+            return;
+
+        CurrentTick += TicksPerFrame;
+        CurrentTime += 1e6m * (decimal)FrameDeltaTime;
     }
 
     /// <remarks>Please call <c>base.LoadMidi()</c> if overriding this.</remarks>
     protected override void Restart() {
-        decimal oldTime = CurrentTime;
-        decimal oldTick = CurrentTick;
         CurrentTime = -MidiDelay * 1000m;
         CurrentTick = MicrosToTicks(0, CurrentTime);
-        OnMidiTimeChanged?.Invoke(CurrentTime - oldTime, CurrentTick - oldTick);
     }
 
     /// <summary>Currently just reads the midi from the file into <see cref="Midi"/></summary>
@@ -265,10 +262,18 @@ public class MidiManager : OmidivComponent {
     protected override void DrawGUI() {
         if (ImGuiManager.IsDebugEnabled) {
             if (ImGui.Begin("debug")) {
-                ImGui.Text(string.Format("time: {0:d}", CurrentTime));
-                var nextTempo = Midi.TempoMap.GT((long)CurrentTime) ?? (0, 0);
-                ImGui.Text(string.Format("next tempo: {0:d} ({1:F2})", nextTempo.tempoMicros, MidiUtil.TempoBPM(nextTempo.tempoMicros)));
-                ImGui.Text(string.Format("at: {0:d}", nextTempo.timeMicros));
+                ImGui.Text(string.Format("time: {0:F2}", (double)CurrentTime));
+                var currTempo = Midi.TempoMap[(long)CurrentTime];
+                ImGui.Text(string.Format("current tempo: {0:d} ({1:F2})", currTempo.tempoMicros, MidiUtil.TempoBPM(currTempo.tempoMicros)));
+                ImGui.Text(string.Format("set at: {0:d}", currTempo.timeMicros));
+                var nextTempoOpt = Midi.TempoMap.GT((long)CurrentTime);
+                if (!nextTempoOpt.HasValue) {
+                    ImGui.Text("No next tempo.");
+                } else {
+                    var nextTempo = nextTempoOpt.Value;
+                    ImGui.Text(string.Format("next tempo: {0:d} ({1:F2})", nextTempo.tempoMicros, MidiUtil.TempoBPM(nextTempo.tempoMicros)));
+                    ImGui.Text(string.Format("at: {0:d}", nextTempo.timeMicros));
+                }
             }
             ImGui.End();
         }
@@ -276,7 +281,7 @@ public class MidiManager : OmidivComponent {
         if (ImGui.Begin("MIDI Controls")) {
             ImGui.SetNextItemWidth(128.0f);
             int _midiDelay = MidiDelay;
-            if (ImGui.InputInt("Delay (ms, +/-)", ref _midiDelay, 100, 2000))
+            if (ImGui.InputInt("Delay (ms, +/-)", ref _midiDelay, 10, 1000))
                 MidiDelay = _midiDelay;
         }
         ImGui.End();

@@ -54,7 +54,8 @@ public class Circle2D : VisualsComponent {
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
     }
 
-    protected void Update() {
+    protected override void Update() {
+        base.Update();
         if (LastReloadVisuals > 0 && Time.realtimeSinceStartup - LastReloadVisuals > 0.5f) { SceneController.NeedsVisualReload = true; LastReloadVisuals = -1f; }
         if (LastTrackUpdate > 0 && Time.realtimeSinceStartup - LastTrackUpdate > 0.2f) { ResetTracks(); LastTrackUpdate = -1f; }
         if (LastNoteUpdate > 0 && Time.realtimeSinceStartup - LastNoteUpdate > 0.2f) { ResetNotes(false); LastNoteUpdate = -1f; }

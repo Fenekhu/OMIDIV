@@ -10,13 +10,6 @@ public abstract class OmidivComponent : MonoBehaviour {
     public static bool IsPlaying => SceneController.IsPlaying;
 
     /// <summary>
-    /// High precision duration of one tick.<br/>
-    /// Consider using this instead of <see cref="Time.fixedDeltaTime"/>.
-    /// </summary>
-    /// <remarks>Identical to <see cref="SceneController.TickDeltaTime"/>.</remarks>
-    public static decimal TickDeltaTime => MidiManager.TickDeltaTime_src;
-
-    /// <summary>
     /// <see cref="Time.deltaTime"/> when not recording, <c>1/recording framerate</c> when recording.
     /// In most cases, use this instead of <see cref="Time.deltaTime"/> so that recordings work properly.
     /// </summary>
@@ -130,12 +123,4 @@ public abstract class OmidivComponent : MonoBehaviour {
     /// Override this. Called when the audio needs to be loaded from the file.
     /// </summary>
     protected virtual void LoadAudio() { }
-
-    /// <summary>
-    /// Override this.<br/>
-    /// Happens possibly multiple times per frame, dependent on tempo with consideration to recording.<br/>
-    /// You probably want to use this instead of the <c>FixedUpdate</c> Unity message.<br/>
-    /// Use <see cref="TickDeltaTime"/> instead of <see cref="Time.fixedDeltaTime"/>.
-    /// </summary>
-    protected virtual void CustomFixedUpdate() { }
 }

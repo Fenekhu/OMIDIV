@@ -161,10 +161,10 @@ public class ImGuiManager : MonoBehaviour {
             ImGui.End();
 
             // draw misc debug window
-            nww = ImGui.GetFontSize() * 24;
-            nwh = ImGui.GetFontSize() * 6;
-            ImGui.SetNextWindowSize(new Vector2(nww, nwh));
-            ImGui.SetNextWindowPos(Vector2.zero);
+            //nww = ImGui.GetFontSize() * 24;
+            //nwh = ImGui.GetFontSize() * 6;
+            //ImGui.SetNextWindowSize(new Vector2(nww, nwh));
+            //ImGui.SetNextWindowPos(Vector2.zero);
             if (ImGui.Begin("debug"/*, ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoInputs*/)) {
                 // currently nothing here
                 ImGui.Text(" ");

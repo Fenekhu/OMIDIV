@@ -33,16 +33,15 @@ public class SceneController : MonoBehaviour {
     public static bool NeedsVisualReload { get; set; } = false;
     public static bool NeedsAudioReload { get; set; } = false;
 
+    private static bool _isPlaying = false;
     /// <summary>Is the visualization currently playing.</summary>
     /// <remarks>Identical to <see cref="OmidivComponent.IsPlaying"/>.</remarks>
-    public static bool IsPlaying { get; private set; } = false;
-
-    /// <summary>
-    /// High precision duration of one tick.<br/>
-    /// Consider using this instead of <see cref="Time.fixedDeltaTime"/>.
-    /// </summary>
-    /// <remarks>Identical to <see cref="OmidivComponent.TickDeltaTime"/>.</remarks>
-    public static decimal TickDeltaTime => MidiManager.TickDeltaTime_src;
+    public static bool IsPlaying { 
+        get {
+            return _isPlaying && VideoRecorder.GetStatus() != VideoRecorder.Status.Processing;
+        }
+        private set { _isPlaying = value; }
+    }
 
     /// <summary>
     /// <see cref="Time.deltaTime"/> when not recording, <c>1/recording framerate</c> when recording.
@@ -73,7 +72,7 @@ public class SceneController : MonoBehaviour {
     }
 
     private void Update() {
-        if (IsPlaying && VideoRecorder.RecordingEnabled && VideoRecorder.GetStatus() != VideoRecorder.Status.Recording)
+        if (VideoRecorder.GetStatus() == VideoRecorder.Status.Processing)
             return;
 
         HandleInputs();
@@ -87,6 +86,7 @@ public class SceneController : MonoBehaviour {
             NeedsVisualReload = false;
             NeedsAudioReload = false;
             NeedsRestart = false;
+            StopPlay();
             OnReset?.Invoke();
             OnLoadMidi?.Invoke();
             OnLoadVisuals?.Invoke();
@@ -94,12 +94,14 @@ public class SceneController : MonoBehaviour {
             OnRestart?.Invoke();
         }
         if (NeedsRestart) {
+            StopPlay();
             NeedsRestart = false;
             OnRestart?.Invoke();
         }
         if (NeedsMidiReload) {
             NeedsMidiReload = false;
             NeedsVisualReload = false;
+            StopPlay();
             OnLoadMidi?.Invoke();
             OnLoadVisuals?.Invoke();
         }
@@ -119,12 +121,11 @@ public class SceneController : MonoBehaviour {
     private void HandleInputs() {
         // Space -- Start/Stop play
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
-            if (IsPlaying) NeedsStopPlay = true; else NeedsStartPlay = true;
+            if (_isPlaying) NeedsStopPlay = true; else NeedsStartPlay = true;
         }
 
         // R -- Stop and Restart Play
         if (Keyboard.current.rKey.wasPressedThisFrame) {
-            NeedsStopPlay = true;
             NeedsRestart = true;
         }
 
