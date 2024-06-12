@@ -4,8 +4,10 @@ Open MIDI Visualizer, or OMIDIV for short, or OMV for shorter, or Open Musical I
 
 Not a midi *player*. Just a visualizer.  
 If you want audio, render it separately and open it.  
-**If you change something and it doesn't do anything, try pressing F6 (to reload the midi, can be done while playing), or F5 (to reload and reset everything).** I'm working on ways to do this automatically without being laggy.  
-If the audio doesn't sync up with the notes, use the Offset (ms) in the audio or midi control window.  
+
+[**Wiki / Guides**](https://github.com/TheGoldenProof/OMIDIV/wiki)
+[User Guide](https://github.com/TheGoldenProof/OMIDIV/wiki/User-Guide) - For regular users that use the [releases](https://github.com/TheGoldenProof/OMIDIV/releases) of this repository.
+[Developer Guide](https://github.com/TheGoldenProof/OMIDIV/wiki/Developer-Guide) - For people who want to work with the OMIDIV Unity project, or just know how it works. You should know how to use Unity and C#.
 
 Demo videos:  
 [Open MIDI Visualizer (Alpha Demo)](https://youtu.be/4YJwQmvFq10)  
