@@ -14,9 +14,9 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
 
     public Circle3D() { ConfigTag = "c3d"; }
 
-    float StartRadius = 300.0f;
-    float DeltaRadius = -16f;
-    float AngleOffset = 0f;
+    protected float StartRadius = 300.0f;
+    protected float DeltaRadius = -16f;
+    protected float AngleOffset = 0f;
 
     protected override void ResetTracks() {
         for (int j = 0; j < Tracks.Length; j++) {
@@ -93,16 +93,16 @@ public class Circle3D : Base3D<Circle3D.TrackInfo> {
     protected override void WriteConfig() {
         base.WriteConfig();
 
-        Config.Set("c3d.startRadius", StartRadius);
-        Config.Set("c3d.deltaRadius", DeltaRadius);
-        Config.Set("c3d.angleRadius", AngleOffset);
+        Config.Set(ConfigTag+".startRadius", StartRadius);
+        Config.Set(ConfigTag+".deltaRadius", DeltaRadius);
+        Config.Set(ConfigTag+".angleRadius", AngleOffset);
     }
 
     protected override void ReadConfig() {
         base.ReadConfig();
 
-        Config.TryGet("c3d.startRadius", ref StartRadius);
-        Config.TryGet("c3d.deltaRadius", ref DeltaRadius);
-        Config.TryGet("c3d.angleOffset", ref AngleOffset);
+        Config.TryGet(ConfigTag+".startRadius", ref StartRadius);
+        Config.TryGet(ConfigTag+".deltaRadius", ref DeltaRadius);
+        Config.TryGet(ConfigTag+".angleOffset", ref AngleOffset);
     }
 }

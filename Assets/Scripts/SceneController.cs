@@ -147,7 +147,9 @@ public class SceneController : MonoBehaviour {
 
         // F11 -- Toggle Fullscreen
         if (Keyboard.current.f11Key.wasPressedThisFrame) {
-            Screen.fullScreen = !Screen.fullScreen;
+            if (!Screen.fullScreen) {
+                Screen.SetResolution(Screen.mainWindowDisplayInfo.width, Screen.mainWindowDisplayInfo.height, FullScreenMode.FullScreenWindow);
+            } else Screen.fullScreen = false;
         }
     }
 

@@ -12,11 +12,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Standard 3D.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Standard 2D.unity
+    guid: 62b734faefdcdc54cb830b455c233ee5
+  - enabled: 1
     path: Assets/Scenes/Circle 3D.unity
     guid: 6a35d59b3f98d2f4e840fb4a694f53de
   - enabled: 1
     path: Assets/Scenes/Circle 2D.unity
     guid: 9ebcbcbd7336d0a4796ae4443df69f57
+  - enabled: 1
+    path: Assets/Scenes/Performant/Standard 3D (Performant).unity
+    guid: 2d07b42dda1a31844a73b714bc687ac8
+  - enabled: 1
+    path: Assets/Scenes/Performant/Circle 3D (Performant).unity
+    guid: 731dd6a2434bac84882b0940978d162f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7a8259d6a4dd9d346a63bd265c35974d,
       type: 2}

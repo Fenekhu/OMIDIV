@@ -13,8 +13,8 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
         public int pitchOffset = 0;
     }
 
-    float ZSpacing = 16f;
-    float NoteVSpacing = 2f;
+    protected float ZSpacing = 16f;
+    protected float NoteVSpacing = 2f;
 
 
     protected override void ResetTracks() {
@@ -75,7 +75,7 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
         if (ImGui.InputFloat("Track depth spacing", ref ZSpacing, 0.5f, 5.0f)) updateTracks = true;
     }
     protected override void DrawIndividualTrackControls(ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes) {
-        if (ImGui.InputInt("Pitch offset", ref trackInfo.pitchOffset)) updateTracks = true;
+        if (ImGui.InputInt("Pitch offset", ref trackInfo.pitchOffset, 1, 12)) updateTracks = true;
     }
     protected override void DrawNoteControls(ref bool updateTracks, ref bool updateNotes) {
         ImGui.SetNextItemWidth(128f);
@@ -88,14 +88,14 @@ public class Standard3D : Base3D<Standard3D.TrackInfo> {
     protected override void WriteConfig() {
         base.WriteConfig();
 
-        Config.Set("s3d.zSpacing", ZSpacing);
-        Config.Set("s3d.noteVSpacing", NoteVSpacing);
+        Config.Set(ConfigTag+".zSpacing", ZSpacing);
+        Config.Set(ConfigTag+".noteVSpacing", NoteVSpacing);
     }
 
     protected override void ReadConfig() {
         base.ReadConfig();
 
-        Config.TryGet("s3d.zSpacing", ref ZSpacing);
-        Config.TryGet("s3d.noteVSpacing", ref NoteVSpacing);
+        Config.TryGet(ConfigTag+".zSpacing", ref ZSpacing);
+        Config.TryGet(ConfigTag+".noteVSpacing", ref NoteVSpacing);
     }
 }

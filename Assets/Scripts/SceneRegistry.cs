@@ -13,6 +13,40 @@ using UnityEngine.SceneManagement;
  */
 
 public class SceneRegistry : MonoBehaviour {
+
+    /// <summary>
+    /// Represents a directory structure of scenes.
+    /// </summary>
+    public class Folder {
+        public string name;
+        public List<Folder> subfolders = new();
+        public List<(int buildIndex, string name)> scenes = new();
+
+        public Folder(string name) { this.name = name; }
+
+        public void Add(string path, int buildIndex, string sceneName) {
+            if (path.Length == 0) {
+                scenes.Add((buildIndex, sceneName));
+            } else {
+                int nextSlash = path.IndexOf('/');
+                string subfolder = path[..nextSlash];
+                string newPath = path[(nextSlash+1)..];
+                foreach (Folder f in subfolders) {
+                    if (f.name == subfolder) {
+                        f.Add(newPath, buildIndex, sceneName);
+                        return;
+                    }
+                }
+                Folder newFolder = new Folder(subfolder);
+                newFolder.Add(newPath, buildIndex, sceneName);
+                subfolders.Add(newFolder);
+            }
+        }
+    }
+
+    /// <summary>The available visualization scenes as a directory structure.</summary>
+    public static Folder SceneDir = new("");
+
     private static Dictionary<int, string> scenes = new Dictionary<int, string>();
 
     /// <summary>Maps build index to display name</summary>
@@ -46,11 +80,14 @@ public class SceneRegistry : MonoBehaviour {
      * but they will still be added to the View list.
      * </remarks>
      */
-    public static void RegisterScene(int index, string name) {
+    public static void RegisterScene(int index, string name, string path = "/") {
         scenes[index] = name;
+        SceneDir.Add(path, index, name);
     }
 
     void Start() {
+        //Debug.Log(GetScenePath(1));
+
         if (StartupSceneIndex_ < 0) StartupSceneIndex = StartupSceneIndex_;
 
         // the startup scene if StartupSceneIndex is found to be invalid
@@ -58,8 +95,9 @@ public class SceneRegistry : MonoBehaviour {
 
         for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++) {
             string name = GetSceneName(i);
+            string path = GetScenePath(i);
             if (!name.StartsWith('#')) { 
-                RegisterScene(i, name);
+                RegisterScene(i, name, path);
                 if (backupSceneIndex < 0) backupSceneIndex = i;
             }
         }
@@ -80,6 +118,12 @@ public class SceneRegistry : MonoBehaviour {
 
     private static bool SceneIsHiddenScene(int index) =>
          GetSceneName(index).StartsWith('#');
+
+    private static string GetScenePath(int index) {
+        string path = SceneUtility.GetScenePathByBuildIndex(index);
+        path = path[14..(path.LastIndexOf('/')+1)];
+        return path;
+    }
 
     private static string GetSceneName(int index) =>
         System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(index));

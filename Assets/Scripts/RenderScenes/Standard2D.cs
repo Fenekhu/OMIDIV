@@ -1,32 +1,25 @@
-﻿using ImGuiNET;
+using ImGuiNET;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static MidiManager;
 
-/// <summary>
-/// Base TrackInfo for a scene that inherits from <see cref="Base3D{TrackInfo}"/>
-/// </summary>
-public class Base3DTrackInfo {
-    /// <summary>The game object that contains all of this track's notes.</summary>
-    public GameObject obj;
-    /// <summary>The <see cref="CookedMidi.Tracks"/> index that this info represents.</summary>
-    public int midiTrack;
-    public bool enabled = true;
-    public Color trackColor;
-    public float lengthFactor = 1f;
-    public List<int> nowPlaying = new List<int>();
-    public int playIndex = 0;
-    public uint noteSides;
-    public bool updateMeshes = true;
-}
+public class Standard2D : VisualsComponent {
 
-/// <summary>
-/// A base class for <see cref="Standard3D"/> and <see cref="Circle3D"/> visualizations, since they share much of the same code.<br/>
-/// Custom subclasses can be made as well that lay out notes in unique ways. 
-/// If you do that, respect <see cref="GlobalScale"/> by making any GameObjects children of this, or manually adjusting their scale.
-/// </summary>
-/// <typeparam name="TrackInfo">What will be stored to represent information about each track.</typeparam>
-public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Base3DTrackInfo, new() {
+    protected class TrackInfo {
+        /// <summary>The game object that contains all of this track's notes.</summary>
+        public GameObject obj;
+        /// <summary>The <see cref="CookedMidi.Tracks"/> index that this info represents.</summary>
+        public int midiTrack;
+        public bool enabled = true;
+        public Color trackColor;
+        public float lengthFactor = 1f;
+        public int pitchOffset = 0;
+        public List<int> nowPlaying = new List<int>();
+        public int playIndex = 0;
+    }
+
+    public Standard2D() { ConfigTag = "s2d"; }
 
     protected static readonly float GlobalScale = 1/128.0f;
 
@@ -34,23 +27,25 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
 
     /// <remarks>
     /// Note: the index of a track in here may not be the same as the midi track it represents (such as if it's been reordered).
-    /// See <see cref="Base3DTrackInfo.midiTrack"/>.
+    /// See <see cref="TrackInfo.midiTrack"/>.
     /// </remarks>
     protected TrackInfo[] Tracks = new TrackInfo[0];
 
     // See user guide for a description of most of these.
     protected float VelocityFactor = 0.75f;
-    protected int SideCount = 4;
-    protected uint SideCountPrev = 0;
-    protected float NoteRotation = 0f;
     protected float NoteHeight = 10f;
     protected float NoteHSpacing = 2f;
+    protected float NoteVSpacing = 2f;
     protected float PlayedAlpha = 0.05f;
 
     // these are used to auto-reload the visuals if its been a certain amount of time since a variable was changed requiring a reload.
     protected float LastTrackUpdate = -1f;
     protected float LastNoteUpdate = -1f;
     protected float LastReloadVisuals = -1f;
+
+    protected bool TrackHasNotes(TrackInfo track) => Midi.Tracks[track.midiTrack].notes.Count != 0;
+
+    protected bool IgnoreTrack(TrackInfo trackInfo) => !trackInfo.enabled || !TrackHasNotes(trackInfo);
 
     protected void Start() {
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
@@ -142,7 +137,6 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
             info.obj = go;
             info.trackColor = TrackColors[i % TrackColors.Count];
             info.midiTrack = i;
-            info.noteSides = (uint)SideCount;
             Tracks[i] = info;
         }
 
@@ -151,16 +145,6 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         ResetNotes();
     }
 
-    protected bool TrackHasNotes(TrackInfo track) => Midi.Tracks[track.midiTrack].notes.Count != 0;
-
-    protected bool IgnoreTrack(TrackInfo trackInfo) => !trackInfo.enabled || !TrackHasNotes(trackInfo);
-
-    /// <summary>Updates the GameObjects for track objects, and other things that don't need to be changed per-note.</summary>
-    protected abstract void ResetTracks();
-    /// <summary>Updates GameObjects for note objects.</summary>
-    /// <param name="justColors">If true, only reset note states to <see cref="NoteState.Unplayed"/>. Otherwise, recalculate positions, meshes, etc.</param>
-    protected abstract void ResetNotes(bool justColors = false);
-
     protected override void ClearVisuals() {
         foreach (TrackInfo info in Tracks) {
             Destroy(info.obj);
@@ -168,10 +152,57 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         Tracks = new TrackInfo[0];
     }
 
+    protected void ResetTracks() {
+        int i = 0;
+        for (int j = 0; j < Tracks.Length; j++) {
+            ref TrackInfo info = ref Tracks[j];
+
+            bool ignore = IgnoreTrack(info);
+            info.obj.SetActive(!ignore);
+            if (ignore) continue;
+
+            float posX = info.obj.transform.localPosition.x;
+            info.obj.transform.localPosition = new Vector3(posX, info.pitchOffset * (NoteHeight + NoteVSpacing), i);
+            Vector3 scale = info.obj.transform.localScale;
+            scale.x = info.lengthFactor;
+            info.obj.transform.localScale = scale;
+
+            i++;
+        }
+    }
+
+    protected void ResetNotes(bool justColors = false) {
+        for (int j = 0; j < Tracks.Length; j++) {
+            ref TrackInfo trackInfo = ref Tracks[j];
+            if (IgnoreTrack(trackInfo)) continue;
+
+            for (int i = 0; i < trackInfo.obj.transform.childCount; i++) {
+                var note = Midi.Tracks[trackInfo.midiTrack].notes[i];
+                Transform obj = trackInfo.obj.transform.GetChild(i);
+
+                SetNoteState(trackInfo, i, NoteState.Unplayed);
+                if (justColors) continue;
+
+                float noteLength = note.lengthTicks;
+                float noteX = note.startTick + noteLength * 0.5f + NoteHSpacing * 0.5f;
+                float noteY = (note.pitch - Midi.NoteRange/2) * (NoteHeight + NoteVSpacing);
+                obj.localPosition = new Vector3(noteX, noteY);
+                obj.localScale = new Vector3(noteLength - NoteHSpacing, NoteHeight, NoteHeight);
+            }
+        }
+    }
+
+    protected override void MovePlay(decimal ticks, decimal microseconds) {
+        foreach (TrackInfo info in Tracks) {
+            Vector3 ds = new Vector3((float)(ticks * (decimal)info.lengthFactor), 0, 0);
+            info.obj.transform.localPosition -= ds;
+        }
+    }
+
     protected override void Restart() {
         for (int i = 0; i < Tracks.Length; i++) {
             ref TrackInfo track = ref Tracks[i];
-            
+
             // reset the x of each track
             Vector3 newPos = track.obj.transform.localPosition;
             newPos.x = 0;
@@ -188,42 +219,6 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         base.Restart();
     }
 
-    protected override void MovePlay(decimal ticks, decimal microseconds) {
-        foreach (TrackInfo info in Tracks) {
-            Vector3 ds = new Vector3((float)(ticks * (decimal)info.lengthFactor), 0, 0);
-            info.obj.transform.localPosition -= ds;
-        }
-    }
-
-    /// <summary>
-    /// Draw the general controls in the MIDI Controls window for this visualization.
-    /// </summary>
-    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
-    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
-    protected virtual void DrawGeneralMidiControls(ref bool updateTracks, ref bool updateNotes) { }
-
-    /// <summary>
-    /// Draw the individual controls within the tree for a track. Will be called for each track.
-    /// </summary>
-    /// <param name="trackInfo">The track thats going to have its controls drawn.</param>
-    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
-    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
-    protected virtual void DrawIndividualTrackControls(ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes) { }
-
-    /// <summary>
-    /// Draw the controls for the "Note Controls" tree.
-    /// </summary>
-    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
-    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
-    protected virtual void DrawNoteControls(ref bool updateTracks, ref bool updateNotes) { }
-
-    /// <summary>
-    /// Called when the track order has been changed or tracks have been enabled/disabled.
-    /// </summary>
-    /// <param name="updateTracks">Set this to true if the tracks need to be updated.</param>
-    /// <param name="updateNotes">Set this to true if the notes need to be updated.</param>
-    protected abstract void TrackListChanged(ref bool updateTracks, ref bool updateNotes);
-
     protected override void DrawGUI() {
         base.DrawGUI();
 
@@ -233,7 +228,6 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         if (ImGui.Begin("MIDI Controls")) {
             ImGui.SetNextItemWidth(128f);
             ImGui.SliderFloat("Played Note Alpha", ref PlayedAlpha, 0f, 1f);
-            DrawGeneralMidiControls(ref updateTracks, ref updateNotes);
 
             if (ImGui.TreeNode("Tracks")) {
                 float buttonDim = ImGui.GetFrameHeight();
@@ -249,16 +243,16 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
 
                     if (ImGui.Button(string.Format("^##trUp{0:d}", i), buttonSize) && i >= skipCount) {
                         (Tracks[i-skipCount], Tracks[i]) = (Tracks[i], Tracks[i-skipCount]);
-                        TrackListChanged(ref updateTracks, ref updateNotes);
+                        updateTracks = true;
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.Button(string.Format("v##trDown{0:d}", i), buttonSize) && i != Tracks.Length - skipCount) {
                         (Tracks[i], Tracks[i+skipCount]) = (Tracks[i+skipCount], Tracks[i]);
-                        TrackListChanged(ref updateTracks, ref updateNotes);
+                        updateTracks = true;
                     }
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
                     if (ImGui.Checkbox(string.Format("##chtr{0:d}", i), ref Tracks[i].enabled))
-                        TrackListChanged(ref updateTracks, ref updateNotes);
+                        updateTracks = true;
                     ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
 
                     ref TrackInfo track = ref Tracks[i];
@@ -270,13 +264,7 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
                             updateNotes = true;
                         }
                         if (ImGui.InputFloat("Length Factor", ref track.lengthFactor)) updateTracks = true;
-                        int sides = (int)track.noteSides;
-                        if (ImGui.SliderInt("Note Sides", ref sides, 3, 8)) {
-                            track.noteSides = (uint)sides;
-                            track.updateMeshes = true;
-                            updateNotes = true;
-                        }
-                        DrawIndividualTrackControls(ref track, ref updateTracks, ref updateNotes);
+                        if (ImGui.InputInt("Pitch offset", ref track.pitchOffset)) updateTracks = true;
                         ImGui.TreePop();
                     }
                 }
@@ -286,14 +274,12 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
             if (ImGui.TreeNode("Note Options")) {
                 ImGui.PushItemWidth(128f);
                 if (ImGui.SliderFloat("Velocity Intensity", ref VelocityFactor, 0f, 1f)) updateNotes = true;
-                if (ImGui.SliderInt("Note Sides", ref SideCount, 3, 8)) updateTracks = updateNotes = true;
-                if (ImGui.SliderFloat("Note Rotation", ref NoteRotation, -180f, 180f, "%.1f deg")) updateNotes = true;
                 if (ImGui.InputFloat("Height", ref NoteHeight)) updateTracks = updateNotes = true;
                 Vector3 newScale = transform.localScale / GlobalScale;
                 if (ImGui.InputFloat("Length Factor", ref newScale.x)) transform.localScale = newScale * GlobalScale;
                 if (ImGui.InputFloat("Horizontal Spacing", ref NoteHSpacing)) updateNotes = true;
+                if (ImGui.InputFloat("Vertical Spacing", ref NoteVSpacing)) updateTracks = updateNotes = true;
                 ImGui.PopItemWidth();
-                DrawNoteControls(ref updateTracks, ref updateNotes);
                 ImGui.TreePop();
             }
         }
@@ -319,10 +305,9 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         string tag = ConfigTag;
 
         Config.Set(tag+".velFactor", VelocityFactor);
-        Config.Set(tag+".noteSides", SideCount);
-        Config.Set(tag+".noteRotation", NoteRotation);
         Config.Set(tag+".noteHeight", NoteHeight);
         Config.Set(tag+".noteHSpacing", NoteHSpacing);
+        Config.Set(tag+".noteVSpacing", NoteVSpacing);
         Config.Set(tag+".lengthScale", transform.localScale.x / GlobalScale);
         Config.Set(tag+".playedAlpha", PlayedAlpha);
 
@@ -338,10 +323,9 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         string tag = ConfigTag;
 
         Config.TryGet(tag+".velFactor", ref VelocityFactor);
-        Config.TryGet(tag+".noteSides", ref SideCount);
-        Config.TryGet(tag+".noteRotation", ref NoteRotation);
         Config.TryGet(tag+".noteHeight", ref NoteHeight);
         Config.TryGet(tag+".noteHSpacing", ref NoteHSpacing);
+        Config.TryGet(tag+".noteVSpacing", ref NoteVSpacing);
         Vector3 scale = transform.localScale / GlobalScale;
         Config.TryGet(tag+".lengthScale", ref scale.x); transform.localScale = scale * GlobalScale;
         Config.TryGet(tag+".playedAlpha", ref PlayedAlpha);
