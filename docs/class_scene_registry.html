@@ -56,8 +56,10 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="class_scene_registry-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">SceneRegistry Class Reference</div></div>
@@ -73,11 +75,17 @@ Inheritance diagram for SceneRegistry:</div>
   <img src="class_scene_registry.png" alt=""/>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_scene_registry_1_1_folder.html">Folder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a directory structure of scenes.  <a href="class_scene_registry_1_1_folder.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af54eb720ef92d99ecb05657efeda5bf4" id="r_af54eb720ef92d99ecb05657efeda5bf4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af54eb720ef92d99ecb05657efeda5bf4">RegisterScene</a> (int index, string name)</td></tr>
-<tr class="memdesc:af54eb720ef92d99ecb05657efeda5bf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a midi visualization scene.  <br /></td></tr>
-<tr class="separator:af54eb720ef92d99ecb05657efeda5bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3babf8c8f4dca708fd45a6ee1e590bf1" id="r_a3babf8c8f4dca708fd45a6ee1e590bf1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3babf8c8f4dca708fd45a6ee1e590bf1">RegisterScene</a> (int index, string name, string path=&quot;/&quot;)</td></tr>
+<tr class="memdesc:a3babf8c8f4dca708fd45a6ee1e590bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a midi visualization scene.  <br /></td></tr>
+<tr class="separator:a3babf8c8f4dca708fd45a6ee1e590bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -85,6 +93,13 @@ Public Attributes</h2></td></tr>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>StartupSceneIndex_</b> = -1</td></tr>
 <tr class="memdesc:a71769896be49e5f26a65a418cf829bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows <a class="el" href="#a485be3f8830a91e22e461563df9be628" title="The build index of the scene that will be loaded at startup.">StartupSceneIndex</a> to be overriden from the Unity editor. <br /></td></tr>
 <tr class="separator:a71769896be49e5f26a65a418cf829bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ad6ef31b7d1f9f1591f1d1afae4e8c7b6" id="r_ad6ef31b7d1f9f1591f1d1afae4e8c7b6"><td class="memItemLeft" align="right" valign="top"><a id="ad6ef31b7d1f9f1591f1d1afae4e8c7b6" name="ad6ef31b7d1f9f1591f1d1afae4e8c7b6"></a>
+static <a class="el" href="class_scene_registry_1_1_folder.html">Folder</a>&#160;</td><td class="memItemRight" valign="bottom"><b>SceneDir</b> = new(&quot;&quot;)</td></tr>
+<tr class="memdesc:ad6ef31b7d1f9f1591f1d1afae4e8c7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The available visualization scenes as a directory structure. <br /></td></tr>
+<tr class="separator:ad6ef31b7d1f9f1591f1d1afae4e8c7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
@@ -99,10 +114,10 @@ static IReadOnlyDictionary&lt; int, string &gt;&#160;</td><td class="memItemRigh
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Holds a list of Midi visualization scenes. </p>
 <p>On startup, it reads the list of scenes in the build settings and adds all scenes that don't start with a '#'.<br  />
- Scenes can be added with <a class="el" href="#af54eb720ef92d99ecb05657efeda5bf4" title="Adds a midi visualization scene.">RegisterScene</a> and a read-only list returned with <a class="el" href="#aa62c2264f0e7be73502852cd9a3afbd0" title="Maps build index to display name.">Scenes</a> </p>
+ Scenes can be added with <a class="el" href="#a3babf8c8f4dca708fd45a6ee1e590bf1" title="Adds a midi visualization scene.">RegisterScene</a> and a read-only list returned with <a class="el" href="#aa62c2264f0e7be73502852cd9a3afbd0" title="Maps build index to display name.">Scenes</a> </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="af54eb720ef92d99ecb05657efeda5bf4" name="af54eb720ef92d99ecb05657efeda5bf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af54eb720ef92d99ecb05657efeda5bf4">&#9670;&#160;</a></span>RegisterScene()</h2>
+<a id="a3babf8c8f4dca708fd45a6ee1e590bf1" name="a3babf8c8f4dca708fd45a6ee1e590bf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3babf8c8f4dca708fd45a6ee1e590bf1">&#9670;&#160;</a></span>RegisterScene()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,7 +133,12 @@ static IReadOnlyDictionary&lt; int, string &gt;&#160;</td><td class="memItemRigh
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>name</em></span>&#160;)</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>path</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;/&quot;</span>&#160;)</td>
         </tr>
       </table>
   </td>

@@ -130,16 +130,21 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerQuarter</b><co
 byte&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerFrame</b><code> [get, set]</code></td></tr>
 <tr class="memdesc:a651f633b75e5b1e4c0c21c2714981b30"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of ticks per frame. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE. <br /></td></tr>
 <tr class="separator:a651f633b75e5b1e4c0c21c2714981b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaf29723e54c08bb057543746a996dec" id="r_aeaf29723e54c08bb057543746a996dec"><td class="memItemLeft" align="right" valign="top">sbyte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaf29723e54c08bb057543746a996dec">smpte</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:aeaf29723e54c08bb057543746a996dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
- Will be one of the values in EMidiSMPTEFPS.  <br /></td></tr>
-<tr class="separator:aeaf29723e54c08bb057543746a996dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02a3d380dd8e183a4d970425078d7cc" id="r_aa02a3d380dd8e183a4d970425078d7cc"><td class="memItemLeft" align="right" valign="top">EMidiSMPTEFPS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa02a3d380dd8e183a4d970425078d7cc">smpte</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aa02a3d380dd8e183a4d970425078d7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The raw bits signifying desired frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
+  <br /></td></tr>
+<tr class="separator:aa02a3d380dd8e183a4d970425078d7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21d4b96bcd5959adcb88304ed9f2a43d" id="r_a21d4b96bcd5959adcb88304ed9f2a43d"><td class="memItemLeft" align="right" valign="top"><a id="a21d4b96bcd5959adcb88304ed9f2a43d" name="a21d4b96bcd5959adcb88304ed9f2a43d"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>SMPTEFPS</b><code> [get]</code></td></tr>
+<tr class="memdesc:a21d4b96bcd5959adcb88304ed9f2a43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
+ <br /></td></tr>
+<tr class="separator:a21d4b96bcd5959adcb88304ed9f2a43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The midi file header. Contains meta information about the midi. </p>
 </div><h2 class="groupheader">Property Documentation</h2>
-<a id="aeaf29723e54c08bb057543746a996dec" name="aeaf29723e54c08bb057543746a996dec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeaf29723e54c08bb057543746a996dec">&#9670;&#160;</a></span>smpte</h2>
+<a id="aa02a3d380dd8e183a4d970425078d7cc" name="aa02a3d380dd8e183a4d970425078d7cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa02a3d380dd8e183a4d970425078d7cc">&#9670;&#160;</a></span>smpte</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,7 +153,7 @@ byte&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerFrame</b><cod
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">sbyte HeaderChunk.smpte</td>
+          <td class="memname">EMidiSMPTEFPS HeaderChunk.smpte</td>
         </tr>
       </table>
   </td>
@@ -158,8 +163,8 @@ byte&#160;</td><td class="memItemRight" valign="bottom"><b>ticksPerFrame</b><cod
 </table>
 </div><div class="memdoc">
 
-<p>The number of frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
- Will be one of the values in EMidiSMPTEFPS. </p>
+<p>The raw bits signifying desired frames per second. Only meaningful if <a class="el" href="#ae54aba56105cc477877844392c8ecd95" title="The format that time is expressed in in this midi.">fmt</a> is EMidiDivisionFormat.SMPTE.<br  />
+ </p>
 <dl class="section see"><dt>See also</dt><dd>EMidiSMPTEFPS</dd></dl>
 
 </div>

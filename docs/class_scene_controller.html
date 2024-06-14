@@ -95,13 +95,9 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsVisualRel
 <tr class="memitem:a632641873439950c8de93838e7b2aaf5" id="r_a632641873439950c8de93838e7b2aaf5"><td class="memItemLeft" align="right" valign="top"><a id="a632641873439950c8de93838e7b2aaf5" name="a632641873439950c8de93838e7b2aaf5"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>NeedsAudioReload</b> = false<code> [get, set]</code></td></tr>
 <tr class="separator:a632641873439950c8de93838e7b2aaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65d8bccf7dbde8b475cbe6f213a19489" id="r_a65d8bccf7dbde8b475cbe6f213a19489"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65d8bccf7dbde8b475cbe6f213a19489">IsPlaying</a> = false<code> [get]</code></td></tr>
+<tr class="memitem:a65d8bccf7dbde8b475cbe6f213a19489" id="r_a65d8bccf7dbde8b475cbe6f213a19489"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65d8bccf7dbde8b475cbe6f213a19489">IsPlaying</a><code> [get]</code></td></tr>
 <tr class="memdesc:a65d8bccf7dbde8b475cbe6f213a19489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the visualization currently playing.  <br /></td></tr>
 <tr class="separator:a65d8bccf7dbde8b475cbe6f213a19489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f5fd735f4f6deb70372071f9bc46618" id="r_a8f5fd735f4f6deb70372071f9bc46618"><td class="memItemLeft" align="right" valign="top">static decimal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f5fd735f4f6deb70372071f9bc46618">TickDeltaTime</a><code> [get]</code></td></tr>
-<tr class="memdesc:a8f5fd735f4f6deb70372071f9bc46618"><td class="mdescLeft">&#160;</td><td class="mdescRight">High precision duration of one tick.<br  />
- Consider using this instead of Time.fixedDeltaTime.  <br /></td></tr>
-<tr class="separator:a8f5fd735f4f6deb70372071f9bc46618"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72aa8023db0930d6bdc00aa795d0e748" id="r_a72aa8023db0930d6bdc00aa795d0e748"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72aa8023db0930d6bdc00aa795d0e748">FrameDeltaTime</a><code> [get]</code></td></tr>
 <tr class="memdesc:a72aa8023db0930d6bdc00aa795d0e748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time.deltaTime when not recording, <code>1/recording framerate</code> when recording. In most cases, use this instead of Time.deltaTime so that recordings work properly.  <br /></td></tr>
 <tr class="separator:a72aa8023db0930d6bdc00aa795d0e748"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,7 +171,7 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnLoadAudio<
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool SceneController.IsPlaying = false</td>
+          <td class="memname">bool SceneController.IsPlaying</td>
         </tr>
       </table>
   </td>
@@ -187,32 +183,6 @@ static Action&#160;</td><td class="memItemRight" valign="bottom"><b>OnLoadAudio<
 
 <p>Is the visualization currently playing. </p>
 <p>Identical to <a class="el" href="class_omidiv_component.html#ab9362674bcd53d675c4932da5a5f26a5" title="Is the visualization currently playing.">OmidivComponent.IsPlaying</a>.</p>
-
-</div>
-</div>
-<a id="a8f5fd735f4f6deb70372071f9bc46618" name="a8f5fd735f4f6deb70372071f9bc46618"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f5fd735f4f6deb70372071f9bc46618">&#9670;&#160;</a></span>TickDeltaTime</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">decimal SceneController.TickDeltaTime</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>High precision duration of one tick.<br  />
- Consider using this instead of Time.fixedDeltaTime. </p>
-<p>Identical to <a class="el" href="class_omidiv_component.html#ad47c8f7c665d08c336dd10cba75b76dc" title="High precision duration of one tick.  Consider using this instead of Time.fixedDeltaTime.">OmidivComponent.TickDeltaTime</a>.</p>
 
 </div>
 </div>

@@ -58,6 +58,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_circle3_d-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Circle3D Class Reference</div></div>
 </div><!--header-->
@@ -72,6 +73,7 @@ Inheritance diagram for Circle3D:</div>
   <img src="class_circle3_d.png" usemap="#Circle3D_map" alt=""/>
   <map id="Circle3D_map" name="Circle3D_map">
 <area href="class_base3_d.html" alt="Base3D&lt; Circle3D.TrackInfo &gt;" shape="rect" coords="0,0,187,24"/>
+<area href="class_circle3_d_performant.html" title="A version of Circle3D that has certain features disabled to increase playback performance...." alt="Circle3DPerformant" shape="rect" coords="0,112,187,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -107,9 +109,8 @@ override void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadConfig</
 <tr class="memitem:a61c246f24e8b3413e3dc1da45b7fc642 inherit pro_methods_class_base3_d" id="r_a61c246f24e8b3413e3dc1da45b7fc642"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
 <tr class="separator:a61c246f24e8b3413e3dc1da45b7fc642 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af89981015fe30f041762c2ba67662d64 inherit pro_methods_class_base3_d" id="r_af89981015fe30f041762c2ba67662d64"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> ()</td></tr>
-<tr class="separator:af89981015fe30f041762c2ba67662d64 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff324f6ce73c7291469ba6fb89c4a906 inherit pro_methods_class_base3_d" id="r_aff324f6ce73c7291469ba6fb89c4a906"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_base3_d.html#aff324f6ce73c7291469ba6fb89c4a906">Update</a> ()</td></tr>
+<tr class="separator:aff324f6ce73c7291469ba6fb89c4a906 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e54ae2a9ce26957fe9639c429c14094 inherit pro_methods_class_base3_d" id="r_a1e54ae2a9ce26957fe9639c429c14094"><td class="memItemLeft" align="right" valign="top">
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetNoteState</b> (TrackInfo trackInfo, int noteIndex, NoteState state)</td></tr>
 <tr class="memdesc:a1e54ae2a9ce26957fe9639c429c14094 inherit pro_methods_class_base3_d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the visuals for a note at a given <em>noteIndex</em>  of a specific <em>trackInfo</em> . <br /></td></tr>
@@ -140,9 +141,9 @@ override void&#160;</td><td class="memItemRight" valign="bottom"><b>ClearVisuals
 override void&#160;</td><td class="memItemRight" valign="bottom"><b>Restart</b> ()</td></tr>
 <tr class="memdesc:aaeec9610ac2cc55e5b953b4a4937d2b5 inherit pro_methods_class_base3_d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this. Called when the visualization restarts (R is pressed). <br /></td></tr>
 <tr class="separator:aaeec9610ac2cc55e5b953b4a4937d2b5 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fd566df38384f3eb0d2d6ad6ac2e5ab inherit pro_methods_class_base3_d" id="r_a9fd566df38384f3eb0d2d6ad6ac2e5ab"><td class="memItemLeft" align="right" valign="top">
-override void&#160;</td><td class="memItemRight" valign="bottom"><b>MovePlay</b> (decimal ticks)</td></tr>
-<tr class="separator:a9fd566df38384f3eb0d2d6ad6ac2e5ab inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4ec145cad002f3c1065ad23444dc9c3 inherit pro_methods_class_base3_d" id="r_aa4ec145cad002f3c1065ad23444dc9c3"><td class="memItemLeft" align="right" valign="top">
+override void&#160;</td><td class="memItemRight" valign="bottom"><b>MovePlay</b> (decimal ticks, decimal microseconds)</td></tr>
+<tr class="separator:aa4ec145cad002f3c1065ad23444dc9c3 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb94aa1192bacae9f4260593cf7b6c84 inherit pro_methods_class_base3_d" id="r_afb94aa1192bacae9f4260593cf7b6c84"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_base3_d.html#afb94aa1192bacae9f4260593cf7b6c84">DrawIndividualTrackControls</a> (ref TrackInfo trackInfo, ref bool updateTracks, ref bool updateNotes)</td></tr>
 <tr class="memdesc:afb94aa1192bacae9f4260593cf7b6c84 inherit pro_methods_class_base3_d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw the individual controls within the tree for a track. Will be called for each track.  <br /></td></tr>
 <tr class="separator:afb94aa1192bacae9f4260593cf7b6c84 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,8 +167,17 @@ override void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadConfig</
  Don't forget to include <a class="el" href="class_omidiv_component.html#ac819e5375ad7a17e2b0f7726e266faee" title="Use this to give different instances in difference scenes different saved config.">ConfigTag</a> in your config keys. <br /></td></tr>
 <tr class="separator:a27b80adf1bb4f8631f130747f43501a7 inherit pro_methods_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a1a9828d0d027fb474a8c77486ebe566a" id="r_a1a9828d0d027fb474a8c77486ebe566a"><td class="memItemLeft" align="right" valign="top"><a id="a1a9828d0d027fb474a8c77486ebe566a" name="a1a9828d0d027fb474a8c77486ebe566a"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>StartRadius</b> = 300.0f</td></tr>
+<tr class="separator:a1a9828d0d027fb474a8c77486ebe566a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1eaee0044b9c8326d9a84567ad3fdce5" id="r_a1eaee0044b9c8326d9a84567ad3fdce5"><td class="memItemLeft" align="right" valign="top"><a id="a1eaee0044b9c8326d9a84567ad3fdce5" name="a1eaee0044b9c8326d9a84567ad3fdce5"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>DeltaRadius</b> = -16f</td></tr>
+<tr class="separator:a1eaee0044b9c8326d9a84567ad3fdce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a574f6e7101d4160632be8651549eac88" id="r_a574f6e7101d4160632be8651549eac88"><td class="memItemLeft" align="right" valign="top"><a id="a574f6e7101d4160632be8651549eac88" name="a574f6e7101d4160632be8651549eac88"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>AngleOffset</b> = 0f</td></tr>
+<tr class="separator:a574f6e7101d4160632be8651549eac88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_base3_d"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_base3_d')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_base3_d.html">Base3D&lt; Circle3D.TrackInfo &gt;</a></td></tr>
 <tr class="memitem:a42f757aa203567bf87add96523145c1f inherit pro_attribs_class_base3_d" id="r_a42f757aa203567bf87add96523145c1f"><td class="memItemLeft" align="right" valign="top">
 GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>NotePrefab</b></td></tr>
@@ -204,6 +214,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>LastNoteUpdate</b></
 <tr class="memitem:ab9e53d4ebdc75cab27e48181753b9060 inherit pro_attribs_class_base3_d" id="r_ab9e53d4ebdc75cab27e48181753b9060"><td class="memItemLeft" align="right" valign="top">
 float&#160;</td><td class="memItemRight" valign="bottom"><b>LastReloadVisuals</b></td></tr>
 <tr class="separator:ab9e53d4ebdc75cab27e48181753b9060 inherit pro_attribs_class_base3_d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_static_attribs_class_base3_d"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_static_attribs_class_base3_d')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_base3_d.html">Base3D&lt; Circle3D.TrackInfo &gt;</a></td></tr>
 <tr class="memitem:ac4274c816c087f18f88809731d4f7fd1 inherit pro_static_attribs_class_base3_d" id="r_ac4274c816c087f18f88809731d4f7fd1"><td class="memItemLeft" align="right" valign="top">
 static readonly float&#160;</td><td class="memItemRight" valign="bottom"><b>GlobalScale</b></td></tr>
