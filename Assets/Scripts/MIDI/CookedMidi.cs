@@ -8,6 +8,7 @@ using Debug = UnityEngine.Debug;
 /// The midi information for one note.
 /// </summary>
 public class MidiNote {
+    public int index;
     public ulong startTick;
     public ulong lengthTicks;
     public ulong startMicro;
@@ -24,6 +25,7 @@ public class MidiNote {
 /// Represents all the relevant information in a midi track.
 /// </summary>
 public class Track {
+    public int index;
     public List<MidiNote> notes = new List<MidiNote>();
     public string name = "";
     public (byte lower, byte upper) pitchRange = (byte.MaxValue, byte.MinValue);
@@ -217,6 +219,7 @@ public class CookedMidi {
         foreach (TrackChunk chunk in raw.tracks) {
             Tracks.Add(new Track());
             Track track = Tracks.Last();
+            track.index = Tracks.Count - 1;
             uint currentTick = 0;
             long currentTime = 0;
 
@@ -243,8 +246,6 @@ public class CookedMidi {
                             if (chActive.TryGetValue(noteEvent.Key, out MidiNote note)) { // if we're starting a new note but a note is already playing on this pitch and channel.
                                 note.lengthTicks = currentTick - note.startTick;
                                 note.lengthMicros = (ulong)currentTime - note.startMicro;
-                                if (note.lengthTicks != 0)
-                                    track.notes.Add(note);
                             }
                             MidiNote note1 = new MidiNote();
                             note1.startTick = currentTick;
@@ -254,6 +255,7 @@ public class CookedMidi {
                             note1.pitch = noteEvent.Key;
                             note1.velocity = noteEvent.Vel;
                             note1.channel = (byte)noteEvent.Channel;
+                            track.notes.Add(note1);
                             chActive[noteEvent.Key] = note1;
                             break;
                         }
@@ -261,8 +263,6 @@ public class CookedMidi {
                             if (chActive.TryGetValue(noteEvent.Key,out MidiNote note)) {
                                 note.lengthTicks = currentTick - note.startTick;
                                 note.lengthMicros = (ulong)currentTime - note.startMicro;
-                                if (note.lengthTicks != 0) // I've found midis with 0-length notes for some reason. here is the best place to deal with them.
-                                    track.notes.Add(note);
                                 chActive.Remove(noteEvent.Key);
                             }
                             break;
@@ -286,8 +286,16 @@ public class CookedMidi {
                 }
             }
 #endif
+            // remove 0-length notes, which happens sometimes
+            for (int i = track.notes.Count - 1; i >= 0; i--)
+                if (track.notes[i].lengthTicks == 0) track.notes.RemoveAt(i);
 
+            // these should already be sorted, but in case they arent.
             track.notes.Sort((n1, n2) => n1.startTick.CompareTo(n2.startTick));
+
+            // we have to assign the note indicies after they are sorted because 0-length notes are removed and that would cause a lot of index recalculations if we did it earlier.
+            int ix = 0;
+            foreach (MidiNote note in track.notes) note.index = ix++;
         }
 
         Debug.Log($"Cook finished reading raw midi (took {Time.realtimeSinceStartupAsDouble - realTime}s)");
