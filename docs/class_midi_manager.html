@@ -79,6 +79,15 @@ Inheritance diagram for MidiManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a63faf22cf31aa8d60d181bf67627a9d8" id="r_a63faf22cf31aa8d60d181bf67627a9d8"><td class="memItemLeft" align="right" valign="top">static NoteState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63faf22cf31aa8d60d181bf67627a9d8">GetNoteState</a> (int trackIndex, int noteIndex)</td></tr>
+<tr class="memdesc:a63faf22cf31aa8d60d181bf67627a9d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the state of the note at the current time.  <br /></td></tr>
+<tr class="separator:a63faf22cf31aa8d60d181bf67627a9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c135af410e6964f40bde03a117a78cd" id="r_a9c135af410e6964f40bde03a117a78cd"><td class="memItemLeft" align="right" valign="top">static NoteState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c135af410e6964f40bde03a117a78cd">GetNoteStateAtTick</a> (int trackIndex, int noteIndex, decimal tick)</td></tr>
+<tr class="memdesc:a9c135af410e6964f40bde03a117a78cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the state of the note at a specific tick.  <br /></td></tr>
+<tr class="separator:a9c135af410e6964f40bde03a117a78cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa83d2d1adbab2316dfaae32b22bd6661" id="r_aa83d2d1adbab2316dfaae32b22bd6661"><td class="memItemLeft" align="right" valign="top">static NoteState&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa83d2d1adbab2316dfaae32b22bd6661">GetNoteStateAtTime</a> (int trackIndex, int noteIndex, decimal micro)</td></tr>
+<tr class="memdesc:aa83d2d1adbab2316dfaae32b22bd6661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the state of the note at a specific time in microseconds.  <br /></td></tr>
+<tr class="separator:aa83d2d1adbab2316dfaae32b22bd6661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a228062a5dfeba60bb4cb7583f20cc3" id="r_a4a228062a5dfeba60bb4cb7583f20cc3"><td class="memItemLeft" align="right" valign="top"><a id="a4a228062a5dfeba60bb4cb7583f20cc3" name="a4a228062a5dfeba60bb4cb7583f20cc3"></a>
 static decimal&#160;</td><td class="memItemRight" valign="bottom"><b>TicksPerSecond</b> (uint tempoMicros)</td></tr>
 <tr class="memdesc:a4a228062a5dfeba60bb4cb7583f20cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current number of midi ticks per second, dependent on tempo. <br /></td></tr>
@@ -155,17 +164,27 @@ static <a class="el" href="class_cooked_midi.html">CookedMidi</a>&#160;</td><td 
 static int&#160;</td><td class="memItemRight" valign="bottom"><b>MidiDelay</b><code> [get, set]</code></td></tr>
 <tr class="separator:a2dcea5fca993309c2a49f19d14e5475d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6cb8fcbb536be3a13026e2a22a2143b" id="r_af6cb8fcbb536be3a13026e2a22a2143b"><td class="memItemLeft" align="right" valign="top"><a id="af6cb8fcbb536be3a13026e2a22a2143b" name="af6cb8fcbb536be3a13026e2a22a2143b"></a>
-static decimal&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTick</b><code> [get, set]</code></td></tr>
+static decimal&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTick</b><code> [get]</code></td></tr>
 <tr class="memdesc:af6cb8fcbb536be3a13026e2a22a2143b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current midi tick the visualization is on. May be negative with a midi delay. <br /></td></tr>
 <tr class="separator:af6cb8fcbb536be3a13026e2a22a2143b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad1cbe2d4d274a1c9e6ec5f96193fc61" id="r_aad1cbe2d4d274a1c9e6ec5f96193fc61"><td class="memItemLeft" align="right" valign="top"><a id="aad1cbe2d4d274a1c9e6ec5f96193fc61" name="aad1cbe2d4d274a1c9e6ec5f96193fc61"></a>
-static decimal&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTime</b><code> [get, set]</code></td></tr>
+static decimal&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTime</b><code> [get]</code></td></tr>
 <tr class="memdesc:aad1cbe2d4d274a1c9e6ec5f96193fc61"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current midi time in microseconds. May be negative with a midi delay. <br /></td></tr>
 <tr class="separator:aad1cbe2d4d274a1c9e6ec5f96193fc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70ae043de3bd07b8349f6b156bc07456" id="r_a70ae043de3bd07b8349f6b156bc07456"><td class="memItemLeft" align="right" valign="top"><a id="a70ae043de3bd07b8349f6b156bc07456" name="a70ae043de3bd07b8349f6b156bc07456"></a>
-static uint&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTempoMicros</b> = 500000<code> [get, set]</code></td></tr>
+static uint&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTempoMicros</b> = 500000<code> [get]</code></td></tr>
 <tr class="memdesc:a70ae043de3bd07b8349f6b156bc07456"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current tempo in microseconds per quarter note (as per the midi file format). <br /></td></tr>
 <tr class="separator:a70ae043de3bd07b8349f6b156bc07456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4efe385d836d755b2844f5ea82e022f" id="r_ac4efe385d836d755b2844f5ea82e022f"><td class="memItemLeft" align="right" valign="top"><a id="ac4efe385d836d755b2844f5ea82e022f" name="ac4efe385d836d755b2844f5ea82e022f"></a>
+static IReadOnlyCollection&lt; IReadOnlyList&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>NowPlaying</b><code> [get]</code></td></tr>
+<tr class="memdesc:ac4efe385d836d755b2844f5ea82e022f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The list of currently playing notes for each track.<br  />
+ <code>NowPlaying[trackIndex][noteIndex]</code> <br /></td></tr>
+<tr class="separator:ac4efe385d836d755b2844f5ea82e022f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff22addf8a822904fa76c0ffeca4127" id="r_a9ff22addf8a822904fa76c0ffeca4127"><td class="memItemLeft" align="right" valign="top"><a id="a9ff22addf8a822904fa76c0ffeca4127" name="a9ff22addf8a822904fa76c0ffeca4127"></a>
+static IReadOnlyDictionary&lt;(int trackIndex, int noteIndex), NoteState &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>UpdatedNoteStates</b><code> [get]</code></td></tr>
+<tr class="memdesc:a9ff22addf8a822904fa76c0ffeca4127"><td class="mdescLeft">&#160;</td><td class="mdescRight">The list of notes that have had their states changed since the last frame. Valid even when not playing in case the delay changes.<br  />
+ After restarting, this will NOT contain. <br /></td></tr>
+<tr class="separator:a9ff22addf8a822904fa76c0ffeca4127"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbbca97ecb0d99c7860b257b3ac5a8cf" id="r_abbbca97ecb0d99c7860b257b3ac5a8cf"><td class="memItemLeft" align="right" valign="top"><a id="abbbca97ecb0d99c7860b257b3ac5a8cf" name="abbbca97ecb0d99c7860b257b3ac5a8cf"></a>
 static double&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentTempoBPM</b><code> [get, set]</code></td></tr>
 <tr class="memdesc:abbbca97ecb0d99c7860b257b3ac5a8cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current tempo in Beats Per Minute. <br /></td></tr>
@@ -254,6 +273,130 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Please call <code>base.DrawMainMenuItems()</code> if overriding this.</p>
+
+</div>
+</div>
+<a id="a63faf22cf31aa8d60d181bf67627a9d8" name="a63faf22cf31aa8d60d181bf67627a9d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63faf22cf31aa8d60d181bf67627a9d8">&#9670;&#160;</a></span>GetNoteState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static NoteState MidiManager.GetNoteState </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>trackIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>noteIndex</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the state of the note at the current time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trackIndex</td><td>The index of the track the note is in.</td></tr>
+    <tr><td class="paramname">noteIndex</td><td>The index of the note within the track.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9c135af410e6964f40bde03a117a78cd" name="a9c135af410e6964f40bde03a117a78cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c135af410e6964f40bde03a117a78cd">&#9670;&#160;</a></span>GetNoteStateAtTick()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static NoteState MidiManager.GetNoteStateAtTick </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>trackIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>noteIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">decimal</td>          <td class="paramname"><span class="paramname"><em>tick</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the state of the note at a specific tick. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trackIndex</td><td>The index of the track the note is in.</td></tr>
+    <tr><td class="paramname">noteIndex</td><td>The index of the note within the track.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa83d2d1adbab2316dfaae32b22bd6661" name="aa83d2d1adbab2316dfaae32b22bd6661"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa83d2d1adbab2316dfaae32b22bd6661">&#9670;&#160;</a></span>GetNoteStateAtTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static NoteState MidiManager.GetNoteStateAtTime </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>trackIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>noteIndex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">decimal</td>          <td class="paramname"><span class="paramname"><em>micro</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the state of the note at a specific time in microseconds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trackIndex</td><td>The index of the track the note is in.</td></tr>
+    <tr><td class="paramname">noteIndex</td><td>The index of the note within the track.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
