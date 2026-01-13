@@ -45,12 +45,14 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
     protected float NoteRotation = 0f;
     protected float NoteHeight = 10f;
     protected float NoteHSpacing = 2f;
-    protected float PlayedAlpha = 0.05f;
+    protected float PlayedAlpha = 0.00f;
 
     // these are used to auto-reload the visuals if its been a certain amount of time since a variable was changed requiring a reload.
     protected float LastTrackUpdate = -1f;
     protected float LastNoteUpdate = -1f;
     protected float LastReloadVisuals = -1f;
+
+    private Color bgColor;
 
     protected void Start() {
         transform.localScale = new Vector3(GlobalScale, GlobalScale, GlobalScale);
@@ -68,7 +70,6 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
         UpdateNowPlayingVisuals();
     }
 
-    protected enum NoteState { Unplayed, Playing, Played }
     /// <summary>
     /// Updates the visuals for a note at a given <paramref name="noteIndex"/> of a specific <paramref name="trackInfo"/>.
     /// </summary>
@@ -88,7 +89,7 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
             mat.SetColor("_EmissionColor", trackInfo.trackColor * 4);
             break;
         case NoteState.Played:
-            mat.color = trackInfo.trackColor.WithAlpha(PlayedAlpha);
+            mat.color = trackInfo.trackColor.LerpWith(Camera.main.backgroundColor, 1f - PlayedAlpha, false);
             mat.SetColor("_EmissionColor", Color.black);
             mat.DisableKeyword("_EMISSION");
             break;

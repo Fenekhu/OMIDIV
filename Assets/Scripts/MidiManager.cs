@@ -1,7 +1,10 @@
 ﻿using ImGuiNET;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
+public enum NoteState { Unplayed, Playing, Played }
 
 /// <summary>
 /// Stores information about the currently loaded midi and its playback status.
@@ -21,7 +24,7 @@ public class MidiManager : OmidivComponent {
     public static CookedMidi Midi { get; private set; } = new CookedMidi();
 
     private static int _midiDelay;
-    public static int MidiDelay { 
+    public static int MidiDelay {
         get { return _midiDelay; }
         set {
             long diff = 1000L * (_midiDelay - value);
@@ -43,17 +46,33 @@ public class MidiManager : OmidivComponent {
     /// <summary>
     /// The current midi tick the visualization is on. May be negative with a midi delay.
     /// </summary>
-    public static decimal CurrentTick { get; set; }
+    public static decimal CurrentTick { get; private set; }
 
     /// <summary>
     /// The current midi time in microseconds. May be negative with a midi delay.
     /// </summary>
-    public static decimal CurrentTime { get; set; }
+    public static decimal CurrentTime { get; private set; }
 
     /// <summary>
     /// The current tempo in microseconds per quarter note (as per the midi file format).
     /// </summary>
-    public static uint CurrentTempoMicros { get; set; } = 500000;
+    public static uint CurrentTempoMicros { get; private set; } = 500000;
+
+    private static List<int>[] nowPlaying_impl = new List<int>[0];
+    /// <summary>
+    /// The list of currently playing notes for each track.<br/>
+    /// <c>NowPlaying[trackIndex][noteIndex]</c>
+    /// </summary>
+    public static IReadOnlyCollection<IReadOnlyList<int>> NowPlaying => nowPlaying_impl;
+
+    private static Dictionary<(int trackIndex, int noteIndex), NoteState> updatedStates_impl = new();
+    /// <summary>
+    /// The list of notes that have had their states changed since the last frame. 
+    /// Valid even when not playing in case the delay changes.<br/>
+    /// After restarting, this will NOT contain 
+    /// </summary>
+    public static IReadOnlyDictionary<(int trackIndex, int noteIndex), NoteState> UpdatedNoteStates => updatedStates_impl;
+
 
     /// <summary>The current tempo in Beats Per Minute.</summary>
     public static double CurrentTempoBPM {
@@ -66,6 +85,41 @@ public class MidiManager : OmidivComponent {
     /// Will be 0 if not playing.
     /// </summary>
     public static decimal TicksPerFrame { get; private set; }
+
+    private static int[] playIndicies;
+
+    /// <summary>
+    /// Get the state of the note at the current time.
+    /// </summary>
+    /// <param name="trackIndex">The index of the track the note is in.</param>
+    /// <param name="noteIndex">The index of the note within the track.</param>
+    public static NoteState GetNoteState(int trackIndex, int noteIndex) {
+        return GetNoteStateAtTick(trackIndex, noteIndex, CurrentTick);
+    }
+
+    /// <summary>
+    /// Get the state of the note at a specific tick.
+    /// </summary>
+    /// <param name="trackIndex">The index of the track the note is in.</param>
+    /// <param name="noteIndex">The index of the note within the track.</param>
+    public static NoteState GetNoteStateAtTick(int trackIndex, int noteIndex, decimal tick) {
+        MidiNote note = Midi.Tracks[trackIndex].notes[noteIndex];
+        if (note.startTick > CurrentTick) return NoteState.Unplayed;
+        if (note.endTick < CurrentTick) return NoteState.Played;
+        return NoteState.Playing;
+    }
+
+    /// <summary>
+    /// Get the state of the note at a specific time in microseconds.
+    /// </summary>
+    /// <param name="trackIndex">The index of the track the note is in.</param>
+    /// <param name="noteIndex">The index of the note within the track.</param>
+    public static NoteState GetNoteStateAtTime(int trackIndex, int noteIndex, decimal micro) {
+        MidiNote note = Midi.Tracks[trackIndex].notes[noteIndex];
+        if (note.startMicro > CurrentTime) return NoteState.Unplayed;
+        if (note.endMicro < CurrentTime) return NoteState.Played;
+        return NoteState.Playing;
+    }
 
     /// <summary>Resets some things and loads the midi if the path has changed then cooks the rawMidi.</summary>
     private static void InitMidi() {
@@ -85,6 +139,11 @@ public class MidiManager : OmidivComponent {
 
         if (Midi == null) Midi = new CookedMidi();
         Midi.Cook(rawMidi);
+
+        nowPlaying_impl = new List<int>[Midi.Tracks.Count];
+        for (int i = 0; i < nowPlaying_impl.Length; i++) nowPlaying_impl[i] = new List<int>();
+
+        playIndicies = new int[Midi.Tracks.Count];
 
         UpdateTPS();
     }
@@ -188,6 +247,41 @@ public class MidiManager : OmidivComponent {
         }
     }
 
+    private static void UpdateNowPlaying() {
+        for (int j = 0; j < Midi.Tracks.Count; j++) {
+            Track track = Midi.Tracks[j];
+
+            // remove notes that are no longer playing.
+            for (int i = 0; i < nowPlaying_impl[j].Count; i++) {
+                int noteIndex = nowPlaying_impl[j][i];
+                if (track.notes[noteIndex].endTick < CurrentTick) {
+                    updatedStates_impl[(j, noteIndex)] = NoteState.Played;
+                    nowPlaying_impl[j].RemoveAt(i--);
+                }
+            }
+
+            while (true) {
+                if (playIndicies[j] >= track.notes.Count) break;
+                MidiNote note = track.notes[playIndicies[j]];
+                if (note.startTick < CurrentTick) {
+                    nowPlaying_impl[j].Add(playIndicies[j]);
+                    updatedStates_impl[(j, playIndicies[j])] = NoteState.Playing;
+                    playIndicies[j]++;
+                } else break;
+            }
+        }
+    }
+
+    private static void OnMidiDelayChanged_impl(long diffMicros, decimal diffTicks) {
+        // TODO: This will not reactivate notes if time moves backwards because that might require rescanning all notes from the beginning
+        // it only deactivates active notes
+        if (diffTicks < 0) {
+
+        }
+    }
+
+    
+
     //----------------------------------------------------------------------------------------
     //       NON-STATIC AREA
     //----------------------------------------------------------------------------------------
@@ -227,19 +321,19 @@ public class MidiManager : OmidivComponent {
             bOpenMidi = false;
         }
 
+        UpdateNowPlaying();
+
         TicksPerFrame = 0;
 
         if (!IsPlaying)
             return;
 
-        if (CurrentTime >= 1e6m/60 && CurrentTime <= 0) {
-            Debug.Log("nop");
-        }
-
         TicksPerFrame = MicrosToTicks(CurrentTime, 1e6m * (decimal)FrameDeltaTime);
     }
 
     private void LateUpdate() {
+        updatedStates_impl.Clear();
+
         if (!IsPlaying)
             return;
 
