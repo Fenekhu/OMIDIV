@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: TheGoldenProof
+  companyName: Fenekhu
   productName: OMIDIV
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -137,7 +137,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.2.0-23b
+  bundleVersion: 0.2.0-24b
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
