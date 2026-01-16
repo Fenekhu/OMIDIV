@@ -132,8 +132,6 @@ public class MidiManager : OmidivComponent {
             if (rawMidi == null) rawMidi = new RawMidi();
             rawMidi.Open(MidiPath);
 
-            //using (StreamWriter sw = new StreamWriter(new FileStream("midi_dump.txt", FileMode.Create))) rawMidi.DebugPrint(sw);
-
             midiPathChanged = false;
         }
 
@@ -356,17 +354,17 @@ public class MidiManager : OmidivComponent {
     protected override void DrawGUI() {
         if (ImGuiManager.IsDebugEnabled) {
             if (ImGui.Begin("debug")) {
-                ImGui.Text(string.Format("time: {0:F2}", (double)CurrentTime));
+                ImGui.Text(string.Format("time: {0:F2} (tick: {1:F0})", (double)CurrentTime, (double)CurrentTick));
                 var currTempo = Midi.TempoMap[(long)CurrentTime];
                 ImGui.Text(string.Format("current tempo: {0:d} ({1:F2})", currTempo.tempoMicros, MidiUtil.TempoBPM(currTempo.tempoMicros)));
-                ImGui.Text(string.Format("set at: {0:d}", currTempo.timeMicros));
+                ImGui.Text(string.Format("set at: {0:d} ({1:F0})", currTempo.timeMicros, MicrosToTicks(0, currTempo.timeMicros)));
                 var nextTempoOpt = Midi.TempoMap.GT((long)CurrentTime);
                 if (!nextTempoOpt.HasValue) {
                     ImGui.Text("No next tempo.");
                 } else {
                     var nextTempo = nextTempoOpt.Value;
                     ImGui.Text(string.Format("next tempo: {0:d} ({1:F2})", nextTempo.tempoMicros, MidiUtil.TempoBPM(nextTempo.tempoMicros)));
-                    ImGui.Text(string.Format("at: {0:d}", nextTempo.timeMicros));
+                    ImGui.Text(string.Format("at: {0:d} ({1:F0})", nextTempo.timeMicros, MicrosToTicks(0, nextTempo.timeMicros)));
                 }
             }
             ImGui.End();
@@ -385,6 +383,12 @@ public class MidiManager : OmidivComponent {
     protected void DrawMainMenuItems(string menuName) {
         if (menuName == "File") {
             bOpenMidi = ImGui.MenuItem("Open Midi");
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            if (ImGui.MenuItem("Dump Midi", rawMidi != null)) {
+                using (StreamWriter sw = new StreamWriter(new FileStream("midi_dump.txt", FileMode.Create))) 
+                    rawMidi.DebugPrint(sw);
+            }
+#endif
             ImGui.Separator();
         }
     }

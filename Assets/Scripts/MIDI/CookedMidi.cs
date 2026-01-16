@@ -341,6 +341,7 @@ public class CookedMidi {
                 long delta = kvp.Key - lastTempoTick;
                 currentTime += currentTempo * delta / Header.ticksPerQuarter;
                 currentTempo = kvp.Value;
+                lastTempoTick = kvp.Key;
                 TempoMap.Set(currentTime, currentTempo);
             }
         } else { // SMPTE
@@ -348,6 +349,7 @@ public class CookedMidi {
                 long delta = kvp.Key - lastTempoTick;
                 currentTime += (long) (1_000_000 * delta / (Header.SMPTEFPS * Header.ticksPerFrame));
                 currentTempo = kvp.Value;
+                lastTempoTick = kvp.Key;
                 TempoMap.Set(currentTime, currentTempo);
             }
         }
