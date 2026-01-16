@@ -1,6 +1,7 @@
 fileFormatVersion: 2
-guid: bea7459a31ded2a4fbc0608482fdb806
-NativeFormatImporter:
+guid: cbbacc02029959546a4c0b2a59a2f898
+DefaultImporter:
+  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -9,5 +10,5 @@ AssetOrigin:
   productId: 146746
   packageName: AudioImporter
   packageVersion: 3.4
-  assetPath: Assets/AudioImporter/Prefabs/List Item.prefab
+  assetPath: Assets/AudioImporter/AudioImporter 3.4 Documentation.chm
   uploadId: 846500

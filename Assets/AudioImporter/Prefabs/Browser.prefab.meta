@@ -8,3 +8,10 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 146746
+  packageName: AudioImporter
+  packageVersion: 3.4
+  assetPath: Assets/AudioImporter/Prefabs/Browser.prefab
+  uploadId: 846500

@@ -298,7 +298,7 @@ public class Circle2D : VisualsComponent {
                 if (ImGui.SliderInt("Note Sides", ref SideCount, 3, 8)) (updateTracks, updateNotes) = (true, true);
                 if (ImGui.SliderFloat("Note Rotation", ref NoteRotation, -180f, 180f, "%.1f deg")) updateNotes = true;
                 if (ImGui.InputFloat("Note Size", ref NoteSize)) updateNotes = true;
-                if (ImGui.SliderFloat("Note Alpha", ref NoteAlpha, 0f, 1f, "%.3f", 3)) updateNotes = true;
+                if (ImGui.SliderFloat("Note Alpha", ref NoteAlpha, 0f, 1f, "%.3f")) updateNotes = true;
                 ImGui.InputFloat("Fade Time", ref NoteFadeTime);
                 NoteFadeTime = math.max(NoteFadeTime, 0.00048828125f); // things break if NoteFadeTime is 0. 1/2048 so the display rounds down to 0.000
                 ImGui.PopItemWidth();

@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// <see cref="CameraController"/> implementing 3-dimensional movement for a camera.

@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
 
 public class FFmpegRenderFeature : ScriptableRendererFeature {
 
-    public static void SendTextureToFFmpeg(Texture tex0, uint frameNum) {
+    public static void SendTextureToFFmpeg(TextureHandle tex0, uint frameNum) {
         // resize and convert to srgb
         (int vw, int vh) = FFmpegWrapper2.VideoSize;
         RenderTexture tex = RenderTexture.GetTemporary(vw, vh, 0, RenderTextureFormat.ARGB32);
@@ -30,13 +29,30 @@ public class FFmpegRenderFeature : ScriptableRendererFeature {
 
     public class SendToFFmpegPass : ScriptableRenderPass {
 
-        private static uint frameNum = 0;
-        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
-            if (!FFmpegWrapper2.IsRecording) { frameNum = 0; return; }
+        public class PassData {
+            public TextureHandle srcTex;
+            //public TextureHandle depthTex;
+        }
 
-            RTHandle ct = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            RTHandle dt = renderingData.cameraData.renderer.cameraDepthTargetHandle;
-            SendTextureToFFmpeg(ct, frameNum++);
+        private static uint frameNum = 0;
+
+        private static void ExecutePass(PassData data, RasterGraphContext ctx) {
+            if (!FFmpegWrapper2.IsRecording) { frameNum = 0; return; }
+            SendTextureToFFmpeg(data.srcTex, frameNum++);
+        }
+
+        public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameCtx) {
+            string passName = "Send frame to FFmpeg";
+
+            using (var builder = renderGraph.AddRasterRenderPass<PassData>(passName, out var passData)) {
+                UniversalResourceData frameData = frameCtx.Get<UniversalResourceData>();
+                passData.srcTex = frameData.activeColorTexture;
+                //passData.depthTex = frameData.activeDepthTexture;
+
+                builder.UseTexture(passData.srcTex);
+                builder.AllowPassCulling(false);
+                builder.SetRenderFunc(static (PassData data, RasterGraphContext ctx) => ExecutePass(data, ctx));
+            }
         }
     }
 
@@ -44,7 +60,7 @@ public class FFmpegRenderFeature : ScriptableRendererFeature {
     private SendToFFmpegPass pass;
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
-        if (renderingData.cameraData.cameraType == CameraType.Game && renderingData.cameraData.camera == Camera.main) {
+        if (renderingData.cameraData.cameraType == CameraType.Game/* && renderingData.cameraData.camera == Camera.main*/) {
             pass.renderPassEvent = rpevent;
             renderer.EnqueuePass(pass);
         }

@@ -45,7 +45,7 @@ public abstract class Base3D<TrackInfo> : VisualsComponent where TrackInfo : Bas
     protected float NoteRotation = 0f;
     protected float NoteHeight = 10f;
     protected float NoteHSpacing = 2f;
-    protected float PlayedAlpha = 0.00f;
+    protected float PlayedAlpha = 0.5f;
 
     // these are used to auto-reload the visuals if its been a certain amount of time since a variable was changed requiring a reload.
     protected float LastTrackUpdate = -1f;

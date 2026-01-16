@@ -1,4 +1,5 @@
 using ImGuiNET;
+using ImGuiNET.Unity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -88,7 +89,6 @@ public class ImGuiManager : MonoBehaviour {
             //ImGui.SetNextWindowPos(Vector2.zero);
             if (ImGui.Begin("debug"/*, ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoInputs*/)) {
                 // currently nothing here
-                ImGui.Text(" ");
             }
             ImGui.End();
         }

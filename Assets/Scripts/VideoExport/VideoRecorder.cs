@@ -203,12 +203,11 @@ public class VideoRecorder : OmidivComponent {
                     ImGui.TreePop();
 
                     if (ImGui.TreeNode("Super Advanced")) {
-                        ImGuiInputTextFlags flags = ImGuiInputTextFlags.Multiline;
                         Vector2 boxSize = new Vector2(0, ImGui.GetTextLineHeight() * 3);
 
                         ImGui.Text("Encoding command");
                         string execArgs = FFmpegWrapper2.ExecArgs;
-                        if (ImGui.InputTextMultiline("##execArgs", ref execArgs, 512, boxSize, flags))
+                        if (ImGui.InputTextMultiline("##execArgs", ref execArgs, 512, boxSize))
                             FFmpegWrapper2.ExecArgs = execArgs;
                         if (ImGui.Button("Reset##execArgs"))
                             FFmpegWrapper2.ExecArgs = FFmpegWrapper2.ExecArgsDef;

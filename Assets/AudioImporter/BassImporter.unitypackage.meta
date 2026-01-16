@@ -1,7 +1,14 @@
 fileFormatVersion: 2
-guid: e56d791fdacbc584fb2d89416c075f7f
+guid: e553b57b837652c4abb3efabb57301bd
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 146746
+  packageName: AudioImporter
+  packageVersion: 3.4
+  assetPath: Assets/AudioImporter/BassImporter.unitypackage
+  uploadId: 846500
