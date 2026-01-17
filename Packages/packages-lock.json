@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.realgames.dear-imgui": {
-      "version": "https://github.com/TylkoDemon/dear-imgui-unity.git",
+      "version": "https://github.com/Fenekhu/dear-imgui-unity.git",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.collections": "2.5.7"
       },
-      "hash": "045284d923247f92726edea3899b2fafe4d86632"
+      "hash": "165487184860c512034fcd1677a9b90c8747e6bc"
     },
     "com.unity.burst": {
       "version": "1.8.27",
