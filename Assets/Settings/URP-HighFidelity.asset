@@ -22,7 +22,7 @@ MonoBehaviour:
   m_RequireDepthTexture: 0
   m_RequireOpaqueTexture: 0
   m_OpaqueDownsampling: 1
-  m_SupportsTerrainHoles: 1
+  m_SupportsTerrainHoles: 0
   m_SupportsHDR: 1
   m_HDRColorBufferPrecision: 0
   m_MSAA: 4
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_SupportProbeVolumeScenarioBlending: 0
   m_ProbeVolumeSHBands: 1
   m_MainLightRenderingMode: 1
-  m_MainLightShadowsSupported: 1
+  m_MainLightShadowsSupported: 0
   m_MainLightShadowmapResolution: 4096
   m_AdditionalLightsRenderingMode: 1
   m_AdditionalLightsPerObjectLimit: 8
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_SupportsLightLayers: 0
   m_DebugLevel: 0
   m_StoreActionsOptimization: 0
-  m_UseAdaptivePerformance: 1
+  m_UseAdaptivePerformance: 0
   m_ColorGradingMode: 0
   m_ColorGradingLutSize: 32
   m_AllowPostProcessAlphaOutput: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
     obsoleteHasProbeVolumes:
       m_Keys: []
       m_Values: 
-  m_PrefilteringModeMainLightShadows: 3
+  m_PrefilteringModeMainLightShadows: 0
   m_PrefilteringModeAdditionalLight: 3
   m_PrefilteringModeAdditionalLightShadows: 2
   m_PrefilterXRKeywords: 1
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_PrefilterDebugKeywords: 1
   m_PrefilterWriteRenderingLayers: 1
   m_PrefilterHDROutput: 1
-  m_PrefilterAlphaOutput: 0
+  m_PrefilterAlphaOutput: 1
   m_PrefilterSSAODepthNormals: 1
   m_PrefilterSSAOSourceDepthLow: 1
   m_PrefilterSSAOSourceDepthMedium: 1
@@ -128,14 +128,14 @@ MonoBehaviour:
   m_PrefilterSoftShadowsQualityHigh: 1
   m_PrefilterSoftShadows: 0
   m_PrefilterScreenCoord: 1
-  m_PrefilterScreenSpaceIrradiance: 0
+  m_PrefilterScreenSpaceIrradiance: 1
   m_PrefilterNativeRenderPass: 1
   m_PrefilterUseLegacyLightmaps: 0
-  m_PrefilterBicubicLightmapSampling: 0
-  m_PrefilterReflectionProbeRotation: 0
+  m_PrefilterBicubicLightmapSampling: 1
+  m_PrefilterReflectionProbeRotation: 1
   m_PrefilterReflectionProbeBlending: 0
   m_PrefilterReflectionProbeBoxProjection: 0
-  m_PrefilterReflectionProbeAtlas: 0
+  m_PrefilterReflectionProbeAtlas: 1
   m_ShaderVariantLogLevel: 0
   m_ShadowCascades: 1
   m_Textures:
