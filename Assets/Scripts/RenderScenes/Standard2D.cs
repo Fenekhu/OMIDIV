@@ -36,7 +36,7 @@ public class Standard2D : VisualsComponent {
     protected float NoteHeight = 10f;
     protected float NoteHSpacing = 2f;
     protected float NoteVSpacing = 2f;
-    protected float PlayedAlpha = 0.05f;
+    protected float PlayedAlpha = 0.25f;
 
     // these are used to auto-reload the visuals if its been a certain amount of time since a variable was changed requiring a reload.
     protected float LastTrackUpdate = -1f;
@@ -61,6 +61,8 @@ public class Standard2D : VisualsComponent {
         if (!IsPlaying) return;
 
         UpdateNowPlayingVisuals();
+
+        IsVideoFeatureDone = CurrentTime > Midi.LastNoteEndTime;
     }
 
     protected enum NoteState { Unplayed, Playing, Played }

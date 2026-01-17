@@ -6,18 +6,31 @@ using UnityEngine;
 /// <summary>
 /// The base class for a component that draws a visualization.
 /// </summary>
-public abstract class VisualsComponent : OmidivComponent {
+public abstract class VisualsComponent : OmidivComponent, IVideoFeature {
 
     public static readonly SortedList<int, Color> TrackColors = new SortedList<int, Color>();
 
     /// Populates <see cref="TrackColors"/>
     static VisualsComponent() {
         for (int i = 0; i < 24; i++) {
-            TrackColors[i] = Color.HSVToRGB(i / 24f, 1, 0.5f);
+            TrackColors[i] = Color.HSVToRGB(i / 24f, 1, 1f);
         }
     }
 
+    /// <summary>
+    /// Whether this component has reached the end of all its visuals, and the video recording can end.
+    /// </summary>
+    /// <remarks>
+    /// Register this component via <see cref="VideoRecorder.RegisterFeature(IVideoFeature)"/>. Register and de-register features in OnEnable and OnDisable. Only registered features will prevent the recording from ending.
+    /// </remarks>
+    /// <seealso cref="AutoRegisterVideoFeature"/>
+    public bool IsVideoFeatureDone { get; protected set; } = false;
 
+    /// <summary>
+    /// Whether to automatically add and remove this component to the video recorder's recorded features in OnEnable and OnDisable. 
+    /// </summary>
+    /// <seealso cref="IsVideoFeatureDone"/>
+    protected bool AutoRegisterVideoFeature { get; set; } = true;
 
     /// <summary>
     /// Whether changes that require recreating the visualization should apply automatically (true) or manually with F6 (false).
@@ -46,11 +59,13 @@ public abstract class VisualsComponent : OmidivComponent {
     protected override void OnEnable() {
         base.OnEnable();
         MidiManager.OnMidiDelayChanged += OnMidiDelayChanged;
+        if (AutoRegisterVideoFeature) VideoRecorder.AddFeature(this);
     }
 
     protected override void OnDisable() {
         base.OnDisable();
         MidiManager.OnMidiDelayChanged -= OnMidiDelayChanged;
+        if (AutoRegisterVideoFeature) VideoRecorder.RemoveFeature(this);
     }
 
     /// <remarks>
@@ -100,6 +115,7 @@ public abstract class VisualsComponent : OmidivComponent {
     }
 
     protected override void Restart() {
+        IsVideoFeatureDone = false;
         decimal micros = MidiManager.MidiDelay * -1000m;
         MovePlay(MidiManager.MicrosToTicks(0, micros), micros);
     }

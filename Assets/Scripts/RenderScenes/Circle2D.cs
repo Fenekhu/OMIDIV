@@ -1,7 +1,7 @@
 using ImGuiNET;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using static MidiManager;
@@ -109,6 +109,8 @@ public class Circle2D : VisualsComponent {
                 } else break;
             }
         }
+
+        IsVideoFeatureDone = CurrentTime > Midi.LastNoteEndTime && Tracks.All(t => t.fadeTimes.All(f => f == 0));
     }
 
     protected override void CreateVisuals() {

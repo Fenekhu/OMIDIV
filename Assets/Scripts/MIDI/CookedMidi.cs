@@ -184,6 +184,7 @@ public class CookedMidi {
     public byte HighestNote { get; private set; }
     public byte LowestNote { get; private set; }
     public byte NoteRange { get { return (byte)(HighestNote - LowestNote); } }
+    public ulong LastNoteEndTime { get; private set; }
 
     public CookedMidi() {}
 
@@ -263,6 +264,7 @@ public class CookedMidi {
                             if (chActive.TryGetValue(noteEvent.Key,out MidiNote note)) {
                                 note.lengthTicks = currentTick - note.startTick;
                                 note.lengthMicros = (ulong)currentTime - note.startMicro;
+                                LastNoteEndTime = Math.Max(LastNoteEndTime, note.endMicro);
                                 chActive.Remove(noteEvent.Key);
                             }
                             break;

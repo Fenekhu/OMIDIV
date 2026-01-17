@@ -2,6 +2,8 @@ using ImGuiNET;
 using SFB;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +20,7 @@ public class VideoRecorder : OmidivComponent {
     public static event Action OnAfterFrame;
     public static event Action OnRecordingEnd;
 
+    private static List<IVideoFeature> videoFeatures = new List<IVideoFeature>();
     private static double recordingTime = 0; // seconds
     private static double simulatedTime = 0; // seconds
     private static double recordingDeltaTime = 0; // seconds
@@ -33,17 +36,45 @@ public class VideoRecorder : OmidivComponent {
 
     public static bool RecordingEnabled { get; set; } = false;
 
+    public static double FrameRate => FFmpegWrapper2.FrameRate;
+
+    public static double RecordingTailTime { get; set; }
+    private static double elapsedTailTime = 0;
+
     public static Status GetStatus() {
         if (FFmpegWrapper2.IsReencoding) return Status.Processing;
         if (FFmpegWrapper2.IsRecording) return Status.Recording;
         return Status.Standby;
     }
 
-    public static double FrameRate => FFmpegWrapper2.FrameRate;
+    public static void AddFeature(IVideoFeature feature) {
+        videoFeatures.Add(feature);
+    }
+    public static void RemoveFeature(IVideoFeature feature) {
+        videoFeatures.Remove(feature);
+    }
+
+    private static void _OnRecordingBegin() {
+        recordingDeltaTime = 1 / FrameRate;
+        overrideTime = true;
+    }
+
+    private static void _OnRecordingEnd() {
+        simulatedTime = recordingTime = 0;
+        overrideTime = false;
+        ImGuiManager.IsEnabled = true;
+    }
+
+
+    // -------------------------------------------------
+    //              NON-STATIC AREA
+    // -------------------------------------------------
 
     private int _autoHideUI = 0;
     /// <summary>Whether to disable the UI when recording begins.</summary>
     public bool AutoHideUI { get { return _autoHideUI != 0; } set { _autoHideUI = value ? 1 : 0; } }
+
+    //private int startPlayCountdown = 0;
 
     protected override void OnEnable() {
         base.OnEnable();
@@ -75,21 +106,18 @@ public class VideoRecorder : OmidivComponent {
         FFmpegWrapper2.ForceKill();
     }
 
-    private static void _OnRecordingBegin() {
-        recordingDeltaTime = 1 / FrameRate;
-        overrideTime = true;
-    }
-
     // currently does nothing but may be needed in the future.
-    private static void _OnFrameBegin() { }
+    private void _OnFrameBegin() { }
 
-    private static void _OnFrameEnd() {
+    private void _OnFrameEnd() {
         recordingTime += recordingDeltaTime;
-    }
-
-    private static void _OnRecordingEnd() {
-        simulatedTime = recordingTime = 0;
-        overrideTime = false;
+        if (elapsedTailTime > 0 || videoFeatures.All(f => f.IsVideoFeatureDone)) {
+            elapsedTailTime += recordingDeltaTime;
+        }
+        if (elapsedTailTime > RecordingTailTime) {
+            elapsedTailTime = 0;
+            SceneController.NeedsStopPlay = true;
+        }
     }
 
     protected override void OnPlayStart() {
@@ -112,6 +140,12 @@ public class VideoRecorder : OmidivComponent {
         }
     }
 
+    private IEnumerator RecordingStarter() {
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        SceneController.NeedsStartPlay = true;
+    }
+
     public void StartIfEnabled() {
         if (RecordingEnabled) StartRecording();
     }
@@ -120,13 +154,13 @@ public class VideoRecorder : OmidivComponent {
     }
 
     public void StartRecording() {
-        if (AutoHideUI) ImGuiManager.IsEnabled = false;
         OnRecordingBegin?.Invoke();
         FFmpegWrapper2.StartRecording();
         StartCoroutine(FrameTrigger());
     }
 
     public void StopRecording() {
+        RecordingEnabled = false;
         FFmpegWrapper2.EndRecording();
         OnRecordingEnd?.Invoke();
     }
@@ -152,14 +186,24 @@ public class VideoRecorder : OmidivComponent {
 
             } else {
 
-                bool _recording = RecordingEnabled;
-                if (ImGui.Checkbox("Record on play", ref _recording))
-                    RecordingEnabled = _recording;
-
                 bool _b_ahui = AutoHideUI;
                 if (ImGui.Checkbox("Auto-hide UI", ref _b_ahui))
                     AutoHideUI = _b_ahui;
                 ImGui.TextDisabled("The UI WILL be recorded if visible.");
+
+                ImGui.SetNextItemWidth(50);
+                double _tail_time = RecordingTailTime;
+                if (ImGui.InputDouble("Recording tail time", ref _tail_time, 0, 0, "%g"))
+                    RecordingTailTime = Math.Max(0, _tail_time);
+
+                if (!RecordingEnabled && ImGui.Button("Start Recording")) {
+                    RecordingEnabled = true;
+                    ImGuiManager.IsEnabled = !AutoHideUI;
+                    StartCoroutine(RecordingStarter());
+                }
+                if (RecordingEnabled && ImGui.Button("Stop Recording")) {
+                    StopIfEnabled();
+                }
 
                 ImGui.Text(" ");
 

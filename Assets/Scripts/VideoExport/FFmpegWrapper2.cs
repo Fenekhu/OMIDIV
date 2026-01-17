@@ -140,7 +140,7 @@ public class FFmpegWrapper2 {
         "-s %video_size% " +
         "-i - " +
 
-        "-vf \"vflip\" " + 
+        //"-vf \"vflip\" " + 
         "-pix_fmt %pix_fmt% " +
         "-c:v %vcodec% " + 
         "-crf %crf% " +
