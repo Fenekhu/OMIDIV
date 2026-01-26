@@ -58,10 +58,10 @@ public class FFmpegWrapper2 {
         return Application.streamingAssetsPath + "/ffmpeg/";
     }
 
-    /// <param name="quoted">If true, puts the path in quotes (useful if it contains spaces).</param>
+    /// <summary>The path of the executable expected to be in the StreamingAssets folder.</summary>
     /// <returns>The full path of the executable, with platform file types accounted for.</returns>
     /// <exception cref="PlatformNotSupportedException">If the platform is not Windows, Mac, or Linux Standalone/Editor.</exception>
-    public static string GetExecutablePath(bool quoted = false) {
+    private static string GetCustomExecutablePath() {
         string path_ext = "";
         switch (Application.platform) {
         case RuntimePlatform.WindowsPlayer:
@@ -75,9 +75,45 @@ public class FFmpegWrapper2 {
         default:
             throw new PlatformNotSupportedException();
         }
-        string ret = GetExecutableDir() + path_ext;
-        if (quoted) ret = "\"" + ret + "\"";
-        return ret;
+        return "\"" + GetExecutableDir() + path_ext + "\"";
+    }
+
+    /// <summary>
+    /// The full path of the executable. 
+    /// First checks the StreamingAssets folder, then the system environment.
+    /// If neither is found, returns the non-existant StreamingAssets folder executable.
+    /// </summary>
+    public static string GetExecutablePath() {
+        string customPath = GetCustomExecutablePath(); // try custom path first
+        Debug.Log($"looking for ffmpeg at {customPath}");
+        if (File.Exists(customPath)) return Path.GetFullPath(customPath);
+
+        string envPath = Environment.ExpandEnvironmentVariables("ffmpeg"); // look in environment next
+        Debug.Log($"looking for ffmpeg at {envPath}");
+        if (File.Exists(envPath)) return Path.GetFullPath(envPath);
+
+        // idk, see http://csharptest.net/526/how-to-search-the-environments-path-for-an-exe-or-dll/index.html
+        if (Path.GetDirectoryName(envPath) == String.Empty) {
+            foreach (string test in (Environment.GetEnvironmentVariable("PATH") ?? "").Split(":")) {
+                string path = test.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    path = Path.Combine(path, envPath);
+                    Debug.Log($"looking for ffmpeg at {path}");
+                    if (File.Exists(path))
+                        return Path.GetFullPath(path);
+                }
+            }
+        }
+
+        if (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer) {
+            string brewPath = "/opt/homebrew/opt/ffmpeg/bin/ffmpeg";
+            Debug.Log($"looking for ffmpeg at {brewPath}");
+            if (File.Exists(brewPath)) return Path.GetFullPath(brewPath);
+        }
+
+        // fallback if not found
+        Debug.Log("ffmpeg not found");
+        return customPath;
     }
 
     private static bool? _ExecExists = null;
@@ -88,7 +124,7 @@ public class FFmpegWrapper2 {
     /// It is called with <paramref name="actuallyCheck"/><c> = true</c> when the VideoRecorder refresh button is pressed.
     /// </remarks>
     public static bool ExecutableExists(bool actuallyCheck = false) {
-        if (_ExecExists == null || actuallyCheck) {
+        if (_ExecExists == null || actuallyCheck) { // check the folder
             _ExecExists = File.Exists(GetExecutablePath());
         }
         return _ExecExists.Value;
