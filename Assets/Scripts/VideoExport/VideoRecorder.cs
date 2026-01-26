@@ -266,7 +266,7 @@ public class VideoRecorder : OmidivComponent {
             string dir = FFmpegWrapper2.OutDir;
             while (dir.EndsWith("/") || dir.EndsWith("\\")) dir = dir[..^1];
             StandaloneFileBrowser.OpenFolderPanelAsync("Video output directory", FFmpegWrapper2.OutDir, false, (string[] res) => {
-                if (res.Length > 0) {
+                if (res.Length > 0 && res[0].Length > 0) {
                     if (!(res[0].EndsWith("/") || res[0].EndsWith("\\"))) res[0] += "/";
                     FFmpegWrapper2.OutDir = res[0];
                 }

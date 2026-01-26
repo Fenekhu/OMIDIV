@@ -308,7 +308,7 @@ public class MidiManager : OmidivComponent {
         if (bOpenMidi) {
             SFB.ExtensionFilter[] exts = {new SFB.ExtensionFilter("MIDI", "mid", "midi")};
             SFB.StandaloneFileBrowser.OpenFilePanelAsync("Open MIDI", "", exts, false, (string[] res) => {
-                if (res.Length > 0) {
+                if (res.Length > 0 && res[0].Length > 0) {
                     MidiPath = new FileInfo(res[0]);
                     midiPathChanged = true;
                     SceneController.NeedsStopPlay = true;

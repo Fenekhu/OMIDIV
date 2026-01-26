@@ -147,7 +147,7 @@ public static class Config {
     /// </summary>
     public static void Open() {
         StandaloneFileBrowser.OpenFilePanelAsync("Open File", "", "omvcfg", false, (string[] res) => {
-            if (res.Length > 0) {
+            if (res.Length > 0 && res[0].Length > 0) {
                 currPath = res[0];
                 Read(new FileInfo(currPath));
             }

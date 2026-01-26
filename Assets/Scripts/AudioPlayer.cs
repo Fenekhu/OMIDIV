@@ -59,7 +59,7 @@ public class AudioPlayer : OmidivComponent {
     protected void Update() {
         if (bOpenAudio) {
             StandaloneFileBrowser.OpenFilePanelAsync("Open Audio", "", "mp3", false, (string[] res) => {
-                if (res.Length > 0) {
+                if (res.Length > 0 && res[0].Length > 0) {
                     AudioPath = new FileInfo(res[0]);
                     SceneController.NeedsStopPlay = true;
                     SceneController.NeedsAudioReload = true;
