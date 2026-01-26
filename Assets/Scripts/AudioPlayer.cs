@@ -18,13 +18,21 @@ public class AudioPlayer : OmidivComponent {
     protected static float AudioTime = 0;
     protected static bool IsPaused = false;
 
+    [SerializeField]
     protected NAudioImporter AudioImporter;
+    [SerializeField]
     protected AudioSource Sound;
     private bool bOpenAudio = false;
 
     protected void SetAudio(AudioClip clip) {
+        Debug.Log($"setting audio to {clip.name}");
         AudioClip = clip;
         Sound.clip = clip;
+    }
+
+    protected override void Awake() {
+        base.Awake();
+        AudioImporter.Loaded += SetAudio;
     }
 
     protected override void OnEnable() {
@@ -37,20 +45,20 @@ public class AudioPlayer : OmidivComponent {
         ImGuiManager.DrawMainMenuItems -= DrawMainMenuItems;
     }
 
-    protected void Start() {
-        if (Sound == null) {
-            Sound = gameObject.AddComponent<AudioSource>();
-        }
-        if (AudioImporter is null) {
-            AudioImporter = gameObject.AddComponent<NAudioImporter>();
-            AudioImporter.Loaded += SetAudio;
-        }
-        if (AudioClip != null) Sound.clip = AudioClip;
-    }
+    //protected void Start() {
+    //    if (Sound == null) {
+    //        Sound = gameObject.AddComponent<AudioSource>();
+    //    }
+    //    if (AudioImporter is null) {
+    //        AudioImporter = gameObject.AddComponent<NAudioImporter>();
+    //        AudioImporter.Loaded += SetAudio;
+    //    }
+    //    if (AudioClip != null) Sound.clip = AudioClip;
+    //}
 
     protected void Update() {
         if (bOpenAudio) {
-            StandaloneFileBrowser.OpenFilePanelAsync("Open Audio", "", "", false, (string[] res) => {
+            StandaloneFileBrowser.OpenFilePanelAsync("Open Audio", "", "mp3", false, (string[] res) => {
                 if (res.Length > 0) {
                     AudioPath = new FileInfo(res[0]);
                     SceneController.NeedsStopPlay = true;

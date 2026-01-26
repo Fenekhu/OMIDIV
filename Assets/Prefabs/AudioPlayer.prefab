@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a523da91acaae6243bc556a26c11698a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ConfigTag: def
+  AudioImporter: {fileID: 6382622605628190780}
+  Sound: {fileID: 98637751704479802}
 --- !u!82 &98637751704479802
 AudioSource:
   m_ObjectHideFlags: 0
