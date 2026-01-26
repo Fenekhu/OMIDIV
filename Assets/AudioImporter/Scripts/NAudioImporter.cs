@@ -1,5 +1,6 @@
 ﻿using System;
 using NAudio.Wave;
+using NLayer.NAudioSupport;
 using UnityEngine;
 
 /// <summary>
@@ -17,8 +18,9 @@ public class NAudioImporter : DecoderImporter
         {
             if (!uri.IsFile)
                 throw new FormatException("NAudioImporter does not support URLs");
-
-            waveStream = new AudioFileReader(uri.LocalPath);
+            
+            var builder = new Mp3FileReader.FrameDecompressorBuilder(wf => new Mp3FrameDecompressor(wf));
+            waveStream = new Mp3FileReader(uri.LocalPath, builder);
             sampleProvider = waveStream.ToSampleProvider();
         }
         catch (Exception e)
