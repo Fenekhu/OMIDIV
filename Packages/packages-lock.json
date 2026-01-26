@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "com.realgames.dear-imgui": {
-      "version": "https://github.com/Fenekhu/dear-imgui-unity.git",
+      "version": "file:/Users/fnhw/coding/dear-imgui-unity",
       "depth": 0,
-      "source": "git",
+      "source": "local",
       "dependencies": {
         "com.unity.collections": "2.5.7"
-      },
-      "hash": "165487184860c512034fcd1677a9b90c8747e6bc"
+      }
     },
     "com.unity.burst": {
       "version": "1.8.27",
