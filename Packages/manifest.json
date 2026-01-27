@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.realgames.dear-imgui": "file:/Users/fnhw/coding/dear-imgui-unity",
+    "com.realgames.dear-imgui": "https://github.com/Fenekhu/dear-imgui-unity.git",
     "com.unity.collab-proxy": "2.11.2",
     "com.unity.ide.rider": "3.0.38",
     "com.unity.ide.visualstudio": "2.0.26",

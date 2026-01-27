@@ -1,6 +1,3 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="RG.ImGui.csproj" />
-  <Project Path="RG.ImGui.Unity.csproj" />
-  <Project Path="RG.ImGui.Unity.Editor.csproj" />
 </Solution>
