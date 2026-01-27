@@ -88,13 +88,19 @@ public class FFmpegWrapper2 {
         Debug.Log($"looking for ffmpeg at {customPath}");
         if (File.Exists(customPath)) return Path.GetFullPath(customPath);
 
-        string envPath = Environment.ExpandEnvironmentVariables("ffmpeg"); // look in environment next
+        string delim = ":";
+        string execName = "ffmpeg";
+        if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer) {
+            delim = ";";
+            execName += ".exe";
+        }
+        string envPath = Environment.ExpandEnvironmentVariables(execName); // look in environment next
         Debug.Log($"looking for ffmpeg at {envPath}");
         if (File.Exists(envPath)) return Path.GetFullPath(envPath);
 
         // idk, see http://csharptest.net/526/how-to-search-the-environments-path-for-an-exe-or-dll/index.html
         if (Path.GetDirectoryName(envPath) == String.Empty) {
-            foreach (string test in (Environment.GetEnvironmentVariable("PATH") ?? "").Split(":")) {
+            foreach (string test in (Environment.GetEnvironmentVariable("PATH") ?? "").Split(delim)) {
                 string path = test.Trim();
                 if (!String.IsNullOrEmpty(path)) {
                     path = Path.Combine(path, envPath);
