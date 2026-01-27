@@ -109,6 +109,8 @@ public class ImGuiManager : MonoBehaviour {
     /// <summary>Fires the Draw event if IsEnabled.</summary>
     private void DrawGUI_() {
         if (IsEnabled) {
+            ImGui.DockSpaceOverViewport(ImGui.GetMainViewport(), ImGuiDockNodeFlags.NoDockingInCentralNode | ImGuiDockNodeFlags.PassthruCentralNode);
+
             DrawGUI();
             Draw?.Invoke();
         }
