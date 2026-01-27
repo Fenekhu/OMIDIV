@@ -72,7 +72,8 @@ Inheritance diagram for VisualsComponent:</div>
  <div class="center">
   <img src="class_visuals_component.png" usemap="#VisualsComponent_map" alt=""/>
   <map id="VisualsComponent_map" name="VisualsComponent_map">
-<area href="class_omidiv_component.html" title="A base component that is subscribed to a bunch of events." alt="OmidivComponent" shape="rect" coords="143,56,276,80"/>
+<area href="class_omidiv_component.html" title="A base component that is subscribed to a bunch of events." alt="OmidivComponent" shape="rect" coords="71,56,204,80"/>
+<area href="interface_i_video_feature.html" alt="IVideoFeature" shape="rect" coords="214,56,347,80"/>
 <area href="class_base3_d.html" title="A base class for Standard3D and Circle3D visualizations, since they share much of the same code...." alt="Base3D&lt; TrackInfo &gt;" shape="rect" coords="0,168,133,192"/>
 <area href="class_circle2_d.html" title="A visualization where the pitches of the track appear as pads placed radially. The pads light up when..." alt="Circle2D" shape="rect" coords="143,168,276,192"/>
 <area href="class_standard2_d.html" alt="Standard2D" shape="rect" coords="286,168,419,192"/>
@@ -138,6 +139,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>CreateVisuals</b> ()<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:adfe7a93c58f742e1d51b8f4549be920a" id="r_adfe7a93c58f742e1d51b8f4549be920a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfe7a93c58f742e1d51b8f4549be920a">IsVideoFeatureDone</a> = false<code> [get, protected set]</code></td></tr>
+<tr class="memdesc:adfe7a93c58f742e1d51b8f4549be920a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether this component has reached the end of all its visuals, and the video recording can end.  <br /></td></tr>
+<tr class="separator:adfe7a93c58f742e1d51b8f4549be920a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a951444a27db65dd189e7ca75c61fbf1d" id="r_a951444a27db65dd189e7ca75c61fbf1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a951444a27db65dd189e7ca75c61fbf1d">AutoRegisterVideoFeature</a> = true<code> [get, set]</code></td></tr>
+<tr class="memdesc:a951444a27db65dd189e7ca75c61fbf1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to automatically add and remove this component to the video recorder's recorded features in OnEnable and OnDisable.  <br /></td></tr>
+<tr class="separator:a951444a27db65dd189e7ca75c61fbf1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab16e685bf4300b79a6a3c9983834cbcc" id="r_ab16e685bf4300b79a6a3c9983834cbcc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab16e685bf4300b79a6a3c9983834cbcc">AutoApplyChanges</a> = true<code> [get, set]</code></td></tr>
 <tr class="memdesc:ab16e685bf4300b79a6a3c9983834cbcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether changes that require recreating the visualization should apply automatically (true) or manually with F6 (false).  <br /></td></tr>
 <tr class="separator:ab16e685bf4300b79a6a3c9983834cbcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,6 +155,7 @@ Properties</h2></td></tr>
 <tr class="memitem:a2af8bb1479c2745f86a1c47fc4608168 inherit properties_class_omidiv_component" id="r_a2af8bb1479c2745f86a1c47fc4608168"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a2af8bb1479c2745f86a1c47fc4608168">FrameDeltaTime</a><code> [get]</code></td></tr>
 <tr class="memdesc:a2af8bb1479c2745f86a1c47fc4608168 inherit properties_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time.deltaTime when not recording, <code>1/recording framerate</code> when recording. In most cases, use this instead of Time.deltaTime so that recordings work properly.  <br /></td></tr>
 <tr class="separator:a2af8bb1479c2745f86a1c47fc4608168 inherit properties_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_interface_i_video_feature"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_interface_i_video_feature')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_i_video_feature.html">IVideoFeature</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -505,6 +513,59 @@ Additional Inherited Members</h2></td></tr>
 <p>Whether changes that require recreating the visualization should apply automatically (true) or manually with F6 (false). </p>
 <p>Note to subclasses:<br  />
  Doesn't make changes you make automatically apply. Instead, chack the value of this for whether or not you should apply the changes when they happen. </p>
+
+</div>
+</div>
+<a id="a951444a27db65dd189e7ca75c61fbf1d" name="a951444a27db65dd189e7ca75c61fbf1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a951444a27db65dd189e7ca75c61fbf1d">&#9670;&#160;</a></span>AutoRegisterVideoFeature</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool VisualsComponent.AutoRegisterVideoFeature = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether to automatically add and remove this component to the video recorder's recorded features in OnEnable and OnDisable. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#adfe7a93c58f742e1d51b8f4549be920a" title="Whether this component has reached the end of all its visuals, and the video recording can end.">IsVideoFeatureDone</a></dd></dl>
+
+</div>
+</div>
+<a id="adfe7a93c58f742e1d51b8f4549be920a" name="adfe7a93c58f742e1d51b8f4549be920a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfe7a93c58f742e1d51b8f4549be920a">&#9670;&#160;</a></span>IsVideoFeatureDone</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool VisualsComponent.IsVideoFeatureDone = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether this component has reached the end of all its visuals, and the video recording can end. </p>
+<p>Register this component via VideoRecorder.RegisterFeature(IVideoFeature). Register and de-register features in OnEnable and OnDisable. Only registered features will prevent the recording from ending. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a951444a27db65dd189e7ca75c61fbf1d" title="Whether to automatically add and remove this component to the video recorder&#39;s recorded features in O...">AutoRegisterVideoFeature</a></dd></dl>
+
+<p>Implements <a class="el" href="interface_i_video_feature.html">IVideoFeature</a>.</p>
 
 </div>
 </div>

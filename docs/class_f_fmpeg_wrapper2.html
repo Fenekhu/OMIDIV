@@ -77,8 +77,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:abb9f737c0a77063d3d75a8aa1dc58182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afae4caec6bfd3f964f41d1416cd9d30d" id="r_afae4caec6bfd3f964f41d1416cd9d30d"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afae4caec6bfd3f964f41d1416cd9d30d">GetExecutableDir</a> ()</td></tr>
 <tr class="separator:afae4caec6bfd3f964f41d1416cd9d30d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4d6d492d402b4888b79a6da42b38470" id="r_aa4d6d492d402b4888b79a6da42b38470"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4d6d492d402b4888b79a6da42b38470">GetExecutablePath</a> (bool quoted=false)</td></tr>
-<tr class="separator:aa4d6d492d402b4888b79a6da42b38470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5482edf7bdba01538a62625b58fc1e1e" id="r_a5482edf7bdba01538a62625b58fc1e1e"><td class="memItemLeft" align="right" valign="top"><a id="a5482edf7bdba01538a62625b58fc1e1e" name="a5482edf7bdba01538a62625b58fc1e1e"></a>
+static string&#160;</td><td class="memItemRight" valign="bottom"><b>GetExecutablePath</b> ()</td></tr>
+<tr class="memdesc:a5482edf7bdba01538a62625b58fc1e1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The full path of the executable. First checks the StreamingAssets folder, then the system environment. If neither is found, returns the non-existant StreamingAssets folder executable. <br /></td></tr>
+<tr class="separator:a5482edf7bdba01538a62625b58fc1e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6080b039fb64b6f368bb6adc1d932af4" id="r_a6080b039fb64b6f368bb6adc1d932af4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6080b039fb64b6f368bb6adc1d932af4">ExecutableExists</a> (bool actuallyCheck=false)</td></tr>
 <tr class="separator:a6080b039fb64b6f368bb6adc1d932af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a315b785f23b7028bf75a12af6fd6aa47" id="r_a315b785f23b7028bf75a12af6fd6aa47"><td class="memItemLeft" align="right" valign="top"><a id="a315b785f23b7028bf75a12af6fd6aa47" name="a315b785f23b7028bf75a12af6fd6aa47"></a>
@@ -255,44 +257,6 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>OutDir</b> =
 
 </div>
 </div>
-<a id="aa4d6d492d402b4888b79a6da42b38470" name="aa4d6d492d402b4888b79a6da42b38470"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4d6d492d402b4888b79a6da42b38470">&#9670;&#160;</a></span>GetExecutablePath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static string FFmpegWrapper2.GetExecutablePath </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>quoted</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">quoted</td><td>If true, puts the path in quotes (useful if it contains spaces).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The full path of the executable, with platform file types accounted for.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">PlatformNotSupportedException</td><td>If the platform is not Windows, Mac, or Linux Standalone/Editor.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a2d6e49cecbefa1456890eda8b5721eca" name="a2d6e49cecbefa1456890eda8b5721eca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2d6e49cecbefa1456890eda8b5721eca">&#9670;&#160;</a></span>InitParams()</h2>
 
@@ -458,7 +422,7 @@ static string&#160;</td><td class="memItemRight" valign="bottom"><b>OutDir</b> =
 <div class="line">        <span class="stringliteral">&quot;-s %video_size% &quot;</span> +</div>
 <div class="line">        <span class="stringliteral">&quot;-i - &quot;</span> +</div>
 <div class="line"> </div>
-<div class="line">        <span class="stringliteral">&quot;-vf \&quot;vflip\&quot; &quot;</span> + </div>
+<div class="line">        </div>
 <div class="line">        <span class="stringliteral">&quot;-pix_fmt %pix_fmt% &quot;</span> +</div>
 <div class="line">        <span class="stringliteral">&quot;-c:v %vcodec% &quot;</span> + </div>
 <div class="line">        <span class="stringliteral">&quot;-crf %crf% &quot;</span> +</div>

@@ -73,8 +73,9 @@ Inheritance diagram for Base3D&lt; TrackInfo &gt;:</div>
  <div class="center">
   <img src="class_base3_d.png" usemap="#Base3D_3C_20TrackInfo_20_3E_map" alt=""/>
   <map id="Base3D_3C_20TrackInfo_20_3E_map" name="Base3D_3C_20TrackInfo_20_3E_map">
-<area href="class_visuals_component.html" title="The base class for a component that draws a visualization." alt="VisualsComponent" shape="rect" coords="0,112,133,136"/>
+<area href="class_visuals_component.html" title="The base class for a component that draws a visualization." alt="VisualsComponent" shape="rect" coords="71,112,204,136"/>
 <area href="class_omidiv_component.html" title="A base component that is subscribed to a bunch of events." alt="OmidivComponent" shape="rect" coords="0,56,133,80"/>
+<area href="interface_i_video_feature.html" alt="IVideoFeature" shape="rect" coords="143,56,276,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -214,7 +215,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>NoteHeight</b> = 10f
 float&#160;</td><td class="memItemRight" valign="bottom"><b>NoteHSpacing</b> = 2f</td></tr>
 <tr class="separator:a3f6a20d559512461d7d69872eac1b4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af989d7595b85ee49d21c9a932969924d" id="r_af989d7595b85ee49d21c9a932969924d"><td class="memItemLeft" align="right" valign="top"><a id="af989d7595b85ee49d21c9a932969924d" name="af989d7595b85ee49d21c9a932969924d"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>PlayedAlpha</b> = 0.00f</td></tr>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>PlayedAlpha</b> = 0.25f</td></tr>
 <tr class="separator:af989d7595b85ee49d21c9a932969924d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a762e5630e37bcab58e22ecd1a79b9a96" id="r_a762e5630e37bcab58e22ecd1a79b9a96"><td class="memItemLeft" align="right" valign="top"><a id="a762e5630e37bcab58e22ecd1a79b9a96" name="a762e5630e37bcab58e22ecd1a79b9a96"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>LastTrackUpdate</b> = -1f</td></tr>
@@ -244,6 +245,12 @@ Additional Inherited Members</h2></td></tr>
 static readonly SortedList&lt; int, Color &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>TrackColors</b> = new SortedList&lt;int, Color&gt;()</td></tr>
 <tr class="separator:a54d5be033631ec0a044e7f3d9814012c inherit pub_static_attribs_class_visuals_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_class_visuals_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_class_visuals_component')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_visuals_component.html">VisualsComponent</a></td></tr>
+<tr class="memitem:adfe7a93c58f742e1d51b8f4549be920a inherit properties_class_visuals_component" id="r_adfe7a93c58f742e1d51b8f4549be920a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_visuals_component.html#adfe7a93c58f742e1d51b8f4549be920a">IsVideoFeatureDone</a> = false<code> [get, protected set]</code></td></tr>
+<tr class="memdesc:adfe7a93c58f742e1d51b8f4549be920a inherit properties_class_visuals_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether this component has reached the end of all its visuals, and the video recording can end.  <br /></td></tr>
+<tr class="separator:adfe7a93c58f742e1d51b8f4549be920a inherit properties_class_visuals_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a951444a27db65dd189e7ca75c61fbf1d inherit properties_class_visuals_component" id="r_a951444a27db65dd189e7ca75c61fbf1d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_visuals_component.html#a951444a27db65dd189e7ca75c61fbf1d">AutoRegisterVideoFeature</a> = true<code> [get, set]</code></td></tr>
+<tr class="memdesc:a951444a27db65dd189e7ca75c61fbf1d inherit properties_class_visuals_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to automatically add and remove this component to the video recorder's recorded features in OnEnable and OnDisable.  <br /></td></tr>
+<tr class="separator:a951444a27db65dd189e7ca75c61fbf1d inherit properties_class_visuals_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab16e685bf4300b79a6a3c9983834cbcc inherit properties_class_visuals_component" id="r_ab16e685bf4300b79a6a3c9983834cbcc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_visuals_component.html#ab16e685bf4300b79a6a3c9983834cbcc">AutoApplyChanges</a> = true<code> [get, set]</code></td></tr>
 <tr class="memdesc:ab16e685bf4300b79a6a3c9983834cbcc inherit properties_class_visuals_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether changes that require recreating the visualization should apply automatically (true) or manually with F6 (false).  <br /></td></tr>
 <tr class="separator:ab16e685bf4300b79a6a3c9983834cbcc inherit properties_class_visuals_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -254,6 +261,7 @@ static readonly SortedList&lt; int, Color &gt;&#160;</td><td class="memItemRight
 <tr class="memitem:a2af8bb1479c2745f86a1c47fc4608168 inherit properties_class_omidiv_component" id="r_a2af8bb1479c2745f86a1c47fc4608168"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omidiv_component.html#a2af8bb1479c2745f86a1c47fc4608168">FrameDeltaTime</a><code> [get]</code></td></tr>
 <tr class="memdesc:a2af8bb1479c2745f86a1c47fc4608168 inherit properties_class_omidiv_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time.deltaTime when not recording, <code>1/recording framerate</code> when recording. In most cases, use this instead of Time.deltaTime so that recordings work properly.  <br /></td></tr>
 <tr class="separator:a2af8bb1479c2745f86a1c47fc4608168 inherit properties_class_omidiv_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_interface_i_video_feature"><td colspan="2" onclick="javascript:dynsection.toggleInherit('properties_interface_i_video_feature')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_i_video_feature.html">IVideoFeature</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A base class for <a class="el" href="class_standard3_d.html" title="The standard 3D note visualization.">Standard3D</a> and <a class="el" href="class_circle3_d.html" title="A visualization similar to Standard3D, except notes are placed radially instead of vertically.">Circle3D</a> visualizations, since they share much of the same code.<br  />
